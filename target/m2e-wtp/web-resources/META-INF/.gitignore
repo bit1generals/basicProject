@@ -1,0 +1,7 @@
+/MANIFEST.MF
+.classpath
+.project
+.settings/**
+**/target/**
+.class
+/.springBeans
