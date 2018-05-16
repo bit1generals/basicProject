@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class BoardVO {
 
-	private Integer bno;
+	private Integer bno, pno;
 	private String btype, id, title, content;
 	private Date regdate, updatedate;
 	

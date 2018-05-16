@@ -7,6 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-list Page
+<h1>Bbs list Page</h1>
+
+${list}
 </body>
 </html>

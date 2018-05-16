@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-list Page
+<h1>Data List Page</h1>
 </body>
 </html>

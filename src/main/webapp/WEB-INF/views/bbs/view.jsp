@@ -7,6 +7,14 @@
 <title>Insert title here</title>
 </head>
 <body>
-view Page
+<h1>Bbs View Page</h1>
+
+1.${boardVO}
+2.${boardvo}
+3.${vo}
+4.${BoardVO}
+
+
+
 </body>
 </html>

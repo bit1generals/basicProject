@@ -8,7 +8,7 @@ import lombok.extern.log4j.Log4j;
 @Controller
 @RequestMapping("/bbs/*")
 @Log4j
-public class BbsController {
-//test
+public class BbsController extends BaseBoardController{
+
 	
 }

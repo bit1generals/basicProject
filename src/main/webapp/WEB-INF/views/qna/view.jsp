@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-view Page
+<h1>QnA View Page</h1>
 </body>
 </html>

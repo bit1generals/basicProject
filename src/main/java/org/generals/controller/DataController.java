@@ -8,6 +8,6 @@ import lombok.extern.log4j.Log4j;
 @Controller
 @RequestMapping("/data/*")
 @Log4j
-public class DataController {
+public class DataController extends BaseBoardController{
 
 }

@@ -14,9 +14,10 @@ public abstract class GenericServiceImpl<T, K, M extends GenericMapper<T, K>> im
 	protected M mapper;
 	
 	@Override
-	public int register(T vo) throws Exception {
-		
-		return mapper.insert(vo);
+	public void register(T vo) throws Exception {
+		if(mapper.insert(vo) != 1) {
+			throw new Exception("insert fail");
+		}
 	}
 
 	@Override
@@ -25,13 +26,17 @@ public abstract class GenericServiceImpl<T, K, M extends GenericMapper<T, K>> im
 	}
 
 	@Override
-	public int modify(T vo) throws Exception {
-		return mapper.update(vo);
+	public void modify(T vo) throws Exception {
+		if(mapper.update(vo) != 1) {
+			throw new Exception("update fail");
+		}
 	}
 
 	@Override
-	public int remove(K key) throws Exception {
-		return mapper.delete(key);
+	public void remove(K key) throws Exception {
+		if(mapper.delete(key) != 1) {
+			throw new Exception("remove fail");
+		}
 	}
 
 	@Override

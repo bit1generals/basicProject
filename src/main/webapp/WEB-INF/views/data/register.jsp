@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-register Page
+<h1>Data Register Page</h1>
 </body>
 </html>
