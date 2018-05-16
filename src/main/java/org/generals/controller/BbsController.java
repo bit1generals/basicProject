@@ -9,5 +9,6 @@ import lombok.extern.log4j.Log4j;
 @RequestMapping("/bbs/*")
 @Log4j
 public class BbsController {
-
+//test
+	
 }
