@@ -2,7 +2,7 @@ package org.generals.test;
 
 import org.generals.domain.BoardVO;
 import org.generals.domain.Criteria;
-import org.generals.mapper.BbsMapper;
+import org.generals.mapper.BoardMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,7 @@ import lombok.extern.log4j.Log4j;
 public class BoardMapperTests {
 
 	@Setter(onMethod_ = { @Autowired })
-	private BbsMapper mapper;
+	private BoardMapper mapper;
 
 	@Test
 	public void testInsert() {
