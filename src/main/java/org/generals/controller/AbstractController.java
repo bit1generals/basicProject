@@ -1,21 +1,17 @@
 package org.generals.controller;
 
-import static org.springframework.test.web.client.match.MockRestRequestMatchers.method;
-
-import java.lang.reflect.Method;
-
 import org.generals.domain.Criteria;
+import org.generals.service.GenericService;
 import org.generals.service.GenericServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 
 @Log4j
-public abstract class AbstractController<T, K, S extends GenericServiceImpl> implements GenericController<T, K> {
+public abstract class AbstractController<T, K, S extends GenericService> implements GenericController<T, K> {
 
 	public static final String SUCCESS = " Success";
 	public static final String FAIL = " Fail";
@@ -38,6 +34,7 @@ public abstract class AbstractController<T, K, S extends GenericServiceImpl> imp
 		log.info("Abstract view Get");
 
 		model.addAttribute(service.view(bno, cri));
+		
 
 	}
 
@@ -50,10 +47,16 @@ public abstract class AbstractController<T, K, S extends GenericServiceImpl> imp
 
 	@Override
 	public void registerPost(T vo, Criteria cri, RedirectAttributes rttr) throws Exception {
-		String result = "Register Success";
 		log.info("Abstract registerPost Post");
-
-		// buildRedirectAttribute(rttr, service.register(vo));
+		
+		try {
+			service.register(vo);
+			buildRedirectAttribute(rttr, methodParse(), SUCCESS);
+		} catch (Exception e) {
+			e.printStackTrace();
+			buildRedirectAttribute(rttr, methodParse(), FAIL);
+		}
+		
 	}
 
 	@Override
@@ -72,6 +75,7 @@ public abstract class AbstractController<T, K, S extends GenericServiceImpl> imp
 			e.printStackTrace();
 			buildRedirectAttribute(rttr, methodParse(), FAIL);
 		}
+		
 	}
 
 	@Override

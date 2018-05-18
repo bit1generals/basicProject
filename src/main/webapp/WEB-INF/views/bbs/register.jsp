@@ -47,10 +47,11 @@
 
 		<div class="header"></div>
 		<div class="content">
-			<form method="post" class="inputForm">
+			<form method="post" class="inputForm" action="">
 			<input type="text" name="title" value="title test">
 			<input type="text" name="content" value="content test">
 			<input type="text" name="id" value="user0">
+			<input type="text" name="btype" value="F"> 
 			
 				<div class="fileDrop"></div>
 				<div class="fileZone">
@@ -74,7 +75,7 @@
 		src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.1/handlebars.js"></script>
 
 	<script id="template" type="text/x-handlebars-template">
-<li>
+<li data-fname="{{fname}}" data-uuid="{{uuid}}" data-path="{{path}}" data-ftype="{{ftype}}">
   <span><img src="{{imgsrc}}" alt="Attachment"></span>
 </li>    
 	</script>
@@ -117,7 +118,7 @@
 				processData : false,
 				contentType : false,
 				success : function(dataVOList) {
-					console.log("success");
+					console.log("file upload success");
 					console.dir(dataVOList[0]);
 					dataVOList.forEach(function(data) {
 						makeFileInfo(data);
@@ -139,11 +140,11 @@
 			console.dir(data);
 			var imgsrc;
 			if (data.ftype === "Y") {
-				imgsrc = "/file/thumbnail?fname=" + data.fname + "&uuid="
+				imgsrc = "/file/show?fname=" + data.fname + "&uuid="
 						+ data.uuid + "&ftype=" + data.ftype + "&path="
-						+ data.path;
+						+ data.path + "/thumbnails";
 			} else {
-				imgsrc = "/resources/img/default.jpg";
+				imgsrc = "/resources/img/default.png";
 			}
 			data.imgsrc = imgsrc;
 
@@ -151,20 +152,18 @@
 		
 		$(".inputForm").submit(function(event) {
 			event.preventDefault();
-			
 			var form = $(this);
 			var html = "";
 			
-			$(".uploadFile").each(function(i, data) {
+			$(".uploadFile li").each(function(i, data) {
 				var file = $(data);
-				html += "<input type='hidden' name='files["+i+"].fname' value='"+file.fname+"'>";
-				html += "<input type='hidden' name='files["+i+"].uuid' value='"+file.uuid+"'>";
-				html += "<input type='hidden' name='files["+i+"].path' value='"+file.path+"'>";
-				html += "<input type='hidden' name='files["+i+"].ftype' value='"+file.ftype+"'>";
+				html += "<input type='hidden' name='files["+i+"].fname' value='"+file.data("fname")+"'>";
+				html += "<input type='hidden' name='files["+i+"].uuid' value='"+file.data("uuid")+"'>";
+				html += "<input type='hidden' name='files["+i+"].path' value='"+file.data("path")+"'>";
+				html += "<input type='hidden' name='files["+i+"].ftype' value='"+file.data("ftype")+"'>";
 			});
-			
-			form.append(html).submit();
-			
+	
+			form.append(html).get(0).submit();
 		});
 	</script>
 

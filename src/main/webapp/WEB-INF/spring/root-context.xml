@@ -3,10 +3,12 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
 	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
 	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
-	
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+
 	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
 		<property name="poolName" value="springHikariCP" />
 		<property name="connectionTestQuery" value="SELECT NOW()" />
@@ -15,7 +17,8 @@
 		<!-- <property name="driverClassName" value="com.mysql.jdbc.Driver"></property> 
 			<property name="jdbcUrl" value="jdbc:mysql://10.10.10.23:3306/jr01?useSSL=false"></property> -->
 		<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property>
-		<property name="jdbcUrl" value="jdbc:log4jdbc:mysql://10.10.10.26:3306/generals"></property>
+		<property name="jdbcUrl"
+			value="jdbc:log4jdbc:mysql://10.10.10.26:3306/generals"></property>
 		<property name="username" value="study"></property>
 		<property name="password" value="study"></property>
 		<property name="minimumIdle" value="3"></property>
@@ -30,8 +33,16 @@
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
+
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
 	
-	<mybatis-spring:scan base-package="org.generals.mapper"/>
-	<context:component-scan base-package="org.generals.service"></context:component-scan>
+	<tx:annotation-driven/>
+	<mybatis-spring:scan base-package="org.generals.mapper" />
+	
+	<context:component-scan base-package="org.generals.service"/>
+
 	
 </beans>

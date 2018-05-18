@@ -1,0 +1,3 @@
+select b.bno, btype, id, title, content, regdate, updatedate, fno, fname, uuid, ftype, path from  
+(select * from tbl_board where bno = 101) b left outer join tbl_file f 
+on b.bno = f.bno;

@@ -1,16 +1,12 @@
 package org.generals.controller;
 
-import static org.hamcrest.CoreMatchers.nullValue;
-
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -27,8 +23,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-
-import com.mysql.jdbc.Util;
 
 import lombok.extern.log4j.Log4j;
 import net.coobird.thumbnailator.Thumbnailator;
@@ -73,25 +67,31 @@ public class FileController {
 	}
 
 
-	@GetMapping("/thumbnail")
-	public ResponseEntity<byte[]> viewAjaxThumbnail(FileVO fileVO) throws Exception {
+	@GetMapping("/show")
+	public ResponseEntity<byte[]> showFile(FileVO fileVO) throws Exception {
 
-		log.info("view Ajax Thumbnail");
+		log.info("show file");
 		ResponseEntity<byte[]> result = null;
 		
 		HttpHeaders headers = new HttpHeaders();
 		
-		String str = fileVO.getFname();
+		String fileName = fileVO.getFname();
 		
-		MediaType mType = MimeTypeUtils.getMimeType(str.substring(str.lastIndexOf(".") + 1));
+		MediaType mType = MimeTypeUtils.getMimeType(fileName.substring(fileName.lastIndexOf(".") + 1));
 		
 		try(ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
 			
-			File target = new File(ROOT + fileVO.getPath()+"/thumbnails/"+fileVO.getFullName());
+			File target = new File(ROOT + fileVO.getPath() + "/" + fileVO.getFullName());
 					
 			FileCopyUtils.copy(new FileInputStream(target), baos);
 			
-			headers.setContentType(mType != null ? mType : MediaType.APPLICATION_OCTET_STREAM); 
+			if(mType != null) {
+				headers.setContentType(mType);
+			}else {
+				headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+				headers.setContentDispositionFormData("filename", new String(fileName.getBytes("UTF-8"), "ISO-8859-1"));
+			}
+			 
 			
 			result = new ResponseEntity<byte[]>(baos.toByteArray(), headers, HttpStatus.OK);
 			

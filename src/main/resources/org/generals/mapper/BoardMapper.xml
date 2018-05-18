@@ -3,24 +3,51 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.generals.mapper.BoardMapper">
-	<insert id="insert" >
-		insert into tbl_board (btype, id, title, content)
+	<insert id="insert">
+		insert into tbl_board (btype, id, title,
+		content)
 		values(#{btype}, #{id}, #{title}, #{content})
 	</insert>
+
+
+	<resultMap type="org.generals.domain.BoardVO" id="boardMap">
+		<id property="bno" column="bno" />
+		<result property="btype" column="btype"/>
+		<result property="id" column="id"/>
+		<result property="title" column="title"/>
+		<result property="content" column="content"/>
+		<result property="regdate" column="regdate"/>
+		<result property="updatedate" column="updatedate"/>
+		<collection property="files" resultMap="fileMap"></collection>
+	</resultMap>
 	
-	<select id="read" resultType="org.generals.domain.BoardVO">
-		select * from tbl_board where bno = #{bno};
+	<resultMap type="org.generals.domain.FileVO" id="fileMap">
+		<result property="bno" column="bno"/>
+		<result property="fno" column="fno"/>
+		<result property="fname" column="fname"/>
+		<result property="uuid" column="uuid"/>
+		<result property="ftype" column="ftype"/>
+		<result property="path" column="path"/>
+	</resultMap>
+
+	<select id="read" resultMap="boardMap">
+		select b.bno, btype, id, title, content, regdate,
+		updatedate, fno, fname, uuid, ftype, path from
+		(select * from tbl_board where bno = #{bno}) b left outer join tbl_file f
+		on b.bno = f.bno
 	</select>
-	
+
 	<update id="update">
-		update tbl_board set title = #{title}, content = #{content}, updatedate = now() where bno = #{bno}
+		update tbl_board set title = #{title}, content =
+		#{content}, updatedate = now() where bno = #{bno}
 	</update>
-	
+
 	<delete id="delete">
 		delete from tbl_board where bno = #{bno}
 	</delete>
-	
+
 	<select id="getList" resultType="org.generals.domain.BoardVO">
-		select * from tbl_board limit #{skip}, 10
+		select * from tbl_board limit
+		#{skip}, 10
 	</select>
 </mapper>

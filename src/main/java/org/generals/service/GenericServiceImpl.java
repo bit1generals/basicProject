@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import lombok.Setter;
 
-public abstract class GenericServiceImpl<T, K, M extends GenericMapper<T, K>> implements GenericService<T, K> {
+public class GenericServiceImpl<T, K, M extends GenericMapper<T, K>> implements GenericService<T, K> {
 
 	@Setter(onMethod_ = { @Autowired })
 	protected M mapper;
