@@ -18,12 +18,12 @@ public abstract class AbstractController<T, K, S extends GenericService> impleme
 
 	@Setter(onMethod_ = { @Autowired })
 	private S service;
+	
 
 	@Override
 	public void list(Criteria cri, Model model) throws Exception {
 
 		log.info("Abstract list Get");
-
 		model.addAttribute("list", service.getList(new Criteria()));
 
 	}

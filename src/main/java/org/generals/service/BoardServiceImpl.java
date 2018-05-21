@@ -19,7 +19,7 @@ import lombok.Setter;
 @Service
 public class BoardServiceImpl extends GenericServiceImpl<BoardVO, Integer, BoardMapper>  implements BoardService{
 
-	@Setter(onMethod_ = { @Autowired })
+/*	@Setter(onMethod_ = { @Autowired })
 	private FileMapper fileMapper;
 
 	
@@ -40,5 +40,5 @@ public class BoardServiceImpl extends GenericServiceImpl<BoardVO, Integer, Board
 	public void remove(Integer key) throws Exception {
 		super.remove(key);
 	}
-	
+	*/
 }

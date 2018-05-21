@@ -3,17 +3,42 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.generals.mapper.FileMapper">
+	<!-- <insert id="insertList" parameterType="list"> <selectKey order="BEFORE" 
+		keyProperty="bno" resultType="int"> select max(bno) from tbl_board </selectKey> 
+		insert into tbl_file (bno, fname, uuid, ftype, path) values <foreach collection="flist" 
+		separator=", " item="file"> (#{bno}, #{file.fname}, #{file.uuid}, #{file.ftype}, 
+		#{file.path}) </foreach> </insert> -->
+
+	<sql id="updateByUuid">
+		update tbl_file set bno = #{bno} where uuid in
+		<foreach collection="flist" separator=", " item="file" open="("
+			close=")">
+			#{file.uuid}
+		</foreach>
+	</sql>
+
 	<insert id="insertList" parameterType="list">
+		insert into tbl_file (fname, uuid, ftype, path)
+		values
+		<foreach collection="flist" separator=", " item="file">
+			(#{file.fname}, #{file.uuid}, #{file.ftype}, #{file.path})
+		</foreach>
+	</insert>
+
+	<update id="insertUpdate">
 		<selectKey order="BEFORE" keyProperty="bno" resultType="int">
 			select max(bno) from tbl_board
 		</selectKey>
-		insert into tbl_file (bno, fname, uuid, ftype, path)
-		values
-		<foreach collection="flist" separator=", " item="file">
-			(#{bno}, #{file.fname}, #{file.uuid}, #{file.ftype}, #{file.path})
-		</foreach>
+		<include refid="updateByUuid"></include>
+	</update>
 
-	</insert>
+	<update id="updateBnoNull">
+		update tbl_file set bno = null where bno = #{bno}
+	</update>
+
+	<update id="updateBno">
+		<include refid="updateByUuid"></include>
+	</update>
 
 	<select id="read" resultType="org.generals.domain.FileVO">
 		select * from tbl_file where fno =

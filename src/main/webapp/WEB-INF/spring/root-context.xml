@@ -43,6 +43,7 @@
 	<mybatis-spring:scan base-package="org.generals.mapper" />
 	
 	<context:component-scan base-package="org.generals.service"/>
+	<context:component-scan base-package="org.generals.listener"/>
 
 	
 </beans>

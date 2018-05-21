@@ -4,7 +4,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -12,11 +11,14 @@ import java.util.List;
 import java.util.UUID;
 
 import org.generals.domain.FileVO;
+import org.generals.service.FileService;
 import org.generals.utils.MimeTypeUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import lombok.Setter;
 import lombok.extern.log4j.Log4j;
 import net.coobird.thumbnailator.Thumbnailator;
 
@@ -36,6 +39,15 @@ public class FileController {
 	public final static String IMG_TYPE = "Y";
 	public final static String OTHER_TYPE = "N"; 
 	public final static String[] IMG_TYPE_ARR = {"jpg","jpeg","png","gif"}; 
+
+	@Setter(onMethod_ = { @Autowired })
+	private FileService service;
+	
+	@PostMapping(value = "/delete")
+	public void deleteFile(FileVO file, Model model) throws Exception{
+				
+	}
+	
 
 	@PostMapping(value = "/upload", produces = "application/json")
 	public ResponseEntity<List<FileVO>> upload(MultipartFile[] files) throws Exception {
@@ -63,6 +75,7 @@ public class FileController {
 
 			fileVOList.add(new FileVO(originName, uid.toString(), fileType, date));
 		}
+		service.register(fileVOList);
 		return new ResponseEntity<List<FileVO>>(fileVOList, HttpStatus.OK);
 	}
 
