@@ -25,7 +25,7 @@
 		</foreach>
 	</insert>
 
-	<update id="insertUpdate">
+	<update id="updateBnoBySelect">
 		<selectKey order="BEFORE" keyProperty="bno" resultType="int">
 			select max(bno) from tbl_board
 		</selectKey>
@@ -36,7 +36,7 @@
 		update tbl_file set bno = null where bno = #{bno}
 	</update>
 
-	<update id="updateBno">
+	<update id="updateBnoByParam">
 		<include refid="updateByUuid"></include>
 	</update>
 
@@ -46,7 +46,7 @@
 	</select>
 
 	<delete id="delete">
-		delete from tbl_file where fno = #{fno}
+		delete from tbl_file where bno = #{bno}
 	</delete>
 
 	<select id="getList" resultType="org.generals.domain.FileVO">

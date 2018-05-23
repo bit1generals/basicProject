@@ -21,8 +21,8 @@ public class GenericServiceImpl<T, K, M extends GenericMapper<T, K>> implements 
 	}
 
 	@Override
-	public T view(K key, Criteria cri) throws Exception {
-		return mapper.read(key, cri);
+	public T view(K key) throws Exception {
+		return mapper.read(key);
 	}
 
 	@Override

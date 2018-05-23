@@ -29,7 +29,7 @@
 										<li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
 										<li><a href="#" class="icon fa-medium"><span class="label">Medium</span></a></li>
 									</ul>
-<!-- 								</header> -->
+								</header>
 
 							<!-- Banner -->
 								<section id="banner">

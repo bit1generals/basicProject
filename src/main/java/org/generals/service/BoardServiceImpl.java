@@ -1,9 +1,9 @@
 package org.generals.service;
 
+import java.io.File;
 import java.util.List;
 
-import javax.annotation.Resource;
-
+import org.generals.controller.FileController;
 import org.generals.domain.BoardVO;
 import org.generals.domain.FileVO;
 import org.generals.mapper.BoardMapper;
@@ -13,32 +13,50 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.Setter;
+import lombok.extern.log4j.Log4j;
 
-
-@Transactional
 @Service
-public class BoardServiceImpl extends GenericServiceImpl<BoardVO, Integer, BoardMapper>  implements BoardService{
+@Log4j
+public class BoardServiceImpl extends GenericServiceImpl<BoardVO, Integer, BoardMapper> implements BoardService {
 
-/*	@Setter(onMethod_ = { @Autowired })
+	@Setter(onMethod_ = { @Autowired })
 	private FileMapper fileMapper;
 
-	
+	@Transactional
 	@Override
 	public void register(BoardVO vo) throws Exception {
 		super.register(vo);
-		List<FileVO> list = vo.getFiles();
-		//list.forEach(fileVO -> mapper.insert(fileVO));
-		fileMapper.insertList(list);
+		fileMapper.updateBnoBySelect(vo.getFiles());
 	}
 
+	@Transactional
 	@Override
 	public void modify(BoardVO vo) throws Exception {
 		super.modify(vo);
+		fileMapper.updateBnoNull(vo.getBno());
+		fileMapper.updateBnoByParam(vo.getBno(), vo.getFiles());
+	}
+
+	@Transactional
+	@Override
+	public void remove(Integer key) throws Exception {
+		
+		List<FileVO> flist = super.mapper.read(key).getFiles();
+		super.remove(key);
+		fileMapper.delete(key);
+		for (FileVO fileVO : flist) {
+			File file = new File(FileController.ROOT + fileVO.getPath() + fileVO.getFullName());
+			File sfile = new File(FileController.ROOT + fileVO.getPath() + "/thumnails" + fileVO.getFullName());
+			if (file.exists()) {
+				file.delete();
+				sfile.delete();
+			}
+		}
 	}
 
 	@Override
-	public void remove(Integer key) throws Exception {
-		super.remove(key);
+	public void registerAjax(List<FileVO> flist) throws Exception {
+		fileMapper.insertList(flist);
 	}
-	*/
+
 }

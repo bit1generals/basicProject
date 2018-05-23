@@ -11,7 +11,7 @@ public interface GenericMapper<T, K> {
 	
 	public int insert(T vo);
 	
-	public T read(@Param("bno") K key, Criteria cri);
+	public T read(@Param("bno") K key);
 	
 	public int update(T vo);
 	

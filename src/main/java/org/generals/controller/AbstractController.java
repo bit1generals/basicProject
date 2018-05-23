@@ -33,7 +33,7 @@ public abstract class AbstractController<T, K, S extends GenericService> impleme
 
 		log.info("Abstract view Get");
 
-		model.addAttribute(service.view(bno, cri));
+		model.addAttribute(service.view(bno));
 		
 
 	}
@@ -46,7 +46,7 @@ public abstract class AbstractController<T, K, S extends GenericService> impleme
 	}
 
 	@Override
-	public void registerPost(T vo, Criteria cri, RedirectAttributes rttr) throws Exception {
+	public void registerPost(T vo, Criteria cri, RedirectAttributes rttr){
 		log.info("Abstract registerPost Post");
 		
 		try {

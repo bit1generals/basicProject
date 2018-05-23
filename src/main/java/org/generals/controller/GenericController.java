@@ -18,7 +18,7 @@ public interface GenericController<T, K> {
 	public void register(Criteria cri) throws Exception;
 	
 	@PostMapping("/register")
-	public void registerPost(T vo, Criteria cri, RedirectAttributes rttr) throws Exception;
+	public void registerPost(T vo, Criteria cri, RedirectAttributes rttr);
 	
 	@GetMapping("/modify")
 	public void modify(K key, Criteria cri) throws Exception;

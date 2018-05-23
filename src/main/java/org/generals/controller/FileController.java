@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.generals.domain.FileVO;
-import org.generals.service.FileService;
+import org.generals.service.BoardService;
 import org.generals.utils.MimeTypeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -41,7 +41,7 @@ public class FileController {
 	public final static String[] IMG_TYPE_ARR = {"jpg","jpeg","png","gif"}; 
 
 	@Setter(onMethod_ = { @Autowired })
-	private FileService service;
+	private BoardService service;
 	
 	@PostMapping(value = "/delete")
 	public void deleteFile(FileVO file, Model model) throws Exception{
@@ -75,7 +75,7 @@ public class FileController {
 
 			fileVOList.add(new FileVO(originName, uid.toString(), fileType, date));
 		}
-		service.register(fileVOList);
+		service.registerAjax(fileVOList);
 		return new ResponseEntity<List<FileVO>>(fileVOList, HttpStatus.OK);
 	}
 
@@ -94,7 +94,7 @@ public class FileController {
 		
 		try(ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
 			
-			File target = new File(ROOT + fileVO.getPath() + "/" + fileVO.getFullName());
+			File target = new File(ROOT + fileVO.getPath() + fileVO.getFullName());
 					
 			FileCopyUtils.copy(new FileInputStream(target), baos);
 			

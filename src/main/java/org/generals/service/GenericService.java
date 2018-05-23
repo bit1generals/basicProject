@@ -8,7 +8,7 @@ public interface GenericService<T, K> {
 
 	public void register(T vo) throws Exception;
 
-	public T view(K key, Criteria cri) throws Exception;
+	public T view(K key) throws Exception;
 
 	public void modify(T vo) throws Exception;
 

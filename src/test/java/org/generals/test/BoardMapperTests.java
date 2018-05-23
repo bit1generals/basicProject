@@ -1,9 +1,12 @@
 package org.generals.test;
 
+import java.io.File;
+
 import org.generals.controller.AbstractController;
 import org.generals.domain.BoardVO;
 import org.generals.domain.Criteria;
 import org.generals.mapper.BoardMapper;
+import org.generals.service.BoardService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +24,7 @@ public class BoardMapperTests {
 
 	@Setter(onMethod_ = { @Autowired })
 	private BoardMapper mapper;
+
 
 	@Test
 	public void testInsertArr() {
@@ -49,14 +53,14 @@ public class BoardMapperTests {
 	@Test
 	public void testRead() {
 
-		log.info(mapper.read(88, new Criteria()));
+		log.info(mapper.read(88));
 
 	}
 
 	@Test
 	public void testUpdate() {
-		// BoardVO vo = mapper.read(200, new Criteria());
-		BoardVO vo = new BoardVO();
+		BoardVO vo = mapper.read(200);
+		//BoardVO vo = new BoardVO();
 		vo.setTitle("update test title 10");
 		vo.setContent("update test content 10");
 
@@ -65,9 +69,8 @@ public class BoardMapperTests {
 	}
 
 	@Test
-	public void testDelete() {
-		mapper.delete(88);
-		log.info(mapper.read(88, new Criteria()));
+	public void testDelete() throws Exception {
+	
 	}
 
 	@Test
@@ -90,5 +93,11 @@ public class BoardMapperTests {
 		} catch (Exception e) {
 			e.getMessage();
 		}
+	}
+	
+	@Test
+	public void testFileremove() {
+		String filePath = "";
+		File file = new File("");
 	}
 }

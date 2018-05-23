@@ -25,7 +25,7 @@ public class FileVO {
 	}
 
 	public String getFullName() {
-		return uuid + "_" + fname;
+		return "/" + uuid + "_" + fname;
 	}
 
 	public String urlBuilder() throws Exception{
