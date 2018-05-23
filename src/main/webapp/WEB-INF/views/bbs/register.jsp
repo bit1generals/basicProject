@@ -26,23 +26,50 @@
 }
 
 .fileDrop {
-	border: 2px dotted #3292A2;
-	width: 90%;
-	height: 50px;
+	border: 2px dotted rgb(246, 131, 131);
+	border-radius: 15px;
+	height: 150px;
 	color: #92AAB0;
-	text-align: center;
+	display: none;
 	font-size: 24px;
-	padding-top: 12px;
-	margin-top: 10px;
+	background: rgba(252, 218, 218, 0.3);
+	font-size: 24px;
+}
+
+.fileZone {
+	height: 150px;
+}
+
+.uploadFile {
+	display: inline-flex;
+	list-style: none;
+	margin: 0;
+}
+
+.fileHeader {
+	position: absolute;
+	color: rgb(246, 131, 131);
+	cursor: pointer;
+}
+
+.fileWrapper {
+	padding: 10px;
+	margin: 10px;
+	height: 120px;
+	width: 140px;
+}
+
+.fileFooter {
+	font-size: 12px;
 }
 </style>
 
 <section>
 	<header class="major">
-		<h2>Erat lacinia</h2>
+		<h2>Register</h2>
 	</header>
-	<div class="row">
-		<!-- <article>
+
+	<!-- <article>
 			<span class="icon fa-diamond"></span>
 			<div class="content">
 				<form method="post" class="inputForm" action="">
@@ -63,72 +90,59 @@
 				</form>
 			</div>
 		</article> -->
-		<form method="post" action="#">
-			<div class="row uniform">
-				<div class="6u 12u$(xsmall)">
-					<input type="text" name="demo-name" id="demo-name" value=""
-						placeholder="Name" />
-				</div>
-				<div class="6u$ 12u$(xsmall)">
-					<input type="email" name="demo-email" id="demo-email" value=""
-						placeholder="Email" />
-				</div>
-				<!-- Break -->
-				<div class="12u$">
-					<div class="select-wrapper">
-						<select name="demo-category" id="demo-category">
-							<option value="">- Category -</option>
-							<option value="1">Manufacturing</option>
-							<option value="1">Shipping</option>
-							<option value="1">Administration</option>
-							<option value="1">Human Resources</option>
-						</select>
+	<form method="post" action="#" class="inputForm">
+		<div class="row uniform">
+			<div class="9u 12u$(xsmall)">
+				<input type="text" name="title" value="title test"
+					placeholder="Input Title">
+			</div>
+
+			<div class="3u 12u$(xsmall)">
+				<input type="text" name="id" value="user0" readonly="readonly">
+			</div>
+
+
+			<input type="hidden" name="btype" value="F">
+
+			<div class="fileAttach" data-show="false">
+				<ul class="actions">
+					<li><a class="button icon fa-download">File Attach</a></li>
+				</ul>
+			</div>
+
+			<div class="12u$">
+				<div class="fileDrop">
+					<div class="fileZone">
+						<ul class="uploadFile">
+						</ul>
 					</div>
 				</div>
-				<!-- Break -->
-				<div class="4u 12u$(small)">
-					<input type="radio" id="demo-priority-low" name="demo-priority"
-						checked> <label for="demo-priority-low">Low</label>
-				</div>
-				<div class="4u 12u$(small)">
-					<input type="radio" id="demo-priority-normal" name="demo-priority">
-					<label for="demo-priority-normal">Normal</label>
-				</div>
-				<div class="4u$ 12u$(small)">
-					<input type="radio" id="demo-priority-high" name="demo-priority">
-					<label for="demo-priority-high">High</label>
-				</div>
-				<!-- Break -->
-				<div class="6u 12u$(small)">
-					<input type="checkbox" id="demo-copy" name="demo-copy"> <label
-						for="demo-copy">Email me a copy</label>
-				</div>
-				<div class="6u$ 12u$(small)">
-					<input type="checkbox" id="demo-human" name="demo-human" checked>
-					<label for="demo-human">I am a human</label>
-				</div>
-				<!-- Break -->
-				<div class="12u$">
-					<textarea name="demo-message" id="demo-message"
-						placeholder="Enter your message" rows="6"></textarea>
-				</div>
-				<!-- Break -->
-				<div class="12u$">
-					<ul class="actions">
-						<li><input type="submit" value="Send Message" class="special" /></li>
-						<li><input type="reset" value="Reset" /></li>
-					</ul>
-				</div>
 			</div>
-		</form>
 
 
+			<div class="12u$">
+				<textarea name="content" placeholder="Enter your message" rows="12"></textarea>
+			</div>
 
-	</div>
+			<div class="12u$">
+				<ul class="actions">
+					<li><input type="submit" value="Register" class="special" /></li>
+					<li><input type="reset" value="Reset" /></li>
+				</ul>
+			</div>
+		</div>
+	</form>
 </section>
+</div>
+</div>
 
-</div>
-</div>
+
+
+
+
+
+
+
 
 <%@include file="../includes/footer.jsp"%>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"
@@ -141,31 +155,37 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.1/handlebars.js"></script>
 
 <script id="template" type="text/x-handlebars-template">
-<li data-fname="{{fname}}" data-uuid="{{uuid}}" data-path="{{path}}" data-ftype="{{ftype}}">
-  <span><img src="{{imgsrc}}" alt="Attachment"></span>
-</li>    
-	</script>
+<div class = "fileWrapper">
+	<div class="fileHeader">X</div>
+	<div class="fileContent">
+		<li data-fname="{{fname}}" data-uuid="{{uuid}}" data-path="{{path}}" data-ftype="{{ftype}}">
+  			<span><img src="{{imgsrc}}" alt="Attachment"></span>
+		<div class="fileFooter">{{fname}}</div>
+		</li>
+	</div>    
+</div>
+</script>
 
 <script>
 	var template = Handlebars.compile($("#template").html());
 	var fileDrop = $(".fileDrop");
+	var fileAttach = $(".fileAttach");
+	var uploadFile = $(".uploadFile");
 
 	fileDrop.on("dragenter dragover", function(event) {
 		event.preventDefault();
-		$(this).css('border', '2px solid #5272A0');
+		$(this).css('border', '2px solid rgb(246,131,131)').css('background',
+				'rgba(252, 218, 218, 0.7)');
 	});
-	/* fileDrop.on("drop dragleave", function(event) {
-		$(this).css('border', '2px dotted #3292A2');
-	}); */
+	fileDrop.on("drop dragleave", function(event) {
+		$(this).css('border', '2px dotted rgb(246,131,131)').css('background',
+				'rgba(252, 218, 218, 0.3)');
+	});
 
 	fileDrop.on("drop", function(event) {
 		console.log("drop event");
 
 		event.preventDefault();
-
-		console.dir(event);
-
-		console.dir(event.originalEvent);
 
 		var files = event.originalEvent.dataTransfer.files;
 
@@ -241,6 +261,22 @@
 
 				form.append(html).get(0).submit();
 			});
+
+	fileAttach.on("click", "a", function(event) {
+
+		if (fileAttach.data("show") == true) {
+			fileDrop.hide();
+			fileAttach.data("show", false);
+		} else {
+			fileDrop.show();
+			fileAttach.data("show", true);
+		}
+	});
+
+	uploadFile.on("click", ".fileHeader", function(e) {
+		console.log("X click");
+		this.parentNode.remove();
+	});
 </script>
 
 </body>
