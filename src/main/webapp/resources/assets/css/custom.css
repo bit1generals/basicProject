@@ -1,0 +1,87 @@
+.header {
+	width: 100%;
+	height: 150px;
+	background-color: blue;
+}
+
+.content {
+	width: 100%;
+	height: 500px;
+}
+
+.content .fileZone {
+	width: 100%;
+	height: 150px;
+}
+
+.footer {
+	width: 100%;
+	height: 100px;
+	background-color: red;
+}
+
+.fileDrop {
+	border: 2px dotted rgb(246, 131, 131);
+	border-radius: 15px;
+	height: 150px;
+	color: #92AAB0;
+	display: none;
+	font-size: 24px;
+	background: rgba(252, 218, 218, 0.3);
+	font-size: 24px;
+}
+
+.fileZone {
+	height: 150px;
+}
+
+.uploadFile {
+	display: inline-flex;
+	list-style: none;
+	margin: 0;
+}
+
+.fileHeader {
+	position: absolute;
+	color: rgb(246, 131, 131);
+	cursor: pointer;
+}
+
+.fileWrapper {
+	padding: 10px;
+	margin: 10px;
+	height: 120px;
+	width: 140px;
+}
+
+.fileFooter {
+	width: 100%;
+	font-size: 12px;
+	word-break: break-word;
+}
+.originImgWrapper {
+	position: absolute;
+	display: none;
+	justify-content: center;
+	align-items: center;
+	top: 0%;
+	width: 100%;
+	height: 100%;
+	background-color: gray;
+	z-index: 100;
+	background: rgba(87, 97, 100, 0.7);
+}
+
+.originImg {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+h1 .mainFont{
+/* 	font-family: THE외계인설명서; */
+}
+
+.textArea{
+	word-break: break-word;
+}

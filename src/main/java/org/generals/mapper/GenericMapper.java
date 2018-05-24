@@ -15,7 +15,7 @@ public interface GenericMapper<T, K> {
 	
 	public int update(T vo);
 	
-	public int delete(K key);
+	public int delete(@Param("bno") K key);
 	
 	public int getTotal(Criteria cri);
 }

@@ -40,16 +40,19 @@ public class BoardServiceImpl extends GenericServiceImpl<BoardVO, Integer, Board
 	@Transactional
 	@Override
 	public void remove(Integer key) throws Exception {
-		
-		List<FileVO> flist = super.mapper.read(key).getFiles();
+		log.info("===============================check");
+		BoardVO vo = super.mapper.read(key);
 		super.remove(key);
-		fileMapper.delete(key);
-		for (FileVO fileVO : flist) {
-			File file = new File(FileController.ROOT + fileVO.getPath() + fileVO.getFullName());
-			File sfile = new File(FileController.ROOT + fileVO.getPath() + "/thumnails" + fileVO.getFullName());
-			if (file.exists()) {
-				file.delete();
-				sfile.delete();
+		if (vo.getFiles() != null) {
+			List<FileVO> flist = vo.getFiles();
+			fileMapper.delete(key);
+			for (FileVO fileVO : flist) {
+				File file = new File(FileController.ROOT + fileVO.getPath() + fileVO.getFullName());
+				File sfile = new File(FileController.ROOT + fileVO.getPath() + "/thumbnails" + fileVO.getFullName());
+				if (file.exists()) {
+					file.delete();
+					sfile.delete();
+				}
 			}
 		}
 	}

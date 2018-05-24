@@ -2140,6 +2140,16 @@
 		line-height: 1.5;
 		margin: 0 0 1em 0;
 	}
+	
+	
+	
+	
+	
+	
+	
+	h1 .mainFont{
+		font-family: "THE외계인설명서";
+	}
 
 		h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
 			color: inherit;
@@ -2794,6 +2804,8 @@
 			cursor: default;
 			list-style: none;
 			padding-left: 0;
+			justify-content: center;
+			align-items: center;
 		}
 
 			ul.pagination li {

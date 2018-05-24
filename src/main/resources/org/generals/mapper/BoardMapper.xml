@@ -47,7 +47,8 @@
 	</delete>
 
 	<select id="getList" resultType="org.generals.domain.BoardVO">
-		select * from tbl_board limit
-		#{skip}, 10
+		select * from tbl_board where btype = #{btype}
+		order by bno desc  
+		limit #{skip}, 12
 	</select>
 </mapper>

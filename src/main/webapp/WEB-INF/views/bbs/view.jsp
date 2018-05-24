@@ -3,81 +3,15 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@include file="../includes/header.jsp"%>
-
-<style>
-.originImgWrapper {
-	position: absolute;
-	display: none;
-	justify-content: center;
-	align-items: center;
-	top: 0%;
-	width: 100%;
-	height: 100%;
-	background-color: gray;
-	z-index: 100;
-	background: rgba(87, 97, 100, 0.7);
-}
-
-.originImg {
-	position: relative;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-
-label {
-	text-decoration: none;
-	color: #7f888f;
-	display: inline-block;
-	font-size: 1em;
-	font-weight: 400;
-	padding-left: 2.4em;
-	padding-right: 0.75em;
-	position: relative;
-}
-
-.uniform {
-	
-}
-
-.fileDrop {
-	border: 2px dotted rgb(246, 131, 131);
-	border-radius: 15px;
-	height: 150px;
-	color: #92AAB0;
-	font-size: 24px;
-	background: rgba(252, 218, 218, 0.3);
-	font-size: 24px;
-}
-
-.uploadFile {
-	display: inline-flex;
-	list-style: none;
-	margin: 0;
-}
-
-.fileHeader {
-	position: absolute;
-	color: rgb(246, 131, 131);
-	cursor: pointer;
-}
-
-.fileWrapper {
-	padding: 10px;
-	margin: 10px;
-	height: 120px;
-	width: 140px;
-}
-
-.fileFooter {
-	font-size: 12px;
-}
-</style>
-
 <section>
 	<header class="major">
 		<h2>View</h2>
 	</header>
+
+	<form id="searchForm">
+		<input type="hidden" name="key" value="${boardVO.bno}">
+
+	</form>
 
 	<div class="row uniform">
 		<div class="9u 12u$(xsmall)">
@@ -105,15 +39,14 @@ label {
 		</div>
 
 
-		<div class="12u$">
+		<div class="12u$ onCheck">
 			<div class="fileDrop">
 				<div class="fileZone">
 					<ul class="uploadFile">
-						<c:forEach items="${boardVO.files}" var="fileVO">
 
+						<c:forEach items="${boardVO.files}" var="fileVO">
 							<div class="fileWrapper">
 								<div class="fileContent">
-
 									<c:choose>
 										<c:when test="${fileVO.ftype == 'Y'}">
 											<li class="img" data-fname="${fileVO.fname}"
@@ -145,12 +78,14 @@ label {
 		</div>
 
 		<div class="12u$">
-			<ul class="actions" data-bno="${boardVO.bno}">
-			
-				<li><button class="special update">Update</button></li> 
-				<li><button class="delete">Delete</button></li>
-				<li><button class="special list">List</button></li>
-				
+			<ul class="actions">
+
+				<li><button class="modify special" data-uri="modify"
+						data-method="get">Modify</button></li>
+				<li><button class="remove" data-uri="remove" data-method="post">Remove</button></li>
+				<li><button class="list special" data-uri="list"
+						data-method="get">List</button></li>
+
 			</ul>
 		</div>
 	</div>
@@ -171,10 +106,10 @@ label {
 
 
 <script>
-	$(".fileContent")
-			.on(
-					"click",
-					".img",
+	var formObj = $("#searchForm");
+
+	$(".fileContent .img")
+			.click(
 					function(event) {
 						event.preventDefault();
 						var target = $(this);
@@ -195,7 +130,7 @@ label {
 		console.dir(path);
 	};
 
-	$(".originImgWrapper").on("click", function(event) {
+	$(".originImgWrapper").click(function(event) {
 		$(".originImg").animate({
 			width : '0%',
 			height : '0%'
@@ -204,10 +139,20 @@ label {
 			$('.originImgWrapper').hide();
 		}, 1000);
 	});
+
+	$(".actions li").click(
+			function(event) {
+				var that = $(event.target);
+				formObj.attr("action", that.data("uri")).attr("method",
+						that.data("method")).submit();
+			});
 	
-	$(".actions li").click(function(event){
-		
-		console.dir(this);
+	$(document).ready(function(){
+		if(${boardVO.files[0].fno != null}){
+			$(".fileDrop").show();
+		}else{
+			$(".onCheck").remove();
+		}
 	});
 </script>
 

@@ -144,7 +144,7 @@ public class FileController {
 	public void thumbnailMaker(MultipartFile file, String fileName, String fileType, String allPath) throws Exception {
 		if (fileType.equals(IMG_TYPE)) {
 			FileOutputStream thfos = new FileOutputStream(new File(allPath, fileName));
-			Thumbnailator.createThumbnail(file.getInputStream(), thfos, 100, 100);
+			Thumbnailator.createThumbnail(file.getInputStream(), thfos, 100 , 100);
 			thfos.close();
 		}
 	}

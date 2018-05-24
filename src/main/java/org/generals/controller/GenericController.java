@@ -18,15 +18,15 @@ public interface GenericController<T, K> {
 	public void register(Criteria cri) throws Exception;
 	
 	@PostMapping("/register")
-	public void registerPost(T vo, Criteria cri, RedirectAttributes rttr);
+	public String registerPost(T vo, Criteria cri, RedirectAttributes rttr);
 	
 	@GetMapping("/modify")
-	public void modify(K key, Criteria cri) throws Exception;
+	public void modify(K key, Criteria cri, Model model) throws Exception;
 	
 	@PostMapping("/modify")
-	public void modifyPost(T vo, Criteria cri, RedirectAttributes rttr) throws Exception;
+	public String modifyPost(T vo, Criteria cri, RedirectAttributes rttr) throws Exception;
 	
 	@PostMapping("/remove")
-	public void removePost(K key, Criteria cri) throws Exception;
+	public String removePost(K key, Criteria cri, Model model, RedirectAttributes rttr) throws Exception;
 	
 }

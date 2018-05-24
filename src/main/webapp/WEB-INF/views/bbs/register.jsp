@@ -1,96 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@include file="../includes/header.jsp"%>
-
-<style>
-.header {
-	width: 100%;
-	height: 150px;
-	background-color: blue;
-}
-
-.content {
-	width: 100%;
-	height: 500px;
-}
-
-.content .fileZone {
-	width: 100%;
-	height: 150px;
-}
-
-.footer {
-	width: 100%;
-	height: 100px;
-	background-color: red;
-}
-
-.fileDrop {
-	border: 2px dotted rgb(246, 131, 131);
-	border-radius: 15px;
-	height: 150px;
-	color: #92AAB0;
-	display: none;
-	font-size: 24px;
-	background: rgba(252, 218, 218, 0.3);
-	font-size: 24px;
-}
-
-.fileZone {
-	height: 150px;
-}
-
-.uploadFile {
-	display: inline-flex;
-	list-style: none;
-	margin: 0;
-}
-
-.fileHeader {
-	position: absolute;
-	color: rgb(246, 131, 131);
-	cursor: pointer;
-}
-
-.fileWrapper {
-	padding: 10px;
-	margin: 10px;
-	height: 120px;
-	width: 140px;
-}
-
-.fileFooter {
-	font-size: 12px;
-}
-</style>
-
 <section>
 	<header class="major">
 		<h2>Register</h2>
 	</header>
-
-	<!-- <article>
-			<span class="icon fa-diamond"></span>
-			<div class="content">
-				<form method="post" class="inputForm" action="">
-					<p>
-						<input type="text" name="title" value="title test">
-					</p>
-
-					<input type="text" name="content" value="content test"> <input
-						type="text" name="id" value="user0"> <input type="hidden"
-						name="btype" value="F">
-
-					<div class="fileDrop"></div>
-					<div class="fileZone">
-						<ul class="uploadFile">
-						</ul>
-					</div>
-					<button>Submit</button>
-				</form>
-			</div>
-		</article> -->
-	<form method="post" action="#" class="inputForm">
+	<form method="post" class="inputForm">
 		<div class="row uniform">
 			<div class="9u 12u$(xsmall)">
 				<input type="text" name="title" value="title test"
@@ -102,7 +17,7 @@
 			</div>
 
 
-			<input type="hidden" name="btype" value="F">
+			<input type="hidden" name="btype" value="B">
 
 			<div class="fileAttach" data-show="false">
 				<ul class="actions">

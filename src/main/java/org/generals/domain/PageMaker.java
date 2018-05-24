@@ -18,12 +18,11 @@ public class PageMaker {
 		
 		start = end - 9;
 		
-		if(total < end * 10) {
-			end = ((total - 1) / 10) + 1;
+		if(total < end * 12) {
+			end = ((total - 1) / 12) + 1;
 		}
 		prev = start != 1 ? true : false;
-		next = end * 10 <= total ? true : false;
-		
+		next = end * 12 <= total ? true : false;
 	}
 	
 	

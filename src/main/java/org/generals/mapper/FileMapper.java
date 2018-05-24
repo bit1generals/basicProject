@@ -13,6 +13,6 @@ public interface FileMapper extends GenericMapper<FileVO, Integer>{
 	
 	public int updateBnoNull(Integer bno);
 	
-	public int updateBnoByParam(Integer bno, @Param("flist")List<FileVO> flist);
+	public int updateBnoByParam(@Param("bno")Integer bno, @Param("flist")List<FileVO> flist);
 	
 }
