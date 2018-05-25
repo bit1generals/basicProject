@@ -10,7 +10,11 @@
 
 	<form id="searchForm">
 		<input type="hidden" name="key" value="${boardVO.bno}">
-
+		<input type="hidden" name="page" value="${cri.page}">
+		<c:if test="${cri.type != null }">
+			<input type="hidden" name="keyword" value="${cri.keyword }">
+			<input type="hidden" name="type" value="${cri.type}">
+		</c:if>
 	</form>
 
 	<div class="row uniform">

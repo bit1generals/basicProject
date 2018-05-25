@@ -5,6 +5,7 @@ import org.generals.domain.PageMaker;
 import org.generals.service.GenericService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.Setter;
@@ -21,7 +22,7 @@ public abstract class AbstractController<T, K, S extends GenericService> impleme
 	
 
 	@Override
-	public void list(Criteria cri, Model model) throws Exception {
+	public void list(@ModelAttribute("cri")Criteria cri, Model model) throws Exception {
 		log.info("Abstract list Get");
 		
 	
@@ -32,7 +33,7 @@ public abstract class AbstractController<T, K, S extends GenericService> impleme
 	}
 
 	@Override
-	public void view(K key, Criteria cri, Model model) throws Exception {
+	public void view(K key, @ModelAttribute("cri")Criteria cri, Model model) throws Exception {
 
 		log.info("Abstract view Get");
 
@@ -40,14 +41,15 @@ public abstract class AbstractController<T, K, S extends GenericService> impleme
 	}
 
 	@Override
-	public void register(Criteria cri) throws Exception {
+	public void register(
+			@ModelAttribute("cri")Criteria cri) throws Exception {
 
 		log.info("Abstract register Get");
 
 	}
 
 	@Override
-	public String registerPost(T vo, Criteria cri, RedirectAttributes rttr){
+	public String registerPost(T vo, @ModelAttribute("cri")Criteria cri, RedirectAttributes rttr){
 		log.info("Abstract registerPost Post");
 		
 		try {
@@ -62,13 +64,13 @@ public abstract class AbstractController<T, K, S extends GenericService> impleme
 
 
 	@Override
-	public void modify(K key, Criteria cri, Model model) throws Exception {
+	public void modify(K key, @ModelAttribute("cri")Criteria cri, Model model) throws Exception {
 		log.info("Abstract modify Get");
 		model.addAttribute(service.view(key));
 	}
 
 	@Override
-	public String modifyPost(T vo, Criteria cri, RedirectAttributes rttr) {
+	public String modifyPost(T vo, @ModelAttribute("cri")Criteria cri, RedirectAttributes rttr) {
 		log.info("Abstract modifyPost Post");
 		log.info("Modify Post VO: "+vo);
 		try {
@@ -82,7 +84,7 @@ public abstract class AbstractController<T, K, S extends GenericService> impleme
 	}
 
 	@Override
-	public String removePost(K key, Criteria cri, Model model, RedirectAttributes rttr) throws Exception {
+	public String removePost(K key, @ModelAttribute("cri")Criteria cri, Model model, RedirectAttributes rttr) throws Exception {
 		log.info("Abstract removePost Post");
 		try {
 			service.remove(key);
@@ -101,12 +103,16 @@ public abstract class AbstractController<T, K, S extends GenericService> impleme
 	public void buildRedirectAttribute(RedirectAttributes rttr, String method, String result) {
 		rttr.addFlashAttribute("msg", method + result);
 	}
+	
+	
 	protected String makeBaseUri() {
 		return this.getClass().getSimpleName().split("C")[0].toLowerCase();
 	}
+	
+	
 	protected void initContext(Criteria cri, Model model) throws Exception {
 		 cri.setBtype(this.getClass().getSimpleName().substring(0, 1));
-		 model.addAttribute("pm", new PageMaker(cri, 200));
+		 model.addAttribute("pm", new PageMaker(cri, service.getTotal(cri)));
 	}
 
 }

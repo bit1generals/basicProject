@@ -21,8 +21,7 @@ public class Criteria {
 	}
 
 	public Criteria(int page) {
-
-		this.page = page;
+		this.page = page < 0 ? 1 : page;
 	}
 
 	public int getSkip() {
@@ -39,29 +38,6 @@ public class Criteria {
 		return this.keyword;
 	}
 	
-	public String getUrl() throws Exception{
-				
-		UriComponentsBuilder builder = UriComponentsBuilder.newInstance().queryParam("page", this.page);
-		
-		if(this.type != null) {
-			builder.queryParam("type", this.type).queryParam("keyword", this.keyword);
-		}		 
-		
-		return builder.build().encode().toUri().toString();
-	}
-	
-	public String getUrl(Integer bno) throws Exception{
-		
-
-		UriComponentsBuilder builder = UriComponentsBuilder.newInstance().queryParam("page", this.page).queryParam("bno", bno);
-		
-		if(this.type != null) {
-			
-			builder.queryParam("type", this.type).queryParam("keyword", this.keyword);
-		}		
-		
-		return builder.build().encode().toUri().toString();
-	}
 
 	
 }

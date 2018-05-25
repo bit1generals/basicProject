@@ -3,37 +3,50 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.generals.mapper.BoardMapper">
+
+	<sql id="search">
+		<if test="type != null">
+			<foreach collection="arr" open="and (" close=")" item="type"
+				separator=" or ">
+				<if test="type eq 't'.toString()">title</if>
+				<if test="type eq 'c'.toString()">content</if>
+				<if test="type eq 'w'.toString()">id</if>
+				like concat('%',#{keyword},'%')
+			</foreach>
+		</if>
+	</sql>
 	<insert id="insert">
 		insert into tbl_board (btype, id, title,
 		content)
 		values(#{btype}, #{id}, #{title}, #{content})
 	</insert>
 
-
 	<resultMap type="org.generals.domain.BoardVO" id="boardMap">
 		<id property="bno" column="bno" />
-		<result property="btype" column="btype"/>
-		<result property="id" column="id"/>
-		<result property="title" column="title"/>
-		<result property="content" column="content"/>
-		<result property="regdate" column="regdate"/>
-		<result property="updatedate" column="updatedate"/>
+		<result property="btype" column="btype" />
+		<result property="id" column="id" />
+		<result property="title" column="title" />
+		<result property="content" column="content" />
+		<result property="regdate" column="regdate" />
+		<result property="updatedate" column="updatedate" />
 		<collection property="files" resultMap="fileMap"></collection>
 	</resultMap>
-	
+
 	<resultMap type="org.generals.domain.FileVO" id="fileMap">
-		<result property="bno" column="bno"/>
-		<result property="fno" column="fno"/>
-		<result property="fname" column="fname"/>
-		<result property="uuid" column="uuid"/>
-		<result property="ftype" column="ftype"/>
-		<result property="path" column="path"/>
+		<result property="bno" column="bno" />
+		<result property="fno" column="fno" />
+		<result property="fname" column="fname" />
+		<result property="uuid" column="uuid" />
+		<result property="ftype" column="ftype" />
+		<result property="path" column="path" />
 	</resultMap>
 
 	<select id="read" resultMap="boardMap">
-		select b.bno, btype, id, title, content, regdate,
+		select b.bno, btype, id, title,
+		content, regdate,
 		updatedate, fno, fname, uuid, ftype, path from
-		(select * from tbl_board where bno = #{bno}) b left outer join tbl_file f
+		(select * from tbl_board where bno = #{bno}) b left outer join
+		tbl_file f
 		on b.bno = f.bno
 	</select>
 
@@ -47,8 +60,15 @@
 	</delete>
 
 	<select id="getList" resultType="org.generals.domain.BoardVO">
-		select * from tbl_board where btype = #{btype}
-		order by bno desc  
-		limit #{skip}, 12
+		select * from tbl_board where
+		btype = #{btype}
+		<include refid="search"/>
+		order by bno desc limit #{skip}, 12
+	</select>
+
+	<select id="getTotal" resultType="int">
+		select count(*) from tbl_board
+		where btype = #{btype}
+		<include refid="search"></include>
 	</select>
 </mapper>
