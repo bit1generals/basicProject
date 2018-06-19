@@ -17,19 +17,20 @@ import lombok.extern.log4j.Log4j;
 
 @Service
 @Log4j
+@Transactional
 public class BoardServiceImpl extends GenericServiceImpl<BoardVO, Integer, BoardMapper> implements BoardService {
 
 	@Setter(onMethod_ = { @Autowired })
 	private FileMapper fileMapper;
 
-	@Transactional
 	@Override
 	public void register(BoardVO vo) throws Exception {
 		super.register(vo);
-		fileMapper.updateBnoBySelect(vo.getFiles());
+		if(vo.getFiles() != null) {
+			fileMapper.updateBnoBySelect(vo.getFiles());
+		}
 	}
 
-	@Transactional
 	@Override
 	public void modify(BoardVO vo) throws Exception {
 		super.modify(vo);
@@ -37,7 +38,6 @@ public class BoardServiceImpl extends GenericServiceImpl<BoardVO, Integer, Board
 		fileMapper.updateBnoByParam(vo.getBno(), vo.getFiles());
 	}
 
-	@Transactional
 	@Override
 	public void remove(Integer key) throws Exception {
 		log.info("===============================check");

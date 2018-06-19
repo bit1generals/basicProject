@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.generals.mapper.RooftopMapper">
+
+	<resultMap type="org.generals.domain.RooftopVO" id="rooftopMap">
+		<id property="rtno" column="rtno" />
+		<result property="rtname" column="rtname" />
+		<result property="maximum" column="maximum" />
+		<result property="lat" column="lat" />
+		<result property="lng" column="lng" />
+		<result property="openTime" column="opentime" />
+		<result property="closeTime" column="closetime" />
+		<result property="opendate" column="opendate" />
+		<result property="closedate" column="closedate" />
+		<collection property="boardVO" resultMap="boardMap" />
+	</resultMap>
+
+	<resultMap type="org.generals.domain.BoardVO" id="boardMap">
+		<id property="bno" column="bno" />
+		<result property="id" column="id" />
+		<result property="title" column="title" />
+		<result property="content" column="content" />
+		<result property="regdate" column="regdate" />
+		<result property="updatedate" column="updatedate" />
+		<collection property="files" resultMap="fileMap" />
+	</resultMap>
+
+	<resultMap type="org.generals.domain.FileVO" id="fileMap">
+		<result property="bno" column="bno" />
+		<result property="fno" column="fno" />
+		<result property="fname" column="fname" />
+		<result property="uuid" column="uuid" />
+		<result property="ftype" column="ftype" />
+		<result property="path" column="path" />
+	</resultMap>
+
+	<select id="getList" resultMap="rooftopMap">
+		select rtno, rtname, rooftop.bno bno, maximum, lat, lng, opentime, closetime,
+		opendate, closedate, id, title, content, regdate, updatedate, fno,
+		fname, uuid, path
+		from
+		(select rtno, rtname, roof.bno, maximum, lat, lng, opentime, closetime,
+		opendate, closedate, id, title, content, regdate, updatedate
+		from (select * from tbl_rooftop where state = 'N' order by rtno desc limit
+		#{skip}, 12) roof inner join tbl_board board
+		on roof.bno = board.bno) rooftop left outer join (select * from tbl_file
+		where ftype='Y') files
+		on rooftop.bno = files.bno
+	</select>
+
+	<select id="read" resultType="org.generals.domain.RooftopVO">
+		select * from tbl_rooftop where hno
+		= #{hno}
+	</select>
+
+	<select id="getTotal"></select>
+
+	<insert id="insert">
+		<selectKey order="BEFORE" resultType="int" keyProperty="bno">
+			select max(bno) from tbl_board
+		</selectKey>
+		insert into tbl_rooftop (rtno, rtname, bno, maximum, lat, lng,
+		opentime, closetime, opendate, closedate)
+		values (#{rtno}, #{rtname},
+		#{bno}, #{maximum},
+		#{lat},#{lng},#{openTime},#{closeTime},#{opendate},#{closedate})
+	</insert>
+
+	<update id="update">
+		update tbl_rooftop set rtname = #{rtname}, maximum =
+		#{maximum}, lat = #{lat}, lng = #{lng},
+		opentime = #{openTime},
+		closetime = #{closeTime}, opendate = #{opendate},
+		closedate =
+		#{closedate}, updatedate = now()
+		where state = 'N' and rtno
+		= #{rtno}
+	</update>
+
+	<delete id="delete">
+		delete from tbl_rooftop where hno=#{hno}
+	</delete>
+
+</mapper>

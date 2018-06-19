@@ -21,6 +21,6 @@ public class DeleteInterceptor extends HandlerInterceptorAdapter {
 		log.info("delete File List : "+ deleteList);
 		request.getSession().setAttribute("deleteList", deleteList);
 		super.postHandle(request, response, handler, modelAndView);
+		
 	}
-	
 }
