@@ -38,4 +38,14 @@ public class FileVO {
 		return builder.toUriString();
 	}
 	
+	public String fileUrlBuilder() throws Exception{
+		String path = "/file/show";
+		UriComponents builder = UriComponentsBuilder.newInstance()
+				.queryParam("fname", this.fname)
+				.queryParam("uuid", this.uuid)
+				.queryParam("ftype", this.ftype)
+				.queryParam("path", this.path).build();
+		return path+builder.toUriString();
+	}
+	
 }

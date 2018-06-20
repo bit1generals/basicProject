@@ -90,6 +90,6 @@
 			<script src="/resources/assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="/resources/assets/js/main.js"></script>
-
+			<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
 	</body>
 </html>

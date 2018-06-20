@@ -23,10 +23,10 @@ public class RooftopTests {
 	@Setter(onMethod_ = { @Autowired })
 	private RooftopService service;
 
-	@Test
+	/*@Test
 	public void testRegister() throws Exception {
 
-		for (int i = 0; i < 100000; i++) {
+		for (int i = 0; i < 1; i++) {
 			RooftopVO rooftopVO = new RooftopVO();
 			BoardVO boardVO = new BoardVO();
 
@@ -47,7 +47,7 @@ public class RooftopTests {
 
 			service.register(rooftopVO);
 		}
-	}
+	}*/
 
 	@Test
 	public void testList() throws Exception {

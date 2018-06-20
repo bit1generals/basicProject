@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.generals.controller.FileController;
 import org.generals.domain.BoardVO;
+import org.generals.domain.Criteria;
 import org.generals.domain.FileVO;
 import org.generals.domain.RooftopVO;
 import org.generals.mapper.BoardMapper;
@@ -35,15 +36,31 @@ public class RooftopServiceImpl extends GenericServiceImpl<RooftopVO, Integer, R
 
 	@Override
 	public void modify(RooftopVO vo) throws Exception {
-		super.modify(vo);
-		
+		boardService.modify(vo.getBoardVO());
+		rooftopMapper.update(vo);
 	}
 
 	@Override
 	public void remove(Integer key) throws Exception {
-		
-		super.remove(key);
-		
+		boardService.remove(key);
+		rooftopMapper.delete(key);
+	}
+
+	@Override
+	public RooftopVO view(Integer key) throws Exception {
+		RooftopVO rooftopVO = rooftopMapper.read(key);
+		rooftopVO.setBoardVO(boardService.view(key));
+		return rooftopVO;
+	}
+
+	@Override
+	public List<RooftopVO> getList(Criteria cri) throws Exception {
+		return rooftopMapper.getList(cri);
+	}
+
+	@Override
+	public int getTotal(Criteria cri) throws Exception {
+		return rooftopMapper.getTotal(cri);
 	}
 
 

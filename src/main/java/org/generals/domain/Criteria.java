@@ -19,13 +19,13 @@ public class Criteria {
 	public Criteria() {
 		this.page = 1;
 	}
-
+	
 	public Criteria(int page) {
 		this.page = page < 0 ? 1 : page;
 	}
 
 	public int getSkip() {
-		return (this.page-1)*10;
+		return (this.page-1) * PageMaker.PER_PAGE_NUM;
 	}
 	
 	public String[] getArr() {
@@ -37,7 +37,9 @@ public class Criteria {
 		log.info("getKeyword---------------------------------"+this.keyword);
 		return this.keyword;
 	}
-	
 
+	public void setPage(int page) {
+		this.page = page < 0 ? 1 : page;
+	}
 	
 }

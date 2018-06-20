@@ -14,6 +14,7 @@
 		<result property="closeTime" column="closetime" />
 		<result property="opendate" column="opendate" />
 		<result property="closedate" column="closedate" />
+		<result property="address" column="address" />
 		<collection property="boardVO" resultMap="boardMap" />
 	</resultMap>
 
@@ -37,35 +38,47 @@
 	</resultMap>
 
 	<select id="getList" resultMap="rooftopMap">
-		select rtno, rtname, rooftop.bno bno, maximum, lat, lng, opentime, closetime,
-		opendate, closedate, id, title, content, regdate, updatedate, fno,
-		fname, uuid, path
+		select rtno, rtname, rooftop.bno
+		bno, maximum, lat, lng, opentime, closetime,
+		opendate, closedate, id,
+		title, content, regdate, updatedate, fno,
+		fname, uuid, path, address
 		from
-		(select rtno, rtname, roof.bno, maximum, lat, lng, opentime, closetime,
-		opendate, closedate, id, title, content, regdate, updatedate
-		from (select * from tbl_rooftop where state = 'N' order by rtno desc limit
+		(select rtno, rtname, roof.bno, maximum, lat, lng, opentime,
+		closetime,
+		opendate, closedate, id, title, content, regdate,
+		updatedate, address
+		from (select * from tbl_rooftop where state = 'N'
+		order by rtno desc limit
 		#{skip}, 12) roof inner join tbl_board board
-		on roof.bno = board.bno) rooftop left outer join (select * from tbl_file
+		on roof.bno = board.bno) rooftop left outer join (select * from
+		tbl_file
 		where ftype='Y') files
 		on rooftop.bno = files.bno
 	</select>
 
 	<select id="read" resultType="org.generals.domain.RooftopVO">
-		select * from tbl_rooftop where hno
-		= #{hno}
+		select * from tbl_rooftop where bno
+		= #{bno}
 	</select>
 
-	<select id="getTotal"></select>
+	<select id="getTotal" resultType="int">
+		select count(*) from
+		tbl_rooftop where state = 'N'
+	</select>
+
 
 	<insert id="insert">
 		<selectKey order="BEFORE" resultType="int" keyProperty="bno">
 			select max(bno) from tbl_board
 		</selectKey>
 		insert into tbl_rooftop (rtno, rtname, bno, maximum, lat, lng,
-		opentime, closetime, opendate, closedate)
-		values (#{rtno}, #{rtname},
+		opentime, closetime, opendate, closedate, address)
+		values (#{rtno},
+		#{rtname},
 		#{bno}, #{maximum},
-		#{lat},#{lng},#{openTime},#{closeTime},#{opendate},#{closedate})
+		#{lat},#{lng},#{openTime},#{closeTime},#{opendate},#{closedate},
+		#{address})
 	</insert>
 
 	<update id="update">
@@ -74,13 +87,13 @@
 		opentime = #{openTime},
 		closetime = #{closeTime}, opendate = #{opendate},
 		closedate =
-		#{closedate}, updatedate = now()
+		#{closedate}, updatedate = now(), address = #{address}
 		where state = 'N' and rtno
 		= #{rtno}
 	</update>
 
 	<delete id="delete">
-		delete from tbl_rooftop where hno=#{hno}
+		delete from tbl_rooftop where bno = #{bno}
 	</delete>
 
 </mapper>

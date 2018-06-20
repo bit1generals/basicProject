@@ -23,6 +23,7 @@ public abstract class AbstractController<T, K, S extends GenericService> impleme
 
 	@Override
 	public void list(@ModelAttribute("cri")Criteria cri, Model model) throws Exception {
+		
 		log.info("Abstract list Get");
 		
 	
