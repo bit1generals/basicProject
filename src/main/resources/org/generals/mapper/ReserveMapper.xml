@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.generals.mapper.ReserveMapper">
+	<select id="selectRooftop" resultType="org.generals.domain.RooftopVO">
+		select * from tbl_rooftop where state = 'Y'
+	</select>
+	<insert id="insertReserve">
+		insert into tbl_reserve_list (bno, id, reservedate,
+		state, starttime, endtime, message)
+		values
+		(#{bno},#{id},#{reservedate},#{state},#{startTime},#{endTime},
+		#{message})
+	</insert>
+
+	<insert id="insertReserveArticle">
+		<selectKey order="BEFORE" keyProperty="rno" resultType="int">
+			select max(rno) from
+			tbl_reserve_list
+		</selectKey>
+
+		insert into tbl_reserve_article_list (rno, serial, type) values
+		<foreach collection="articleList" separator="," item="articleVO">
+			<foreach collection="articleVO.serials" item="serial"
+				separator=",">
+				( #{rno}, #{serial}, #{articleVO.type} )
+			</foreach>
+		</foreach>
+
+	</insert>
+
+	<!-- <insert id="insertReserveArticle"> <selectKey order="BEFORE" keyColumn="rno"> 
+		select max(rno) from tbl_reserve_list </selectKey> insert into tbl_reserve_article_list 
+		(rno, serial, type) values <foreach collection="articleList" open="(" close=")" 
+		separator="," item="articleVO" , index="i"> <foreach collection="articleVO.serials" 
+		item="serial"> #{rno},#{articleVO.serials[i]},#{articleVO.type} </foreach> 
+		</foreach> </insert> -->
+
+	<select id="selectTime" resultType="org.generals.domain.ReserveVO">
+		select starttime, endtime
+		from tbl_reserve_list where bno=#{bno} and
+		reservedate=#{reservedate}
+		and state=#{state}
+	</select>
+
+	<select id="selectArticle" resultType="org.generals.domain.ArticleVO">
+		select * from tbl_article
+	</select>
+
+	<select id="selectReserveArticle" resultMap="getReserveArticleSerials">
+		<![CDATA[
+		select *
+		from tbl_article_list
+		where type = #{reserveVO.type} and serial not in
+			(select serial
+			from
+				(select rno
+				from tbl_reserve_list
+				where state=#{reserveVO.state} and not (starttime > #{reserveVO.endTime} or endtime <=
+				#{reserveVO.startTime})) reserve 
+			inner join tbl_reserve_article_list
+			article
+			on reserve.rno = article.rno)
+		]]>
+	</select>
+
+	<resultMap type="org.generals.domain.ArticleVO" id="getReserveArticleSerials">
+		<id column="type" />
+		<collection property="serials" ofType="java.lang.String"
+			javaType="java.util.ArrayList">
+			<result column="serial" />
+		</collection>
+	</resultMap>
+
+
+
+	<resultMap type="org.generals.domain.ReserveVO" id="reserveVO">
+		<id property="rno" column="rno" />
+		<result property="id" column="id" />
+		<result property="reservedate" column="reservedate" />
+		<result property="regdate" column="regdate" />
+		<result property="startTime" column="starttime" />
+		<result property="endTime" column="endtime" />
+		<collection property="rooftopVO" resultMap="rooftopVO"></collection>
+	</resultMap>
+
+	<resultMap type="org.generals.domain.RooftopVO" id="rooftopVO">
+		<result property="bno" column="bno" />
+		<result property="rtname" column="rtname" />
+		<result property="maximum" column="maximum" />
+	</resultMap>
+
+	<select id="selectReserveList" resultMap="reserveVO">
+		select *
+		from (select *
+		from tbl_reserve_list order by reservedate desc)
+		reserve inner
+		join
+		tbl_rooftop rooftop on reserve.bno = rooftop.bno
+		limit #{skip}, 10
+	</select>
+
+	<select id="getTotal" resultType="int">
+		select count(*)
+		from
+		tbl_reserve_list
+	</select>
+
+
+	<!-- <resultMap type="org.generals.domain.ArticleVO" id="getReserveArticle"> 
+		<id column="rno" property="rno" /> <result property="type" column="type" 
+		/> <result property="aname" column="aname" /> <collection property="serials" 
+		ofType="java.lang.String" javaType="java.util.ArrayList"> <result column="serial" 
+		/> </collection> </resultMap> <resultMap type="org.generals.domain.ReserveVO" 
+		id="getReserveVO"> <id property="rno" column="rno" /> <result property="id" 
+		column="id" /> <result property="reservedate" column="reservedate" /> <result 
+		property="regdate" column="regdate" /> <result property="startTime" column="starttime" 
+		/> <result property="endTime" column="endtime" /> <collection property="rooftopVO" 
+		resultMap="rooftopVO"></collection> <collection property="articleList" resultMap="getReserveArticle"></collection> 
+		</resultMap> <select id="getReserve" resultMap="getReserveVO"> select * from 
+		(select * from tbl_reserve_list where rno = #{rno}) reserve inner join tbl_reserve_article_list 
+		article on reserve.rno = article.rno </select> -->
+
+	<select id="selectArticleByRno" resultMap="getArticleList">
+		select rno, serial,
+		article.type, aname from
+		(select * from tbl_reserve_article_list where
+		rno = #{rno}) reserve
+		inner join tbl_article article on reserve.type =
+		article.type
+	</select>
+
+	<resultMap type="org.generals.domain.ArticleVO" id="getArticleList">
+		<id column="type" property="type" />
+		<result property="rno" column="rno" />
+		<result property="aname" column="aname" />
+		<collection property="serials" ofType="java.lang.String"
+			javaType="java.util.ArrayList">
+			<result column="serial" />
+		</collection>
+	</resultMap>
+
+</mapper>

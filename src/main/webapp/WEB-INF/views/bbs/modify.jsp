@@ -1,8 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@include file="../includes/header.jsp"%>
-
 
 <section>
 	<header class="major">
@@ -42,14 +40,14 @@
 											<li class="img" data-fname="${fileVO.fname}"
 												data-uuid="${fileVO.uuid}" data-path="${fileVO.path}"
 												data-ftype="${fileVO.ftype}"><img
-												src="/file/show${fileVO.urlBuilder()}/thumbnails">
+												src="${fileVO.urlBuilder()}/thumbnails">
 										</c:when>
 
 										<c:when test="${fileVO.ftype == 'N'}">
 											<li data-fname="${fileVO.fname}"
 												data-uuid="${fileVO.uuid}" data-path="${fileVO.path}"
 												data-ftype="${fileVO.ftype}">
-												<a href="/file/show${fileVO.urlBuilder()}"> <img
+												<a href="${fileVO.urlBuilder()}"> <img
 													src="/resources/img/default.png"></a>
 										</c:when>
 									</c:choose>
@@ -89,15 +87,6 @@
 
 
 <%@include file="../includes/footer.jsp"%>
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"
-	integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-	crossorigin="anonymous">
-	
-</script>
-
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.1/handlebars.js"></script>
-
 <script id="template" type="text/x-handlebars-template">
 <div class = "fileWrapper">
 	<div class="fileHeader">X</div>

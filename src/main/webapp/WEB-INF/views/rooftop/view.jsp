@@ -1,15 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@include file="../includes/header.jsp"%>
+
 <section>
 	<header class="major">
-		<h2>View</h2>
+		<h2>Rooftop View</h2>
 	</header>
 
 	<form id="searchForm">
-		<input type="hidden" name="key" value="${boardVO.bno}">
+		<input type="hidden" name="key" value="${rooftopVO.boardVO.bno}">
 		<input type="hidden" name="page" value="${cri.page}">
 		<c:if test="${cri.type != null }">
 			<input type="hidden" name="keyword" value="${cri.keyword }">
@@ -19,36 +18,110 @@
 
 	<div class="row uniform">
 		<div class="9u 12u$(xsmall)">
-
-
+			<label>Title</label>
+		</div>
+		<div class="3u 12u$(xsmall)">
+			<label>ID</label>
+		</div>
+		
+		<div class="9u 12u$(xsmall)">
 			<input type="text" name="title"
-				value='<c:out value="${boardVO.title}"/>' readonly="readonly"
+				value='<c:out value="${rooftopVO.boardVO.title}"/>' disabled>
+		</div>
+
+		<div class="3u 12u$(xsmall)">
+			<input type="text" name="id"
+				value='<c:out value="${rooftopVO.boardVO.id}"/>' disabled>
+		</div>
+
+		<div class="9u 12u$(xsmall)">
+			<label>Rooftop Name</label>
+		</div>
+		<div class="3u 12u$(xsmall)">
+			<label>Maximum</label>
+		</div>
+
+		<div class="9u 12u$(xsmall)">
+			<input type="text" name="rtname" value="${rooftopVO.rtname}" disabled>
+		</div>
+
+		<div class="3u 12u$(xsmall)">
+			<input type="text" name="maximum" value="${rooftopVO.maximum}"
+				disabled>
+		</div>
+
+		<div class="6u 12u$(xsmall)">
+			<label>RegDate</label>
+		</div>
+		<div class="6u 12u$(xsmall)">
+			<label>UpdateDate</label>
+		</div>
+
+		<div class="6u 12u$(xsmall)">
+			<input type="text"
+				value='<fmt:formatDate value="${rooftopVO.boardVO.regdate}" type="both"/>'
+				disabled>
+		</div>
+		<div class="6u 12u$(xsmall)">
+			<input type="text" name="updatedate"
+				value='<fmt:formatDate value="${rooftopVO.boardVO.updatedate}" type="both"/>'
 				disabled>
 		</div>
 
 		<div class="3u 12u$(xsmall)">
-			<input type="text" name="id" value='<c:out value="${boardVO.id}"/>'
-				readonly="readonly" disabled>
+			<label>OpenDate</label>
+		</div>
+		<div class="3u 12u$(xsmall)">
+			<label>CloseDate</label>
 		</div>
 
-		<div class="6u 12u$(xsmall)">
-			<input type="text" style="text-align: center;"
-				value='RegDate   :   <fmt:formatDate value="${boardVO.regdate}" type="both"/>'
-				readonly="readonly" disabled>
+		<div class="3u 12u$(xsmall)">
+			<label>OpenTime</label>
 		</div>
-		<div class="6u 12u$(xsmall)">
-			<input type="text" name="updatedate" style="text-align: center"
-				value='UpdateDate   :   <fmt:formatDate value="${boardVO.updatedate}" type="both"/>'
-				readonly="readonly" disabled>
+		<div class="3u 12u$(xsmall)">
+			<label>CloseTime</label>
 		</div>
 
+		<div class="3u 12u$(xsmall)">
+			<input type="text" class="openCloseDate" name="opendate"
+				value='<fmt:formatDate value="${rooftopVO.opendate}" type="date"/>'
+				disabled />
+		</div>
+
+		<div class="3u 12u$(xsmall)">
+			<input type="text" class="openCloseDate" name="closedate"
+				value='<fmt:formatDate value="${rooftopVO.closedate}" type="date"/>'
+				disabled />
+		</div>
+
+		<div class="3u 12u$(xsmall)">
+			<input type="text" name="openTime" value="${rooftopVO.openTime}"
+				disabled />
+		</div>
+		<div class="3u 12u$(xsmall)">
+			<input type="text" name="closeTime" value="${rooftopVO.closeTime}"
+				disabled />
+		</div>
+
+		<div class="10u 12u$(xsmall)">
+			<label>Address</label>
+		</div>
+
+		<div class="12u$">
+			<input type="text" name="address" value="${rooftopVO.address}"
+				disabled>
+		</div>
+
+		<div class="12u$">
+			<div id="map" style="width: 100%; height: 350px;"></div>
+		</div>
 
 		<div class="12u$ onCheck">
 			<div class="fileDrop">
 				<div class="fileZone">
 					<ul class="uploadFile">
 
-						<c:forEach items="${boardVO.files}" var="fileVO">
+						<c:forEach items="${rooftopVO.boardVO.files}" var="fileVO">
 							<div class="fileWrapper">
 								<div class="fileContent">
 									<c:choose>
@@ -56,11 +129,11 @@
 											<li class="img" data-fname="${fileVO.fname}"
 												data-uuid="${fileVO.uuid}" data-path="${fileVO.path}"
 												data-ftype="${fileVO.ftype}"><img
-												src="/file/show${fileVO.urlBuilder()}/thumbnails">
+												src="${fileVO.urlBuilder()}/thumbnails">
 										</c:when>
 
 										<c:when test="${fileVO.ftype == 'N'}">
-											<li><a href="/file/show${fileVO.urlBuilder()}"> <img
+											<li><a href="${fileVO.urlBuilder()}"> <img
 													src="/resources/img/default.png"></a>
 										</c:when>
 									</c:choose>
@@ -78,7 +151,8 @@
 
 		<div class="12u$">
 			<textarea name="content" rows="12" style="resize: none"
-				disabled="disabled"><c:out value="${boardVO.content}" /></textarea>
+				disabled="disabled"><c:out
+					value="${rooftopVO.boardVO.content}" /></textarea>
 		</div>
 
 		<div class="12u$">
@@ -89,7 +163,8 @@
 				<li><button class="remove" data-uri="remove" data-method="post">Remove</button></li>
 				<li><button class="list special" data-uri="list"
 						data-method="get">List</button></li>
-
+				<li><button class="authorize special" data-uri="authorize"
+						data-method="post">Authorize</button></li>
 			</ul>
 		</div>
 	</div>
@@ -101,14 +176,7 @@
 </div>
 </div>
 
-
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"
-	integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-	crossorigin="anonymous">
-	
-</script>
-
-
+<%@include file="../includes/footer.jsp"%>
 <script>
 	var formObj = $("#searchForm");
 
@@ -152,15 +220,33 @@
 			});
 	
 	$(document).ready(function(){
-		if(${boardVO.files[0].fno != null}){
+		if(${rooftopVO.boardVO.files[0].fno != null}){
 			$(".fileDrop").show();
 		}else{
 			$(".onCheck").remove();
 		}
 	});
+	
+	var mapContainer = document.getElementById('map'),
+
+	mapOption = {
+		center : new daum.maps.LatLng(${rooftopVO.lat}, ${rooftopVO.lng}),
+		level : 3
+	};
+	var map = new daum.maps.Map(mapContainer, mapOption);
+					
+	var coords = new daum.maps.LatLng(${rooftopVO.lat},${rooftopVO.lng});
+
+	// 결과값으로 받은 위치를 마커로 표시합니다
+	var marker = new daum.maps.Marker({
+		map : map,
+		position : coords
+	});
+	// 인포윈도우로 장소에 대한 설명을 표시합니다
+	var infoWindow = new daum.maps.InfoWindow(
+			{
+				content : '<div style="width:150px;text-align:center;padding:6px 0;">${rooftopVO.rtname}</div>'
+			});
+	infoWindow.open(map, marker);
+
 </script>
-
-</body>
-</html>
-
-<%@include file="../includes/footer.jsp"%>

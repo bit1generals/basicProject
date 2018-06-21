@@ -3,6 +3,7 @@ package org.generals.domain;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 
+import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import lombok.Data;
@@ -41,5 +42,11 @@ public class Criteria {
 	public void setPage(int page) {
 		this.page = page < 0 ? 1 : page;
 	}
-	
+	public String urlBuilder() throws Exception{
+		UriComponents builder = UriComponentsBuilder.newInstance()
+				.queryParam("page", this.page)
+				.queryParam("type", this.type)
+				.queryParam("keyword", this.keyword).build();
+		return builder.toUriString();
+	}
 }

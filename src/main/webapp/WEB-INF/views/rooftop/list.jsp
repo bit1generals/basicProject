@@ -1,32 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
 <%@include file="../includes/header.jsp"%>
-
-
-<!-- Banner -->
-<section id="banner">
-	<div class="content">
-		<header>
-			<h1 class="mainFont">
-				Rooftop<br /> Reservation available
-			</h1>
-			<p>DongKyu JungKeun SuHyun</p>
-		</header>
-		<p>I think that I shall never see A poem lovely as a tree. A tree
-			whose hungry mouth is prest Against the earth’s sweet flowing breast;
-			A tree that looks at God all day, And lifts her leafy arms to pray; A
-			tree that may in Summer wear A nest of robins in her hair; Upon whose
-			bosom snow has lain; Who intimately lives with rain. Poems are made
-			by fools like me, But only God can make a tree.</p>
-		<ul class="actions">
-			<li><a href="#" class="button big">Reservation</a></li>
-		</ul>
-	</div>
-	<span class="image object"> <img
-		src="/resources/images/dotte4.gif" alt="" />
-	</span>
-</section>
 
 <!-- Section -->
 <section>
@@ -39,7 +13,7 @@
 				
 				<a class="image"> <img style="cursor: pointer" 
 				src="${rooftopVO.boardVO.files[0].fno ne null 
-					? rooftopVO.boardVO.files[0].fileUrlBuilder() : '/resources/images/1.jpg'}" alt="" class="view" /></a>
+					? rooftopVO.boardVO.files[0].urlBuilder('midthumbnails') : '/resources/images/1.jpg'}" alt="" class="view" /></a>
 				
 				<div class="row uniform textArea">
 					<div class="8u 12u$(xsmall)">

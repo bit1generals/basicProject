@@ -18,7 +18,7 @@ public abstract class AbstractController<T, K, S extends GenericService> impleme
 	public static final String FAIL = " Fail";
 
 	@Setter(onMethod_ = { @Autowired })
-	private S service;
+	protected S service;
 	
 
 	@Override
@@ -52,6 +52,7 @@ public abstract class AbstractController<T, K, S extends GenericService> impleme
 	@Override
 	public String registerPost(T vo, @ModelAttribute("cri")Criteria cri, RedirectAttributes rttr){
 		log.info("Abstract registerPost Post");
+		log.info("register post vo : "+ vo);
 		
 		try {
 			service.register(vo);
@@ -74,6 +75,7 @@ public abstract class AbstractController<T, K, S extends GenericService> impleme
 	public String modifyPost(T vo, @ModelAttribute("cri")Criteria cri, RedirectAttributes rttr) {
 		log.info("Abstract modifyPost Post");
 		log.info("Modify Post VO: "+vo);
+		
 		try {
 			service.modify(vo);
 			buildRedirectAttribute(rttr, methodParse(), SUCCESS);

@@ -7,9 +7,11 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.extern.log4j.Log4j;
 
 @Data
 @NoArgsConstructor
+@Log4j
 public class FileVO {
 
 	private Integer fno, bno;
@@ -29,16 +31,6 @@ public class FileVO {
 	}
 
 	public String urlBuilder() throws Exception{
-		
-		UriComponents builder = UriComponentsBuilder.newInstance()
-				.queryParam("fname", this.fname)
-				.queryParam("uuid", this.uuid)
-				.queryParam("ftype", this.ftype)
-				.queryParam("path", this.path).build();
-		return builder.toUriString();
-	}
-	
-	public String fileUrlBuilder() throws Exception{
 		String path = "/file/show";
 		UriComponents builder = UriComponentsBuilder.newInstance()
 				.queryParam("fname", this.fname)
@@ -47,5 +39,15 @@ public class FileVO {
 				.queryParam("path", this.path).build();
 		return path+builder.toUriString();
 	}
-	
+	public String urlBuilder(String thumbPath) throws Exception{
+		String path = "/file/show";
+		UriComponents builder = UriComponentsBuilder.newInstance()
+				.queryParam("fname", this.fname)
+				.queryParam("uuid", this.uuid)
+				.queryParam("ftype", this.ftype)
+				.queryParam("path", this.path + "/"+thumbPath).build();
+		log.info("thumb" + thumbPath);
+		
+		return path+builder.toUriString();
+	}
 }

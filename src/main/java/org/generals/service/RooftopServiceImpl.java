@@ -63,5 +63,11 @@ public class RooftopServiceImpl extends GenericServiceImpl<RooftopVO, Integer, R
 		return rooftopMapper.getTotal(cri);
 	}
 
+	public void authorize(Integer key) throws Exception{
+		int result = rooftopMapper.updateStatebyBno(key);
+		if(result != 1) {
+			throw new Exception("Authorize Fail");
+		}
+	}
 
 }

@@ -1,31 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@include file="../includes/header.jsp"%>
-
-
-<!-- Banner -->
-<section id="banner">
-	<div class="content">
-		<header>
-			<h1 class="mainFont">
-				Generals<br /> by BitCamp
-			</h1>
-			<p>DongKyu JungKeun SuHyun</p>
-		</header>
-		<p>Aenean ornare velit lacus, ac varius enim ullamcorper eu. Proin
-			aliquam facilisis ante interdum congue. Integer mollis, nisl amet
-			convallis, porttitor magna ullamcorper, amet egestas mauris. Ut magna
-			finibus nisi nec lacinia. Nam maximus erat id euismod egestas.
-			Pellentesque sapien ac quam. Lorem ipsum dolor sit nullam.</p>
-		<ul class="actions">
-			<li><a href="#" class="button big">Learn More</a></li>
-		</ul>
-	</div>
-	<span class="image object"> <img
-		src="/resources/images/dotte4.gif" alt="" />
-	</span>
-</section>
 
 <!-- Section -->
 <section>
@@ -34,7 +9,6 @@
 	</header>
 	<div class="posts">
 		<c:forEach items="${list}" var="boardVO">
-
 			<article data-key="${boardVO.bno}" data-uri="view" data-method="get">
 				<a class="image"> <img style="cursor: pointer"
 					src="/resources/images/1.jpg" alt="" class="view" /></a>
@@ -112,7 +86,6 @@
 <form id="searchForm">
 	<input type="hidden" name="key" value=""> <input type="hidden"
 		name="page" value="${pm.cri.page}">
-
 	<c:if test="${pm.cri.type != null }">
 		<input type="hidden" name="keyword" value="${pm.cri.keyword }">
 		<input type="hidden" name="type" value="${pm.cri.type}">

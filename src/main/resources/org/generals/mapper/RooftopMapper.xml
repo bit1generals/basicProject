@@ -87,9 +87,13 @@
 		opentime = #{openTime},
 		closetime = #{closeTime}, opendate = #{opendate},
 		closedate =
-		#{closedate}, updatedate = now(), address = #{address}
-		where state = 'N' and rtno
-		= #{rtno}
+		#{closedate}, address = #{address}
+		where state = 'N' and bno
+		= #{boardVO.bno}
+	</update>
+	
+	<update id="updateStatebyBno">
+		update tbl_rooftop set state = 'Y' where bno = #{bno}
 	</update>
 
 	<delete id="delete">

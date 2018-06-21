@@ -58,10 +58,12 @@ public class FileController {
 
 		String date = new SimpleDateFormat("yyyy/MM/dd").format(new Date());
 
-		String allPath = ROOT + date + "\\thumbnails";
+		String minThumbnailPath = ROOT + date + "\\thumbnails";
+		String midThumbnailPath = ROOT + date + "\\midthumbnails";
 		String filePath = ROOT + date;
 
-		checkDirectory(allPath);
+		checkDirectory(minThumbnailPath);
+		checkDirectory(midThumbnailPath);
 
 		for (MultipartFile file : files) {
 
@@ -71,7 +73,8 @@ public class FileController {
 			String fileType = checkType(originName);
 			
 			fileMaker(file,filePath,fileName);
-			thumbnailMaker(file, fileName, fileType, allPath);
+			thumbnailMaker(file, fileName, fileType, minThumbnailPath, 100, 100);
+			thumbnailMaker(file, fileName, fileType, midThumbnailPath, 550, 250);
 
 			fileVOList.add(new FileVO(originName, uid.toString(), fileType, date));
 		}
@@ -141,10 +144,10 @@ public class FileController {
 		fos.close();
 	}
 
-	public void thumbnailMaker(MultipartFile file, String fileName, String fileType, String allPath) throws Exception {
+	public void thumbnailMaker(MultipartFile file, String fileName, String fileType, String allPath, int width, int height) throws Exception {
 		if (fileType.equals(IMG_TYPE)) {
 			FileOutputStream thfos = new FileOutputStream(new File(allPath, fileName));
-			Thumbnailator.createThumbnail(file.getInputStream(), thfos, 100 , 100);
+			Thumbnailator.createThumbnail(file.getInputStream(), thfos, width , height);
 			thfos.close();
 		}
 	}

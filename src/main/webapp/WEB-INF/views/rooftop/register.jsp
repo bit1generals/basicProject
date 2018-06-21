@@ -1,21 +1,39 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@include file="../includes/header.jsp"%>
+
 <section>
 	<header class="major">
 		<h2>Rooftop Register</h2>
 	</header>
 	<form method="post" class="inputForm">
 		<div class="row uniform">
+			<input type="hidden" name="boardVO.btype" value="R"> <input
+				type="hidden" name="lat" value=""> <input type="hidden"
+				name="lng" value="">
+
+			<div class="9u 12u$(xsmall)">
+				<label>Title</label>
+			</div>
+			<div class="3u 12u$(xsmall)">
+				<label>ID</label>
+			</div>
 			<div class="9u 12u$(xsmall)">
 				<input type="text" name="boardVO.title" value="title test"
 					placeholder="Input Title" data-name="Title">
 			</div>
 
 			<div class="3u 12u$(xsmall)">
-				<input type="text" name="boardVO.id" value="user0" readonly="readonly">
+				<input type="text" name="boardVO.id" value="user0"
+					readonly="readonly">
 			</div>
 
+			<div class="9u 12u$(xsmall)">
+				<label>Rooftop Name</label>
+			</div>
+			<div class="3u 12u$(xsmall)">
+				<label>Maximum</label>
+			</div>
 
 			<div class="9u 12u$(xsmall)">
 				<input type="text" name="rtname" value="rooftop name"
@@ -28,18 +46,31 @@
 			</div>
 
 			<div class="3u 12u$(xsmall)">
+				<label>OpenDate</label>
+			</div>
+			<div class="3u 12u$(xsmall)">
+				<label>CloseDate</label>
+			</div>
+
+			<div class="3u 12u$(xsmall)">
+				<label>OpenTime</label>
+			</div>
+			<div class="3u 12u$(xsmall)">
+				<label>CloseTime</label>
+			</div>
+			<div class="3u 12u$(xsmall)">
 				<input type="text" class="openCloseDate" name="opendate"
-					 autocomplete="off" data-name="OpenDate"/>
+					autocomplete="off" data-name="OpenDate" placeholder="Input OpenDate"/>
 			</div>
 
 			<div class="3u 12u$(xsmall)">
 				<input type="text" class="openCloseDate" name="closedate"
-					 autocomplete="off" data-name="CloseDate"/>
+					autocomplete="off" data-name="CloseDate" placeholder="Input CloseDate" />
 			</div>
 
 			<div class="3u 12u$(xsmall)">
 				<select name="openTime" class="openTime" data-name="OpenTime">
-					<c:forEach begin="0" end="23" var="num" >
+					<c:forEach begin="0" end="23" var="num">
 						<option value="${num}">${num}:00</option>
 					</c:forEach>
 				</select>
@@ -50,8 +81,11 @@
 			</div>
 
 			<div class="10u 12u$(xsmall)">
+				<label>Address</label>
+			</div>
+			<div class="10u 12u$(xsmall)">
 				<input type="text" name="address" value="서울특별시 종로구 종로2가 9"
-					id="address" placeholder="Input Address" data-name="RooftopAddress">
+					id="address" placeholder="Input Address" data-name="Rooftop Address">
 			</div>
 
 			<div class="2u 12u$(xsmall)">
@@ -63,9 +97,6 @@
 				<div id="map" style="width: 100%; height: 350px;"></div>
 			</div>
 
-			<input type="hidden" name="boardVO.btype" value="R">
-			<input type="hidden" name="lat" value=""> 
-			<input type="hidden" name="lng" value="">
 
 			<div class="fileAttach" data-show="false">
 				<ul class="actions">
@@ -85,7 +116,8 @@
 
 
 			<div class="12u$">
-				<textarea name="boardVO.content" placeholder="Enter your message" rows="12" data-name="Content"></textarea>
+				<textarea name="boardVO.content" placeholder="Enter your message"
+					rows="12" data-name="Content"></textarea>
 			</div>
 
 			<div class="12u$">
@@ -102,10 +134,7 @@
 
 <%@include file="../includes/footer.jsp"%>
 
-<script type="text/javascript"
-	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2986010b12d8334b24509c1d77fe5837&libraries=services"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.1/handlebars.js"></script>
+
 
 <script id="template" type="text/x-handlebars-template">
 <div class = "fileWrapper">
@@ -135,8 +164,6 @@
 		dateFormat : 'yy-mm-dd',
 		minDate : 1
 	});
-
-	
 
 	fileDrop.on("dragenter dragover", function(event) {
 		event.preventDefault();
@@ -193,18 +220,17 @@
 		var html = "";
 		var submitAllow = false;
 
-		inputForm.find("input, select, textarea").each(function(idx, target){
+		inputForm.find("input, select, textarea").each(function(idx, target) {
 			var inputData = $(target);
-			if (!inputData.val()){
-				alert(inputData.data("name")+"을(를) 입력해주세요");
+			if (!inputData.val()) {
+				alert(inputData.data("name") + "을(를) 입력해주세요");
 				event.preventDefault();
 				return submitAllow;
 			}
 		});
-		
+
 		$(".uploadFile li").each(
 				function(i, data) {
-					console.log("왜 이치옴?");
 					var file = $(data);
 					html += "<input type='hidden' name='boardVO.files[" + i
 							+ "].fname' value='" + file.data("fname") + "'>";
@@ -214,10 +240,10 @@
 							+ "].path' value='" + file.data("path") + "'>";
 					html += "<input type='hidden' name='boardVO.files[" + i
 							+ "].ftype' value='" + file.data("ftype") + "'>";
-		});
+				});
 		inputForm.append(html);
 		submitAllow = true;
-			
+
 		return submitAllow;
 	});
 
@@ -288,23 +314,17 @@
 		inputForm.find("[name='lat']").val(latlng[0].y);
 		inputForm.find("[name='lng']").val(latlng[0].x);
 	};
-	
+
 	openTime.change(function(event) {
-		
+
 		makeCloseTime($(this).val());
 	});
-	
+
 	function makeCloseTime(targetTime) {
-		closeTime.empty();		
-		for(++targetTime ; targetTime <= 24 ; targetTime++){
-			closeTime.append("<option value='"+targetTime+"'>"+targetTime+":00</option>");	
+		closeTime.empty();
+		for (++targetTime; targetTime <= 24; targetTime++) {
+			closeTime.append("<option value='"+targetTime+"'>" + targetTime
+					+ ":00</option>");
 		}
 	};
-	
-
-	
-
 </script>
-
-</body>
-</html>

@@ -1,8 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@include file="../includes/header.jsp"%>
+
 <section>
 	<header class="major">
 		<h2>View</h2>
@@ -19,8 +18,6 @@
 
 	<div class="row uniform">
 		<div class="9u 12u$(xsmall)">
-
-
 			<input type="text" name="title"
 				value='<c:out value="${boardVO.title}"/>' readonly="readonly"
 				disabled>
@@ -56,11 +53,11 @@
 											<li class="img" data-fname="${fileVO.fname}"
 												data-uuid="${fileVO.uuid}" data-path="${fileVO.path}"
 												data-ftype="${fileVO.ftype}"><img
-												src="/file/show${fileVO.urlBuilder()}/thumbnails">
+												src="${fileVO.urlBuilder()}/thumbnails">
 										</c:when>
 
 										<c:when test="${fileVO.ftype == 'N'}">
-											<li><a href="/file/show${fileVO.urlBuilder()}"> <img
+											<li><a href="${fileVO.urlBuilder()}"> <img
 													src="/resources/img/default.png"></a>
 										</c:when>
 									</c:choose>
@@ -102,13 +99,7 @@
 </div>
 
 
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"
-	integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-	crossorigin="anonymous">
-	
-</script>
-
-
+<%@include file="../includes/footer.jsp"%>
 <script>
 	var formObj = $("#searchForm");
 
@@ -160,7 +151,4 @@
 	});
 </script>
 
-</body>
-</html>
 
-<%@include file="../includes/footer.jsp"%>
