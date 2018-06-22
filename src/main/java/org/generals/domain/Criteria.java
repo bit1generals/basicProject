@@ -14,11 +14,11 @@ import lombok.extern.log4j.Log4j;
 public class Criteria {
 
 	private int page;
-	private String type,btype;
-	private String keyword;
+	private String type, btype, keyword, state;
 
 	public Criteria() {
 		this.page = 1;
+		this.state = "Y";
 	}
 	
 	public Criteria(int page) {
@@ -42,11 +42,5 @@ public class Criteria {
 	public void setPage(int page) {
 		this.page = page < 0 ? 1 : page;
 	}
-	public String urlBuilder() throws Exception{
-		UriComponents builder = UriComponentsBuilder.newInstance()
-				.queryParam("page", this.page)
-				.queryParam("type", this.type)
-				.queryParam("keyword", this.keyword).build();
-		return builder.toUriString();
-	}
+	
 }

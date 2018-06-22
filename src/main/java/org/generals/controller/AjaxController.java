@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.generals.domain.ArticleVO;
 import org.generals.domain.ReserveVO;
+import org.generals.domain.RooftopVO;
 import org.generals.service.ReserveService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -51,4 +52,8 @@ public class AjaxController {
 		return new ResponseEntity<List<ArticleVO>>(list, HttpStatus.OK);
 	}
 	
+	@GetMapping(value = "/rooftopData", produces = "application/json")
+	public ResponseEntity<RooftopVO> getRooftopData(Integer bno) {
+		return new ResponseEntity<RooftopVO> (service.getRooftopVO(bno), HttpStatus.OK);
+	}
 }

@@ -56,6 +56,9 @@ if(${msg ne null}){
 								</tr>
 							</tfoot>
 						</table>
+						
+						
+						
 						<center>
 							<nav>
 								<ul class="pagination">
@@ -90,9 +93,10 @@ if(${msg ne null}){
 		</div>
 	</div>
 </section>
+</div>
+</div>
 <%@include file="../includes/footer.jsp"%>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.1/handlebars.js"></script>
+
 
 <script id="template" type="text/x-handlebars-template">
 <tr class='loadArticle'>

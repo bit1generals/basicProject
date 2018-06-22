@@ -25,8 +25,9 @@ public class PageMaker {
 		end = ((cri.getPage() - 1) / 10) * 10 + 10;
 		start = end - 9;
 		if (total < end * PER_PAGE_NUM) {
-			end = (int) Math.ceil(total / PER_PAGE_NUM);
+			end = (int) (total / PER_PAGE_NUM)+ 1;
 		}
+
 		prev = start != 1 ? true : false;
 		next = end * PER_PAGE_NUM <= total ? true : false;
 		

@@ -14,7 +14,7 @@
 			finibus nisi nec lacinia. Nam maximus erat id euismod egestas.
 			Pellentesque sapien ac quam. Lorem ipsum dolor sit nullam.</p>
 		<ul class="actions">
-			<li><a href="#" class="button big">Learn More</a></li>
+			<li><a href="/reserve/register" class="button big">Reservation</a></li>
 		</ul>
 	</div>
 	<span class="image object"> <img

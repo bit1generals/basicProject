@@ -10,6 +10,10 @@
 	<form id="searchForm">
 		<input type="hidden" name="key" value="${rooftopVO.boardVO.bno}">
 		<input type="hidden" name="page" value="${cri.page}">
+
+		<c:if test="${param.state != null }">
+			<input type="hidden" name="state" value="${param.state}">
+		</c:if>
 		<c:if test="${cri.type != null }">
 			<input type="hidden" name="keyword" value="${cri.keyword }">
 			<input type="hidden" name="type" value="${cri.type}">
@@ -18,10 +22,11 @@
 
 	<form method="post" class="inputForm">
 		<div class="row uniform">
-			<input type="hidden" name="boardVO.bno" value="${rooftopVO.boardVO.bno}">
-			<input type="hidden" name="boardVO.btype" value="R"> <input
-				type="hidden" name="lat" value="${rooftopVO.lat}"> <input
-				type="hidden" name="lng" value="${rooftopVO.lng}">
+			<input type="hidden" name="boardVO.bno"
+				value="${rooftopVO.boardVO.bno}"> <input type="hidden"
+				name="boardVO.btype" value="R"> <input type="hidden"
+				name="lat" value="${rooftopVO.lat}"> <input type="hidden"
+				name="lng" value="${rooftopVO.lng}">
 
 			<div class="9u 12u$(xsmall)">
 				<label>Title</label>
@@ -32,7 +37,8 @@
 
 			<div class="9u 12u$(xsmall)">
 				<input type="text" name="boardVO.title"
-					value='<c:out value="${rooftopVO.boardVO.title}"/>' data-name="Title">
+					value='<c:out value="${rooftopVO.boardVO.title}"/>'
+					data-name="Title">
 			</div>
 
 			<div class="3u 12u$(xsmall)">
@@ -49,11 +55,13 @@
 			</div>
 
 			<div class="9u 12u$(xsmall)">
-				<input type="text" name="rtname" value="${rooftopVO.rtname}" data-name="Rooftop Name">
+				<input type="text" name="rtname" value="${rooftopVO.rtname}"
+					data-name="Rooftop Name">
 			</div>
 
 			<div class="3u 12u$(xsmall)">
-				<input type="text" name="maximum" value="${rooftopVO.maximum}" data-name="Maximum People">
+				<input type="text" name="maximum" value="${rooftopVO.maximum}"
+					data-name="Maximum People">
 			</div>
 
 
@@ -70,7 +78,7 @@
 					disabled>
 			</div>
 			<div class="6u 12u$(xsmall)">
-				<input type="text" 
+				<input type="text"
 					value='<fmt:formatDate value="${rooftopVO.boardVO.updatedate}" type="both"/>'
 					disabled>
 			</div>
@@ -91,12 +99,14 @@
 
 			<div class="3u 12u$(xsmall)">
 				<input type="text" class="openCloseDate" name="opendate"
-					value='<fmt:formatDate value="${rooftopVO.opendate}" pattern="yyyy-MM-dd" type="date"/>' data-name="OpenDate"/>
+					value='<fmt:formatDate value="${rooftopVO.opendate}" pattern="yyyy-MM-dd" type="date"/>'
+					data-name="OpenDate" />
 			</div>
 
 			<div class="3u 12u$(xsmall)">
 				<input type="text" class="openCloseDate" name="closedate"
-					value='<fmt:formatDate value="${rooftopVO.closedate}" pattern="yyyy-MM-dd" type="date"/>'data-name="CloseDate" />
+					value='<fmt:formatDate value="${rooftopVO.closedate}" pattern="yyyy-MM-dd" type="date"/>'
+					data-name="CloseDate" />
 			</div>
 
 			<div class="3u 12u$(xsmall)">
@@ -120,11 +130,12 @@
 			</div>
 
 			<div class="10u 12u$(xsmall)">
-				<input type="text" name="address" value="${rooftopVO.address}" id="address" data-name="Rooftop Address">
+				<input type="text" name="address" value="${rooftopVO.address}"
+					id="address" data-name="Rooftop Address">
 			</div>
 
 			<div class="2u 12u$(xsmall)">
-				<input type="button" value="Select" id="addressButton" >
+				<input type="button" value="Select" id="addressButton">
 			</div>
 
 			<div class="12u$">
@@ -174,7 +185,7 @@
 
 			<div class="12u$">
 				<textarea name="boardVO.content" rows="12" style="resize: none"
-					 data-name="Content"><c:out
+					data-name="Content"><c:out
 						value="${rooftopVO.boardVO.content}" /></textarea>
 			</div>
 
@@ -379,11 +390,16 @@
 										result[0].y,
 										result[0].x);
 
+								
 								// 결과값으로 받은 위치를 마커로 표시합니다
 								marker = new daum.maps.Marker({
 									map : map,
 									position : coords
 								});
+								console.dir(map);
+								
+								
+								
 								// 인포윈도우로 장소에 대한 설명을 표시합니다
 								infoWindow = new daum.maps.InfoWindow(
 										{

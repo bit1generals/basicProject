@@ -5,7 +5,11 @@
 <!-- Section -->
 <section>
 	<header class="major">
-		<h2 class="mainFont">Rooftop Apply List</h2>
+
+		<h2 class="mainFont">Rooftop
+		<c:if test="${param.state eq 'N'}"> Unreceived </c:if>
+		List</h2>
+		
 	</header>
 	<div class="posts">
 		<c:forEach items="${list}" var="rooftopVO">
@@ -37,7 +41,6 @@
 			</article>
 		</c:forEach>
 	</div>
-
 </section>
 <section>
 
@@ -95,7 +98,11 @@
 <form id="searchForm">
 	<input type="hidden" name="key" value=""> <input type="hidden"
 		name="page" value="${pm.cri.page}">
-
+		
+	<c:if test="${param.state != null }">
+		<input type="hidden" name="state" value="${param.state}">
+	</c:if>
+	
 	<c:if test="${pm.cri.type != null }">
 		<input type="hidden" name="keyword" value="${pm.cri.keyword }">
 		<input type="hidden" name="type" value="${pm.cri.type}">

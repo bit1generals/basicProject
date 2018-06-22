@@ -10,6 +10,9 @@
 	<form id="searchForm">
 		<input type="hidden" name="key" value="${rooftopVO.boardVO.bno}">
 		<input type="hidden" name="page" value="${cri.page}">
+		<c:if test="${param.state != null }">
+			<input type="hidden" name="state" value="${param.state}">
+		</c:if>
 		<c:if test="${cri.type != null }">
 			<input type="hidden" name="keyword" value="${cri.keyword }">
 			<input type="hidden" name="type" value="${cri.type}">
@@ -23,7 +26,7 @@
 		<div class="3u 12u$(xsmall)">
 			<label>ID</label>
 		</div>
-		
+
 		<div class="9u 12u$(xsmall)">
 			<input type="text" name="title"
 				value='<c:out value="${rooftopVO.boardVO.title}"/>' disabled>
@@ -163,8 +166,14 @@
 				<li><button class="remove" data-uri="remove" data-method="post">Remove</button></li>
 				<li><button class="list special" data-uri="list"
 						data-method="get">List</button></li>
-				<li><button class="authorize special" data-uri="authorize"
-						data-method="post">Authorize</button></li>
+				<c:if test="${cri.state eq 'N'}">
+					<li><button class="authorize" data-uri="authorize"
+							data-method="post">Authorize</button></li>
+				</c:if>
+				<c:if test="${cri.state eq 'Y'}">
+					<li><button class="reserve special"
+							data-uri="/reserve/register" data-method="get">Reservation</button></li>
+				</c:if>
 			</ul>
 		</div>
 	</div>
@@ -212,12 +221,12 @@
 		}, 1000);
 	});
 
-	$(".actions li").click(
-			function(event) {
+	$(".actions li").click(function(event) {
+		
 				var that = $(event.target);
 				formObj.attr("action", that.data("uri")).attr("method",
 						that.data("method")).submit();
-			});
+	});
 	
 	$(document).ready(function(){
 		if(${rooftopVO.boardVO.files[0].fno != null}){
@@ -225,28 +234,36 @@
 		}else{
 			$(".onCheck").remove();
 		}
+		showMap();
 	});
 	
-	var mapContainer = document.getElementById('map'),
+	function showMap(){
+		console.log("showMap check");
+		var mapContainer = document.getElementById('map'),mapOption = {
+			center : new daum.maps.LatLng(${rooftopVO.lat},${rooftopVO.lng}),
+			level : 3
+		};
+		var map = new daum.maps.Map(mapContainer, mapOption);
+						
+		var coords = new daum.maps.LatLng(${rooftopVO.lat},${rooftopVO.lng});
 
-	mapOption = {
-		center : new daum.maps.LatLng(${rooftopVO.lat}, ${rooftopVO.lng}),
-		level : 3
+		// 결과값으로 받은 위치를 마커로 표시합니다
+		var marker = new daum.maps.Marker({
+			map : map,
+			position : coords
+		});
+		console.dir(map);
+		console.log("--------------");
+		console.dir(marker);
+		console.dir(coords);
+		// 인포윈도우로 장소에 대한 설명을 표시합니다
+		var infoWindow = new daum.maps.InfoWindow(
+				{
+					content : '<div style="width:150px;text-align:center;padding:6px 0;">${rooftopVO.rtname}</div>'
+				});
+		infoWindow.open(map, marker);
+		map.setCenter(coords);
+
 	};
-	var map = new daum.maps.Map(mapContainer, mapOption);
-					
-	var coords = new daum.maps.LatLng(${rooftopVO.lat},${rooftopVO.lng});
-
-	// 결과값으로 받은 위치를 마커로 표시합니다
-	var marker = new daum.maps.Marker({
-		map : map,
-		position : coords
-	});
-	// 인포윈도우로 장소에 대한 설명을 표시합니다
-	var infoWindow = new daum.maps.InfoWindow(
-			{
-				content : '<div style="width:150px;text-align:center;padding:6px 0;">${rooftopVO.rtname}</div>'
-			});
-	infoWindow.open(map, marker);
-
+	
 </script>

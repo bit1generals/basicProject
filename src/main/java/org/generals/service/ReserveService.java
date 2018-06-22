@@ -23,15 +23,12 @@ public class ReserveService {
 	private ReserveMapper mapper;
 
 	public void insertReserve(ReserveVO vo) throws Exception {
-
 		if (mapper.insertReserve(vo) != 1) {
 			throw new Exception("Reservation Fail");	
 		}
 		if (vo.getArticleList() != null) {
 			mapper.insertReserveArticle(vo.getArticleList());
 		}
-		
-		
 	}
 
 	public List<RooftopVO> getRooftop() {
@@ -70,6 +67,10 @@ public class ReserveService {
 	
 	public List<ArticleVO> getArticleList(Long rno){
 		return mapper.selectArticleByRno(rno);
+	}
+	
+	public RooftopVO getRooftopVO(Integer bno) {
+		return mapper.selectRooftopByBno(bno);
 	}
 	
 }

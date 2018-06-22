@@ -27,8 +27,11 @@ public class ReserveController {
 	private ReserveService service;
 	
 	@GetMapping("/register")
-	public void register(Model model) {
+	public void register(Integer key, Model model) {
 		log.info("register()... call");
+		if(key != null) {
+			model.addAttribute("selectRooftopVO", service.getRooftopVO(key));
+		}
 		model.addAttribute("rooftopList", service.getRooftop());
 		model.addAttribute("articleList", service.getArticle());
 	}

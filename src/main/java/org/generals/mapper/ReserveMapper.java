@@ -29,5 +29,7 @@ public interface ReserveMapper {
 	public ReserveVO getReserve(Long rno);
 
 	public List<ArticleVO> selectArticleByRno(Long rno);
+	
+	public RooftopVO selectRooftopByBno(Integer bno);
 }
 

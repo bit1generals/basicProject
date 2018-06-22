@@ -28,9 +28,11 @@
 		<h2>Menu</h2>
 		</header>
 		<ul>
+		<li><a href="/">Homepage</a></li>
 			<li><a href="/bbs/list">Free Board</a></li>
 			<li><a href="/rooftop/list">Rooftop List</a></li>
-			<li><span class="opener">Submenu</span>
+			<li><a href="/rooftop/list?state=N">Rooftop Unreceived List</a></li>
+			<li><span class="opener">Reserve</span>
 				<ul>
 					<li><a href="/reserve/list">Reserve List</a></li>
 					<li><a href="/reserve/register">Reserve</a></li>

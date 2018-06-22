@@ -26,7 +26,6 @@ public abstract class AbstractController<T, K, S extends GenericService> impleme
 		
 		log.info("Abstract list Get");
 		
-	
 		initContext(cri, model);
 		
 		model.addAttribute("list", service.getList(cri));

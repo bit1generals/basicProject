@@ -48,7 +48,7 @@
 		closetime,
 		opendate, closedate, id, title, content, regdate,
 		updatedate, address
-		from (select * from tbl_rooftop where state = 'N'
+		from (select * from tbl_rooftop where state = #{state}
 		order by rtno desc limit
 		#{skip}, 12) roof inner join tbl_board board
 		on roof.bno = board.bno) rooftop left outer join (select * from
@@ -64,7 +64,7 @@
 
 	<select id="getTotal" resultType="int">
 		select count(*) from
-		tbl_rooftop where state = 'N'
+		tbl_rooftop where state = #{state}
 	</select>
 
 

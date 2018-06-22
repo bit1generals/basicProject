@@ -15,6 +15,7 @@ import lombok.Data;
 public class ReserveVO {
 
 	private Long rno, bno;
+	private Integer openTime, closeTime;
 	private String id, state, message, type;
 	
 	private RooftopVO rooftopVO;
@@ -23,7 +24,6 @@ public class ReserveVO {
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH")
 	private Date reservedate;
 	private Date regdate, updatedate;
-	//@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH")
 	private Timestamp startTime, endTime;
 
 	private List<ArticleVO> articleList;

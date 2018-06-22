@@ -26,7 +26,7 @@
 		<div id="main">
 			<div class="inner">
 				<!-- Header -->
-				<header id="header"> <a href="index.html" class="logo"><strong>Project</strong>
+				<header id="header"> <a href="/" class="logo"><strong>Project</strong>
 					by Generals</a>
 				<ul class="icons">
 					<li><a href="#" class="icon fa-twitter"><span

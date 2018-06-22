@@ -3,9 +3,18 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.generals.mapper.ReserveMapper">
+
 	<select id="selectRooftop" resultType="org.generals.domain.RooftopVO">
-		select * from tbl_rooftop where state = 'Y'
+		select * from tbl_rooftop
+		where state = 'Y' and closedate >= now()
 	</select>
+
+	<select id="selectRooftopByBno" resultType="org.generals.domain.RooftopVO">
+		select * from
+		tbl_rooftop where bno = #{bno}
+	</select>
+
+
 	<insert id="insertReserve">
 		insert into tbl_reserve_list (bno, id, reservedate,
 		state, starttime, endtime, message)
@@ -38,10 +47,13 @@
 		</foreach> </insert> -->
 
 	<select id="selectTime" resultType="org.generals.domain.ReserveVO">
-		select starttime, endtime
+		select rooftop.bno,
+		starttime, endtime, opentime, closetime from
+		(select starttime, endtime, bno
 		from tbl_reserve_list where bno=#{bno} and
 		reservedate=#{reservedate}
-		and state=#{state}
+		and state=#{state}) reserve right outer join (select * from tbl_rooftop where bno=#{bno}) rooftop
+		on reserve.bno = rooftop.bno
 	</select>
 
 	<select id="selectArticle" resultType="org.generals.domain.ArticleVO">

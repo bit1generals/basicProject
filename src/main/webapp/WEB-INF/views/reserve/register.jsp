@@ -25,9 +25,10 @@
 
 			<div class="6u 12u$(xsmall) firstRow">
 				<div class="select-wrapper">
-					<select name="bno" id="department" data-name="Rooftop">
+					<select name="bno" id="rooftop" data-name="Rooftop">
 						<c:forEach items="${rooftopList}" var="rooftopVO">
-							<option value="${rooftopVO.bno}">${rooftopVO.rtname}
+							<option value="${rooftopVO.bno}"
+								${selectRooftopVO.bno eq rooftopVO.bno ? 'selected' : ''}>${rooftopVO.rtname}
 								(${rooftopVO.maximum} person)</option>
 						</c:forEach>
 					</select>
@@ -93,7 +94,7 @@
 				<li><input type="reset" id="reset" value="Reset"></li>
 				<li><input type="button" id="cancel" value="Cancel"></li>
 			</ul>
-	</div>
+		</div>
 	</form>
 </section>
 </div>
@@ -113,6 +114,7 @@
 	var secondRow = $(".secondRow");
 	var thirdRow = $(".thirdRow select");
 	var serialsMap = new Map();
+	var rooftop = $("#rooftop");
 
 	$("#cancel").click(function(event) {
 		self.location = "/reserve/list";
@@ -165,9 +167,16 @@
 						return submitAllow;
 					});
 
-	reservedate.datepicker({
-		dateFormat : 'yy-mm-dd'
-	});
+	function makeDatepicker(opendate, closedate) {
+
+		console.log(opendate);
+		console.log(closedate);
+		reservedate.datepicker({
+			dateFormat : 'yy-mm-dd',
+			minDate : (opendate > new Date() ? opendate : 1),
+			maxDate : closedate
+		})
+	};
 
 	//console.dir($('.firstRow input'));
 
@@ -226,7 +235,7 @@
 	startTime.change(function(event) {
 		endTime.empty();
 		var start = new Date(this.value).getHours();
-		var end = findEndTime(start);
+		var end = findEndTime(start, $(this[0]).data("close"));
 		var date = reservedate.val();
 		for (start += 1; start <= end; start++) {
 			endTime.append('<option value="' + date + ' '
@@ -240,10 +249,9 @@
 	// get date event
 	firstRow.change(function(event) {
 		init();
-
+		
 		if (reservedate.val() != "") {
 			$(".secondRow").show();
-
 			var obj = {
 				"bno" : $('select[name="bno"] option:selected').val(),
 				"reservedate" : reservedate.val() + " 00"
@@ -257,30 +265,46 @@
 				processData : false,
 				contentType : "application/json;charset=UTF-8",
 				success : function(timeDataList) {
+					console.dir(timeDataList);
 					var targetList = $(timeDataList);
 					targetList.each(function(idx, item) {
 						var start = new Date(item.startTime).getHours();
 						var end = new Date(item.endTime).getHours();
 						collectTime(start, end);
 					});
-					makeStartTime();
+					makeStartTime(timeDataList[0].openTime, timeDataList[0].closeTime);
 				}
 			});
 		}
-		;
 	});
 
+	rooftop.change(function() {
+		reservedate.val("");
+	
+		$.ajax({
+			url : '/ajax/rooftopData?bno='+$('select[name="bno"] option:selected').val(),
+			type : 'get',
+			dataType : 'json',
+			processData : false,
+			contentType : "application/json;charset=UTF-8",
+			success : function(data) {
+				reservedate.datepicker("destroy");
+				makeDatepicker(new Date(data.opendate),new Date(data.closedate));
+			}
+		});
+	});
+	
 	function collectTime(start, end) {
 		for (start; start < end; start++) {
 			impossibleTime.push(start);
 		}
 	};
-	function makeStartTime() {
+	function makeStartTime(openTime, closeTime) {
 		var date = reservedate.val();
 
-		startTime.append('<option></option>');
+		startTime.append('<option data-close="'+closeTime+'"></option>');
 
-		for (var num = 9; num < 21; num++) {
+		for (var num = openTime; num < closeTime; num++) {
 			startTime.append('<option value="'
 					+ date
 					+ ' '
@@ -301,11 +325,10 @@
 		articleList.empty();
 		$(".secondRow").hide();
 		$(".thirdRow").hide();
-
 	};
 
-	function findEndTime(start) {
-		var result = 21;
+	function findEndTime(start, end) {
+		var result = end;
 		if (impossibleTime[0] != null) {
 			impossibleTime.sort(function(a, b) {
 				return a - b;
@@ -343,4 +366,14 @@
 				+ type.val() + "' data-count='" + value + "'>" + articleName
 				+ " : " + value + "ea <span>X</span></li>");
 	};
+	
+	$(document).ready(
+			function() {
+				makeDatepicker(
+						new Date(
+								"<fmt:formatDate value="${selectRooftopVO.opendate}" type="date" pattern="yyyy-MM-dd"/>"),
+						new Date(
+								"<fmt:formatDate value="${selectRooftopVO.closedate}" type="date" pattern="yyyy-MM-dd"/>"));
+
+			});
 </script>
