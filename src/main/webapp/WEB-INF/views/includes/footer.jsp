@@ -20,6 +20,7 @@
 		<div class="mini-posts"></div>
 		<ul class="actions">
 			<li><a href="#" class="button">Login</a></li>
+			<li><a href="/member/join" class="button">Join</a></li>
 		</ul>
 		</section>
 		

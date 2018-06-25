@@ -27,6 +27,8 @@
 				name="boardVO.btype" value="R"> <input type="hidden"
 				name="lat" value="${rooftopVO.lat}"> <input type="hidden"
 				name="lng" value="${rooftopVO.lng}">
+				<input type="hidden"
+			name="${_csrf.parameterName }" value="${_csrf.token }">
 
 			<div class="9u 12u$(xsmall)">
 				<label>Title</label>

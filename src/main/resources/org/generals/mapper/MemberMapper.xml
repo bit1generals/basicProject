@@ -8,4 +8,7 @@
 		values(#{id}, #{name}, #{pw}, #{email})
 	</insert>
 	
+	<select id="checkID" resultType="int">
+		select count(id) from tbl_member where id=#{id}
+	</select>
 </mapper>
