@@ -3,12 +3,46 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.generals.mapper.MemberMapper">
-	<insert id="insert" >
+	<insert id="insert">
 		insert into tbl_member (id, name, pw, email)
 		values(#{id}, #{name}, #{pw}, #{email})
 	</insert>
-	
+
+	<insert id="insertAuth">
+		insert into tbl_auth (id, auth)
+		values(#{id},
+		'ROLE_MEMBER')
+	</insert>
+
 	<select id="checkID" resultType="int">
-		select count(id) from tbl_member where id=#{id}
+		select count(id) from tbl_member
+		where id=#{id}
 	</select>
+
+	<select id="read" resultMap="memberMap">
+		select member.id id,pw,name,email,auth,
+		regdate,updatedate from
+		(select * from tbl_member where id=#{id}) member inner join tbl_auth auth
+		on member.id = auth.id;
+	</select>
+	<resultMap type="org.generals.domain.MemberVO" id="memberMap">
+		<id column="id" property="id" />
+		<result column="pw" property="pw" />
+		<result column="name" property="name" />
+		<result column="email" property="email" />
+		<result column="regdate" property="regdate" />
+		<result column="updatedate" property="updatedate" />
+		<collection property="authList" ofType="java.lang.String"
+			javaType="java.util.ArrayList">
+			<result column="auth" />
+		</collection>
+	</resultMap>
+	
+	<select id="getList" resultType="org.generals.domain.MemberVO">
+		select * from tbl_member
+	</select>
+	<update id="updatePW">
+		update tbl_member set pw = #{pw} where id = #{id}
+	</update>
+
 </mapper>

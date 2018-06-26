@@ -18,7 +18,6 @@ public class Criteria {
 
 	public Criteria() {
 		this.page = 1;
-		this.state = "Y";
 	}
 	
 	public Criteria(int page) {

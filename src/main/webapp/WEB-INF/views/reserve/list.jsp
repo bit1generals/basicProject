@@ -3,12 +3,7 @@
 
 <%@ include file="../includes/header.jsp"%>
 
-<script>
 
-if(${msg ne null}){
-	alert("${msg}");
-}
-</script>
 <section class="wrapper style1">
 	<div class="inner">
 		<div class="index align-left">

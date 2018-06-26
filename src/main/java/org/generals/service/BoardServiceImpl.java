@@ -8,6 +8,7 @@ import org.generals.domain.BoardVO;
 import org.generals.domain.FileVO;
 import org.generals.mapper.BoardMapper;
 import org.generals.mapper.FileMapper;
+import org.generals.security.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

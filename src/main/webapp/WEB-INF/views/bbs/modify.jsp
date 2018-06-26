@@ -10,15 +10,18 @@
 	<form method="post" class="inputForm">
 		<div class="row uniform">
 			<div class="9u 12u$(xsmall)">
-				<input type="text" name="title" value='<c:out value="${boardVO.title}"/>'>
+				<input type="text" name="title"
+					value='<c:out value="${boardVO.title}"/>'>
 			</div>
 
 			<div class="3u 12u$(xsmall)">
-				<input type="text" name="id" value="<c:out value="${boardVO.id}"/>" readonly="readonly">
+				<input type="text" name="id" value="<c:out value="${boardVO.id}"/>"
+					readonly="readonly">
 			</div>
 
-			<input type="hidden" name="bno" value="${boardVO.bno}">
-			<input type="hidden" name="btype" value="F">
+			<input type="hidden" name="bno" value="${boardVO.bno}"> <input
+				type="hidden" name="btype" value="F"> <input type="hidden"
+				name="${_csrf.parameterName }" value="${_csrf.token }">
 
 			<div class="fileAttach" data-show="false">
 				<ul class="actions">
@@ -27,43 +30,43 @@
 			</div>
 
 			<div class="12u$">
-			<div class="fileDrop">
-				<div class="fileZone">
-					<ul class="uploadFile">
-						<c:forEach items="${boardVO.files}" var="fileVO">
+				<div class="fileDrop">
+					<div class="fileZone">
+						<ul class="uploadFile">
+							<c:forEach items="${boardVO.files}" var="fileVO">
 
-							<div class="fileWrapper">
-								<div class="fileContent">
-									<div class="fileHeader">X</div>
-									<c:choose>
-										<c:when test="${fileVO.ftype == 'Y'}">
-											<li class="img" data-fname="${fileVO.fname}"
-												data-uuid="${fileVO.uuid}" data-path="${fileVO.path}"
-												data-ftype="${fileVO.ftype}"><img
-												src="${fileVO.urlBuilder()}/thumbnails">
-										</c:when>
+								<div class="fileWrapper">
+									<div class="fileContent">
+										<div class="fileHeader">X</div>
+										<c:choose>
+											<c:when test="${fileVO.ftype == 'Y'}">
+												<li class="img" data-fname="${fileVO.fname}"
+													data-uuid="${fileVO.uuid}" data-path="${fileVO.path}"
+													data-ftype="${fileVO.ftype}"><img
+													src="${fileVO.urlBuilder()}/thumbnails">
+											</c:when>
 
-										<c:when test="${fileVO.ftype == 'N'}">
-											<li data-fname="${fileVO.fname}"
-												data-uuid="${fileVO.uuid}" data-path="${fileVO.path}"
-												data-ftype="${fileVO.ftype}">
-												<a href="${fileVO.urlBuilder()}"> <img
-													src="/resources/img/default.png"></a>
-										</c:when>
-									</c:choose>
-									</li>
-								<div class="fileFooter">${fileVO.fname}</div>
+											<c:when test="${fileVO.ftype == 'N'}">
+												<li data-fname="${fileVO.fname}" data-uuid="${fileVO.uuid}"
+													data-path="${fileVO.path}" data-ftype="${fileVO.ftype}">
+													<a href="${fileVO.urlBuilder()}"> <img
+														src="/resources/img/default.png"></a>
+											</c:when>
+										</c:choose>
+										</li>
+										<div class="fileFooter">${fileVO.fname}</div>
+									</div>
 								</div>
-							</div>
-						</c:forEach>
+							</c:forEach>
 
-					</ul>
+						</ul>
+					</div>
 				</div>
 			</div>
-		</div>
 
 			<div class="12u$">
-				<textarea name="content" rows="12"><c:out value="${boardVO.content}"/></textarea>
+				<textarea name="content" rows="12"><c:out
+						value="${boardVO.content}" /></textarea>
 			</div>
 
 			<div class="12u$">

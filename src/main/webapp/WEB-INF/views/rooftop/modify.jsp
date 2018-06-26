@@ -261,6 +261,7 @@
 		}
 
 		$.ajax({
+			headers : { "X-CSRF-TOKEN" : "${_csrf.token }"},
 			url : '/file/upload',
 			method : 'post',
 			data : formData,

@@ -10,7 +10,8 @@
 		<div class="row uniform">
 			<input type="hidden" name="boardVO.btype" value="R"> <input
 				type="hidden" name="lat" value=""> <input type="hidden"
-				name="lng" value="">
+				name="lng" value=""><input type="hidden"
+				name="${_csrf.parameterName }" value="${_csrf.token }">
 
 			<div class="9u 12u$(xsmall)">
 				<label>Title</label>
@@ -60,12 +61,14 @@
 			</div>
 			<div class="3u 12u$(xsmall)">
 				<input type="text" class="openCloseDate" name="opendate"
-					autocomplete="off" data-name="OpenDate" placeholder="Input OpenDate"/>
+					autocomplete="off" data-name="OpenDate"
+					placeholder="Input OpenDate" />
 			</div>
 
 			<div class="3u 12u$(xsmall)">
 				<input type="text" class="openCloseDate" name="closedate"
-					autocomplete="off" data-name="CloseDate" placeholder="Input CloseDate" />
+					autocomplete="off" data-name="CloseDate"
+					placeholder="Input CloseDate" />
 			</div>
 
 			<div class="3u 12u$(xsmall)">
@@ -85,7 +88,8 @@
 			</div>
 			<div class="10u 12u$(xsmall)">
 				<input type="text" name="address" value="서울특별시 종로구 종로2가 9"
-					id="address" placeholder="Input Address" data-name="Rooftop Address">
+					id="address" placeholder="Input Address"
+					data-name="Rooftop Address">
 			</div>
 
 			<div class="2u 12u$(xsmall)">
@@ -187,6 +191,9 @@
 		}
 
 		$.ajax({
+			headers : {
+				"X-CSRF-TOKEN" : "${_csrf.token }"
+			},
 			url : '/file/upload',
 			method : 'post',
 			data : formData,

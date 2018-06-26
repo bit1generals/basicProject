@@ -1,5 +1,7 @@
 package org.generals.controller;
 
+import java.security.Principal;
+
 import org.generals.domain.Criteria;
 import org.generals.domain.PageMaker;
 import org.generals.service.GenericService;
@@ -23,9 +25,8 @@ public abstract class AbstractController<T, K, S extends GenericService> impleme
 	@Setter(onMethod_ = { @Autowired })
 	protected S service;
 	
-
 	@Override
-	public void list(@ModelAttribute("cri")Criteria cri, Model model) throws Exception {
+	public void list(@ModelAttribute("cri")Criteria cri, Model model, Principal principal) throws Exception {
 		
 		log.info("Abstract list Get");
 		

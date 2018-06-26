@@ -7,6 +7,8 @@ import org.generals.domain.PageMaker;
 import org.generals.domain.ReserveVO;
 import org.generals.service.ReserveService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +22,7 @@ import lombok.extern.log4j.Log4j;
 @Controller
 @RequestMapping("/reserve")
 @Log4j
+@Scope(proxyMode = ScopedProxyMode.TARGET_CLASS )
 public class ReserveController {
 	
 	

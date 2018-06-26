@@ -94,10 +94,16 @@ body {
 	margin-bottom: 0;
 }
 
-.row.uniform label {
+.row.uniform label.join{
 	margin-bottom: 0;
+	display:inline-block;
 }
-
+.row.uniform label.join.red{
+	color: red;
+}
+.row.uniform label.join.green{
+	color: green;
+}
 .row.\30 \25 >* {
 	padding: 0 0 0 0em;
 }

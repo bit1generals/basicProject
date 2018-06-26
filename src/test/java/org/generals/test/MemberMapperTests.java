@@ -27,4 +27,11 @@ public class MemberMapperTests {
 		}
 
 	}
+	@Test
+	public void testInsert2() {
+		for (int i = 0; i < 100; i++) {
+			
+		}
+	}
+	
 }

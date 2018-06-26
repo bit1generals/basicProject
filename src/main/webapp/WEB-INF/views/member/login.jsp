@@ -4,6 +4,9 @@
 
 
 <section>
+	<c:if test="${param.error != null }">
+		<h2>아이디 혹은 패스워드가 틀렸습니다.</h2>
+	</c:if>
 	<header class="major">
 		<h2>Login</h2>
 	</header>
@@ -23,7 +26,7 @@
 
 
 	<div>
-		<form id="loginForm">
+		<form id="loginForm" action="/login">
 			<input type="hidden" name="${_csrf.parameterName }"
 				value="${_csrf.token }">
 			<div class="row uniform">
@@ -35,8 +38,8 @@
 			<div class="row uniform">
 				<div class="4u 12u$(xsmall)"></div>
 				<div class="4u 12u$(xsmall)">
-					<input type="text" name="id" id="id" placeholder="Input ID"
-						value="user1" />
+					<input type="text" name="username" id="id" placeholder="Input ID"
+						value="bbb" />
 				</div>
 			</div>
 
@@ -52,7 +55,7 @@
 
 				<div class="4u 12u$(xsmall)">
 
-					<input type="password" name="pw" id="pw" value="pw1"
+					<input type="password" name="password" id="pw" value="bbb"
 						placeholder="Password" />
 				</div>
 
@@ -63,12 +66,12 @@
 
 				<div class="4u 12u$(xsmall)">
 
-					<input type="checkbox" id="rememberMe" name="rememberMe"> <label
+					<input type="checkbox" id="rememberMe" name="remember-me"> <label
 						for="rememberMe">Remember Me</label>
 
 					<ul class="actions">
 						<li style="padding-right: 5px;"><input type="submit"
-							value="Login" data-uri="login" data-method="post"></li>
+							value="Login" data-uri="/login" data-method="post"></li>
 						<li><input type="button" value="JOIN" data-uri="join"
 							data-method="get"></li>
 					</ul>
@@ -77,7 +80,7 @@
 
 
 
-
+				
 
 			</div>
 		</form>

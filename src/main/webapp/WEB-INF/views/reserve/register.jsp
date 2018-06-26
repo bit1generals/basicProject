@@ -16,6 +16,9 @@
 	<form method="post" action="/reserve/register">
 		<div class="row uniform">
 
+			<input type="hidden"
+			name="${_csrf.parameterName }" value="${_csrf.token }">
+			
 			<div class="6u 12u$(xsmall)">
 				<label>Rooftop</label>
 			</div>
@@ -218,6 +221,7 @@
 		};
 
 		$.ajax({
+			headers : { "X-CSRF-TOKEN" : "${_csrf.token }"},
 			url : '/ajax/articleData',
 			type : 'post',
 			data : JSON.stringify(obj),
@@ -258,6 +262,7 @@
 			};
 
 			$.ajax({
+				headers : { "X-CSRF-TOKEN" : "${_csrf.token }"},
 				url : '/ajax/timeData',
 				type : 'post',
 				data : JSON.stringify(obj),

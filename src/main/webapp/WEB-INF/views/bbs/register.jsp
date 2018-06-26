@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@include file="../includes/header.jsp"%>
-
 <section>
 	<header class="major">
 		<h2>Register</h2>
@@ -16,9 +15,8 @@
 			<div class="3u 12u$(xsmall)">
 				<input type="text" name="id" value="user0" readonly="readonly">
 			</div>
-
-
-			<input type="hidden" name="btype" value="B">
+			<input type="hidden" name="btype" value="B"> <input
+				type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
 
 			<div class="fileAttach" data-show="false">
 				<ul class="actions">

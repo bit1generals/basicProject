@@ -2,23 +2,47 @@
 	pageEncoding="UTF-8"%>
 <%@include file="../includes/header.jsp"%>
 
+
+
 <!-- Section -->
 <section>
 	<header class="major">
 
-		<h2 class="mainFont">Rooftop
-		<c:if test="${param.state eq 'N'}"> Unreceived </c:if>
-		List</h2>
-		
+		<h2 class="mainFont">
+			Rooftop
+			<c:if test="${param.state eq 'N'}"> Unreceived </c:if>
+			List
+		</h2>
 	</header>
+
+
+	<sec:authentication property="principal.member.authList" var="authList"/>
+	<sec:authorize access="hasRole('ROLE_ADMIN')" var="check">${check}</sec:authorize>
+
+
+	<div class="row uniform">
+		<div class="8u 12u$(xsmall)"></div>
+		<div class="4u 12u$(xsmall)">
+			<input type="radio" id="" name="authorize">
+			<label for="demo-priority-normal">Authorize</label>
+			<input type="radio" id="" name="nonAuthorize">
+			<label for="demo-priority-normal">Non Authorize</label>
+			<input type="radio" id="" name="all">
+			<label for="demo-priority-normal">ALL</label>
+		</div>
+	</div>
+	<hr>
+
 	<div class="posts">
 		<c:forEach items="${list}" var="rooftopVO">
-			<article data-key="${rooftopVO.boardVO.bno}" data-uri="view" data-method="get">
-				
-				<a class="image"> <img style="cursor: pointer" 
-				src="${rooftopVO.boardVO.files[0].fno ne null 
-					? rooftopVO.boardVO.files[0].urlBuilder('midthumbnails') : '/resources/images/1.jpg'}" alt="" class="view" /></a>
-				
+			<article data-key="${rooftopVO.boardVO.bno}" data-uri="view"
+				data-method="get">
+
+				<a class="image"> <img style="cursor: pointer"
+					src="${rooftopVO.boardVO.files[0].fno ne null 
+					? rooftopVO.boardVO.files[0].urlBuilder('midthumbnails') : '/resources/images/1.jpg'}"
+					alt="" class="view" /></a>
+
 				<div class="row uniform textArea">
 					<div class="8u 12u$(xsmall)">
 						<h3>${rooftopVO.boardVO.title}</h3>
@@ -98,11 +122,11 @@
 <form id="searchForm">
 	<input type="hidden" name="key" value=""> <input type="hidden"
 		name="page" value="${pm.cri.page}">
-		
+
 	<c:if test="${param.state != null }">
 		<input type="hidden" name="state" value="${param.state}">
 	</c:if>
-	
+
 	<c:if test="${pm.cri.type != null }">
 		<input type="hidden" name="keyword" value="${pm.cri.keyword }">
 		<input type="hidden" name="type" value="${pm.cri.type}">

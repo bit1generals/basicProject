@@ -39,16 +39,23 @@
 
 	<select id="getList" resultMap="rooftopMap">
 		select rtno, rtname, rooftop.bno
-		bno, maximum, lat, lng, opentime, closetime,
+		bno, maximum, lat, lng, opentime,
+		closetime,
 		opendate, closedate, id,
-		title, content, regdate, updatedate, fno,
+		title, content, regdate, updatedate,
+		fno,
 		fname, uuid, path, address
 		from
-		(select rtno, rtname, roof.bno, maximum, lat, lng, opentime,
+		(select rtno, rtname, roof.bno,
+		maximum, lat, lng, opentime,
 		closetime,
-		opendate, closedate, id, title, content, regdate,
+		opendate, closedate, id, title,
+		content, regdate,
 		updatedate, address
-		from (select * from tbl_rooftop where state = #{state}
+		from (select * from tbl_rooftop
+		<if test="state != null">
+			where state = #{state}
+		</if>
 		order by rtno desc limit
 		#{skip}, 12) roof inner join tbl_board board
 		on roof.bno = board.bno) rooftop left outer join (select * from
@@ -64,7 +71,10 @@
 
 	<select id="getTotal" resultType="int">
 		select count(*) from
-		tbl_rooftop where state = #{state}
+		tbl_rooftop
+		<if test="state != null">
+			where state = #{state}
+		</if>
 	</select>
 
 
@@ -89,9 +99,10 @@
 		closedate =
 		#{closedate}, address = #{address}
 		where state = 'N' and bno
-		= #{boardVO.bno}
+		=
+		#{boardVO.bno}
 	</update>
-	
+
 	<update id="updateStatebyBno">
 		update tbl_rooftop set state = 'Y' where bno = #{bno}
 	</update>

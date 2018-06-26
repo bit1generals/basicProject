@@ -99,7 +99,6 @@
 						class="inputs extra" placeholder="Email" />
 				</div>
 			</div>
-			
 			<input type="hidden"
 			name="${_csrf.parameterName }" value="${_csrf.token }">
 
@@ -204,11 +203,11 @@
 	function makeCheckID(check) {
 		if (check) {
 			checkID
-					.html("<label style='display:inline-block;'>ID&nbsp</label><label style='color: red; display:inline-block;'>(Can not use it)</label>");
+					.html("<label class='join'>ID&nbsp</label><label class='join red'>(Can not use it)</label>");
 			id.data("state", false);
 		} else {
 			checkID
-					.html("<label style='display:inline-block;'>ID&nbsp</label><label style='color: green; display:inline-block;'>(Can use it)</label>");
+					.html("<label class='join'>ID&nbsp</label><label class='join green'>(Can use it)</label>");
 			id.data("state", true);
 		}
 	}
@@ -216,12 +215,12 @@
 	function makeCheckPW(check) {
 		if (check) {
 			checkMsg
-					.html("<label style='display:inline-block;'>PASSWORD CHECK&nbsp</label><label style='color: green; display:inline-block;'>(Matched)</label>");
+					.html("<label class='join'>PASSWORD CHECK&nbsp</label><label class='join green'>(Matched)</label>");
 			pw.data("state", true);
 			pwCheck.data("state", true);
 		} else {
 			checkMsg
-					.html("<label style='display:inline-block;'>PASSWORD CHECK&nbsp</label><label style='color: red; display:inline-block;'>(Not Matched)</label>");
+					.html("<label class='join'>PASSWORD CHECK&nbsp</label><label class='join red'>(Not Matched)</label>");
 			pw.data("state", false);
 			pwCheck.data("state", false);
 		}

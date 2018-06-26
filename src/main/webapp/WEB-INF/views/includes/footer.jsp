@@ -19,7 +19,7 @@
 		</header>
 		<div class="mini-posts"></div>
 		<ul class="actions">
-			<li><a href="#" class="button">Login</a></li>
+			<li><a href="/member/login" class="button">Login</a></li>
 			<li><a href="/member/join" class="button">Join</a></li>
 		</ul>
 		</section>
@@ -32,13 +32,10 @@
 		<li><a href="/">Homepage</a></li>
 			<li><a href="/bbs/list">Free Board</a></li>
 			<li><a href="/rooftop/list">Rooftop List</a></li>
-			<li><a href="/rooftop/list?state=N">Rooftop Unreceived List</a></li>
 			<li><span class="opener">Reserve</span>
 				<ul>
 					<li><a href="/reserve/list">Reserve List</a></li>
 					<li><a href="/reserve/register">Reserve</a></li>
-					<li><a href="#">Tempus Magna</a></li>
-					<li><a href="#">Feugiat Veroeros</a></li>
 				</ul></li>
 		</ul>
 		</nav>
@@ -82,5 +79,12 @@
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2986010b12d8334b24509c1d77fe5837&libraries=services"></script>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.1/handlebars.js"></script>
+	
+<script>
+
+if(${msg ne null}){
+	alert("${msg}");
+}
+</script>
 </body>
 </html>

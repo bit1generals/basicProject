@@ -14,10 +14,13 @@ import org.generals.domain.FileVO;
 import org.generals.service.BoardService;
 import org.generals.utils.MimeTypeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,6 +36,8 @@ import net.coobird.thumbnailator.Thumbnailator;
 @RestController
 @RequestMapping("/file/*")
 @Log4j
+@PreAuthorize("isAuthenticated()")
+@Scope(proxyMode = ScopedProxyMode.TARGET_CLASS )
 public class FileController {
 
 	public final static String ROOT = "C:\\zzz\\upload\\";
