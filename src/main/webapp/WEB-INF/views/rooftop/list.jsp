@@ -15,23 +15,22 @@
 		</h2>
 	</header>
 
-
-	<sec:authentication property="principal.member.authList" var="authList"/>
-	<sec:authorize access="hasRole('ROLE_ADMIN')" var="check">${check}</sec:authorize>
-
-
-	<div class="row uniform">
-		<div class="8u 12u$(xsmall)"></div>
-		<div class="4u 12u$(xsmall)">
-			<input type="radio" id="" name="authorize">
-			<label for="demo-priority-normal">Authorize</label>
-			<input type="radio" id="" name="nonAuthorize">
-			<label for="demo-priority-normal">Non Authorize</label>
-			<input type="radio" id="" name="all">
-			<label for="demo-priority-normal">ALL</label>
+	<sec:authorize access="hasRole('ROLE_ADMIN')">
+		<div class="row uniform">
+			<div class="8u 12u$(xsmall)"></div>
+			<div class="4u 12u$(xsmall)">
+				<input type="radio" id="1" name="authorize"> <label
+					for="demo-priority-normal">Authorize</label> <input type="radio"
+					id="2" name="nonAuthorize"> <label
+					for="demo-priority-normal">Non Authorize</label> <input
+					type="radio" id="3" name="all" checked="checked"> <label
+					for="demo-priority-normal">ALL</label>
+			</div>
 		</div>
-	</div>
-	<hr>
+		<hr>
+	</sec:authorize>
+
+
 
 	<div class="posts">
 		<c:forEach items="${list}" var="rooftopVO">
@@ -50,7 +49,12 @@
 					<div class="4u 12u$(xsmall)">
 						<h3>${rooftopVO.boardVO.id}</h3>
 					</div>
+					
+					<div class="12u">
+						<h4>${rooftopVO.address}</h4>
+					</div>
 				</div>
+				
 				<c:choose>
 					<c:when test="${rooftopVO.boardVO.content.length() > 50}">
 						<p>${rooftopVO.boardVO.content.substring(0,50)}...... (づ｡◕‿‿◕｡)づ </p>
@@ -86,19 +90,19 @@
 			<div class="3u 12u$(xsmall)">
 				<div class="select-wrapper">
 					<select name="type">
-						<option value="n" ${pm.cri.type eq null?'selected':''}>-
+						<option value="" ${pm.cri.type eq null?'selected':''}>-
 							Category -</option>
-						<option value="t" ${pm.cri.type eq 't'?'selected':''}>Title</option>
-						<option value="c" ${pm.cri.type eq 'c'?'selected':''}>Content</option>
+						<option value="a" ${pm.cri.type eq 'a'?'selected':''}>Address</option>
+						<option value="rt" ${pm.cri.type eq 'rt'?'selected':''}>Rooftop Name</option>
 						<option value="w" ${pm.cri.type eq 'w'?'selected':''}>Writer</option>
-						<option value="t-c" ${pm.cri.type eq 't-c'?'selected':''}>Title
-							+ Content</option>
-						<option value="t-w" ${pm.cri.type eq 't-w'?'selected':''}>Title
+						<option value="a-rt" ${pm.cri.type eq 'a-rt'?'selected':''}>Address
+							+ Rooftop Name</option>
+						<option value="a-w" ${pm.cri.type eq 'a-w'?'selected':''}>Address
 							+ Writer</option>
-						<option value="w-c" ${pm.cri.type eq 'w-c'?'selected':''}>Writer
-							+ Content</option>
-						<option value="t-c-w" ${pm.cri.type eq 't-c-w'?'selected':''}>Title
-							+ Content + Writer</option>
+						<option value="w-rt" ${pm.cri.type eq 'w-rt'?'selected':''}>Writer
+							+ Rooftop Name</option>
+						<option value="a-rt-w" ${pm.cri.type eq 'a-rt-w'?'selected':''}>Address
+							+ Rooftop Name + Writer</option>
 					</select>
 				</div>
 			</div>

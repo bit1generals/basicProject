@@ -94,6 +94,8 @@
 		<result property="regdate" column="regdate" />
 		<result property="startTime" column="starttime" />
 		<result property="endTime" column="endtime" />
+		<result property="message" column="message" />
+		
 		<collection property="rooftopVO" resultMap="rooftopVO"></collection>
 	</resultMap>
 

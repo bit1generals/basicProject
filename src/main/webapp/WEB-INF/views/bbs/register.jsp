@@ -13,7 +13,10 @@
 			</div>
 
 			<div class="3u 12u$(xsmall)">
-				<input type="text" name="id" value="user0" readonly="readonly">
+				<input type="text" name="id"
+					value="<sec:authentication property='principal.username'/>"
+					readonly="readonly">
+
 			</div>
 			<input type="hidden" name="btype" value="B"> <input
 				type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">

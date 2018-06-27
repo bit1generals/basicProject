@@ -9,6 +9,7 @@ import org.generals.service.ReserveService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +24,7 @@ import lombok.extern.log4j.Log4j;
 @RequestMapping("/reserve")
 @Log4j
 @Scope(proxyMode = ScopedProxyMode.TARGET_CLASS )
+@PreAuthorize("isAuthenticated()")
 public class ReserveController {
 	
 	
@@ -43,7 +45,6 @@ public class ReserveController {
 	public String registerPost(ReserveVO reserveVO, RedirectAttributes rttr) {
 		log.info("registerPost()... call");
 		log.info("reserveVO : " + reserveVO);
-		reserveVO.setId("user10");
 		reserveVO.setState("D");
 		try {
 			service.insertReserve(reserveVO);
@@ -56,6 +57,7 @@ public class ReserveController {
 	}
 	
 	@GetMapping("/list")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public void list(Model model, Criteria cri) {
 		log.info("list()... call");
 		List<ReserveVO> reservList = service.getList(cri);

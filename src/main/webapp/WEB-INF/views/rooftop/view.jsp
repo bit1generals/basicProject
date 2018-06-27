@@ -17,6 +17,8 @@
 			<input type="hidden" name="keyword" value="${cri.keyword }">
 			<input type="hidden" name="type" value="${cri.type}">
 		</c:if>
+		<input type="hidden" name="${_csrf.parameterName }"
+			value="${_csrf.token }">
 	</form>
 
 	<div class="row uniform">
@@ -160,15 +162,20 @@
 
 		<div class="12u$">
 			<ul class="actions">
-
-				<li><button class="modify special" data-uri="modify"
-						data-method="get">Modify</button></li>
-				<li><button class="remove" data-uri="remove" data-method="post">Remove</button></li>
+				<c:if
+					test="${rooftopVO.boardVO.id} == <sec:authentication property='principal.username'/>">
+					<li><button class="modify special" data-uri="modify"
+							data-method="get">Modify</button></li>
+					<li><button class="remove" data-uri="remove"
+							data-method="post">Remove</button></li>
+				</c:if>
 				<li><button class="list special" data-uri="list"
 						data-method="get">List</button></li>
 				<c:if test="${cri.state eq 'N'}">
-					<li><button class="authorize" data-uri="authorize"
-							data-method="post">Authorize</button></li>
+					<sec:authorize access="hasRole('ROLE_ADMIN')">
+						<li><button class="authorize" data-uri="authorize"
+								data-method="post">Authorize</button></li>
+					</sec:authorize>
 				</c:if>
 				<c:if test="${cri.state eq 'Y'}">
 					<li><button class="reserve special"

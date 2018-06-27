@@ -29,7 +29,8 @@
 							<tbody>
 
 								<c:forEach items="${reserveList}" var="reserveVO">
-									<tr data-rno="${reserveVO.rno}" class="rowData" data-state="false">
+									<tr data-rno="${reserveVO.rno}" class="rowData"
+										data-state="false" data-msg="${reserveVO.message}">
 										<td>${reserveVO.rno}</td>
 										<td colspan="2">${reserveVO.rooftopVO.rtname}</td>
 										<td>${reserveVO.id}</td>
@@ -43,50 +44,62 @@
 									</tr>
 								</c:forEach>
 							</tbody>
-							<tfoot>
-								<tr>
-									<td colspan="5"><input style="float: right;"></td>
-									<td colspan="3"><a href="/reserve/register"
-										style="float: right;" class="button">Reservation</a></td>
-								</tr>
-							</tfoot>
 						</table>
-						
-						
-						
-						<center>
-							<nav>
-								<ul class="pagination">
-
-									<c:if test="${pm.prev}">
-										<li><a href="/reserve/list?page=${pm.start -1}"
-											aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
-										</a></li>
-									</c:if>
-
-
-									<c:forEach begin="${pm.start}" end="${pm.end}" var="num">
-										<li class=" ${param.page eq num? 'active' : ''}"><a
-											href="/reserve/list?page=${num}">${num}</a></li>
-									</c:forEach>
-
-
-									<c:if test="${pm.next}">
-										<li><a href="/reserve/list?page=${pm.end +1}"
-											aria-label="Next"> <span aria-hidden="true">&raquo;</span>
-										</a></li>
-									</c:if>
-								</ul>
-							</nav>
-						</center>
 					</div>
-
-
 				</div>
 			</section>
 
 		</div>
 	</div>
+</section>
+<section>
+
+	<center>
+		<ul class="pagination" data-uri="list" data-method="get">
+			<li data-page="${pm.start-1}"><span style="pointer-events: auto"
+				class="button ${pm.prev ?'':'disabled'}">Prev</span></li>
+			<c:forEach begin="${pm.start}" end="${pm.end}" var="i">
+				<li style="cursor: pointer" data-page="${i}"><span
+					class="page ${i eq pm.cri.page?'active' : ''}"> ${i} </span></li>
+			</c:forEach>
+			<li data-page="${pm.end+1}"><span
+				class="button ${pm.next ?'':'disabled'}">Next</span></li>
+		</ul>
+	</center>
+
+	<form method="get">
+		<div class="row uniform textArea">
+			<div class="3u 12u$(xsmall)">
+				<div class="select-wrapper">
+					<select name="type">
+						<option value="n" ${pm.cri.type eq null?'selected':''}>-
+							Category -</option>
+						<option value="t" ${pm.cri.type eq 't'?'selected':''}>Title</option>
+						<option value="c" ${pm.cri.type eq 'c'?'selected':''}>Content</option>
+						<option value="w" ${pm.cri.type eq 'w'?'selected':''}>Writer</option>
+						<option value="t-c" ${pm.cri.type eq 't-c'?'selected':''}>Title
+							+ Content</option>
+						<option value="t-w" ${pm.cri.type eq 't-w'?'selected':''}>Title
+							+ Writer</option>
+						<option value="w-c" ${pm.cri.type eq 'w-c'?'selected':''}>Writer
+							+ Content</option>
+						<option value="t-c-w" ${pm.cri.type eq 't-c-w'?'selected':''}>Title
+							+ Content + Writer</option>
+					</select>
+				</div>
+			</div>
+			<div class="7u 12u$(xsmall)">
+				<input type="text" name="keyword" placeholder="Input Keyword"
+					value="${pm.cri.keyword ne null ? pm.cri.keyword : '' }">
+			</div>
+
+			<div class="2u 12u$(xsmall)">
+				<ul class="actions">
+					<li><button class="button special icon fa-search">Search</button></li>
+				</ul>
+			</div>
+		</div>
+	</form>
 </section>
 </div>
 </div>
@@ -94,19 +107,27 @@
 
 
 <script id="template" type="text/x-handlebars-template">
-<tr class='loadArticle'>
+<tr class='loadArticle' rowspan='2'>
 	<td colspan='8'>
 		└> 
 	{{#if .}}
+		Articles : 
 		{{#each .}}
-			{{aname}} : {{this.serials.length}} 개
+			{{aname}}  {{this.serials.length}}개
 		{{/each}}
-	
 	{{else}}
            Articles was not reserved.
 	{{/if}}
 	</td>
+
 </tr>
+{{#if this.msg}}
+<tr class='loadArticle'>
+	<td colspan='8'>
+		└> Message : {{this.msg}}
+	</td>
+</tr>
+{{/if}}
 <input class='loadArticle' type='hidden'/>
 
 
@@ -116,28 +137,27 @@
 	var rowData = $(".rowData");
 	var template = Handlebars.compile($("#template").html());
 	var statement = "";
-	
-	rowData.click( function(event){
+
+	rowData.click(function(event) {
 		var selectedData = $(this);
 		var rno = selectedData.data("rno");
 		var state = selectedData.data("state");
+		var msg = selectedData.data("msg");
 		console.log(statement);
 		console.log($(".loadArticle"));
 		$(".loadArticle").remove();
-		if(statement != rno){
+		if (statement != rno) {
 			console.log("if in! ==" + statement);
-			selectAjax(rno, selectedData);
+			selectAjax(rno, selectedData, msg);
 			statement = rno;
-		}else{
+		} else {
 			statement = "";
 		}
-		
-
 
 	});
-	function selectAjax(rno, selectedData){
+	function selectAjax(rno, selectedData, msg) {
 		$.ajax({
-			url : '/ajax/reserveArticleData?rno='+rno,
+			url : '/ajax/reserveArticleData?rno=' + rno,
 			type : 'get',
 			dataType : 'text',
 			processData : false,
@@ -145,10 +165,11 @@
 			success : function(articleVOList) {
 				var obj = JSON.parse(articleVOList);
 				console.dir($(obj));
+				obj.msg = msg;
+				console.dir(obj);
 				var html = template(obj);
-				selectedData.after(html);				
+				selectedData.after(html);
 			}
 		});
 	};
-		
 </script>

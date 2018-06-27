@@ -8,8 +8,8 @@
 	</header>
 
 	<form id="searchForm">
-		<input type="hidden" name="key" value="${boardVO.bno}">
-		<input type="hidden" name="page" value="${cri.page}">
+		<input type="hidden" name="key" value="${boardVO.bno}"> <input
+			type="hidden" name="page" value="${cri.page}">
 		<c:if test="${cri.type != null }">
 			<input type="hidden" name="keyword" value="${cri.keyword }">
 			<input type="hidden" name="type" value="${cri.type}">
@@ -80,10 +80,13 @@
 
 		<div class="12u$">
 			<ul class="actions">
-
-				<li><button class="modify special" data-uri="modify"
-						data-method="get">Modify</button></li>
-				<li><button class="remove" data-uri="remove" data-method="post">Remove</button></li>
+				<c:if
+					test="${boardVO.id} == <sec:authentication property='principal.username'/>">
+					<li><button class="modify special" data-uri="modify"
+							data-method="get">Modify</button></li>
+					<li><button class="remove" data-uri="remove"
+							data-method="post">Remove</button></li>
+				</c:if>
 				<li><button class="list special" data-uri="list"
 						data-method="get">List</button></li>
 

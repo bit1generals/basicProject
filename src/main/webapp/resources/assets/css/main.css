@@ -2450,6 +2450,15 @@ table tbody tr:nth-child(2n + 1) {
 	background-color: rgba(230, 235, 237, 0.25);
 }
 
+table tbody tr:nth-child(2n + 1).loadArticle {
+	background-color: rgba(252, 218, 218, 0.3);
+}
+
+table tbody tr.loadArticle {
+	background-color:rgba(252, 218, 218, 0.3);
+}
+
+
 table td {
 	padding: 0.75em 0.75em;
 }

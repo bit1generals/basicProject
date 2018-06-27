@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/security/tags"
+	prefix="sec"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <!-- Sidebar -->
 <div id="sidebar">
@@ -14,27 +16,73 @@
 		</section>
 
 		<!-- Section -->
-		<section> <header class="major">
-		<h2>Login</h2>
-		</header>
-		<div class="mini-posts"></div>
-		<ul class="actions">
-			<li><a href="/member/login" class="button">Login</a></li>
-			<li><a href="/member/join" class="button">Join</a></li>
-		</ul>
-		</section>
-		
+
+		<sec:authorize access="isAuthenticated()">
+			<div class="row uniform">
+				<div class="12u$">
+					<h3>
+						<sec:authentication property="principal.username" />
+						님 환영합니다.
+					</h3>
+				</div>
+				<div class="12u$">
+					<form action="/member/logout" method="post">
+						<input type="hidden" name="${_csrf.parameterName }"
+							value="${_csrf.token }">
+						<button>Logout</button>
+						<a class="button">MyPage</a>
+					</form>
+				</div>
+			</div>
+
+
+
+
+		</sec:authorize>
+
+		<sec:authorize access="isAnonymous()">
+			<section> <header class="major">
+			<h2>Login</h2>
+			</header>
+			<div class="mini-posts"></div>
+			<form id="loginForm" action="/login" method="post">
+				<div class="row uniform">
+					<div class="12u$">
+						<label>ID</label> <input type="hidden"
+							name="${_csrf.parameterName }" value="${_csrf.token }"> <input
+							type="text" name="username" id="id" placeholder="Input ID"
+							value="bbb">
+					</div>
+					<div class="12u$">
+						<label>PASSWORD</label><input type="password" name="password"
+							id="pw" value="bbb" placeholder="Password">
+					</div>
+					<div class="12u$">
+						<input type="checkbox" id="rememberMe" name="remember-me">
+						<label for="rememberMe">Remember Me</label>
+						<ul class="actions">
+							<li><button>Login</button></li>
+							<li><a href="/member/join" class="button">Join</a></li>
+						</ul>
+					</div>
+				</div>
+			</form>
+			</section>
+		</sec:authorize>
+
 		<!-- Menu -->
 		<nav id="menu"> <header class="major">
 		<h2>Menu</h2>
 		</header>
 		<ul>
-		<li><a href="/">Homepage</a></li>
+			<li><a href="/">Homepage</a></li>
 			<li><a href="/bbs/list">Free Board</a></li>
 			<li><a href="/rooftop/list">Rooftop List</a></li>
 			<li><span class="opener">Reserve</span>
 				<ul>
-					<li><a href="/reserve/list">Reserve List</a></li>
+					<sec:authorize access="hasRole('ROLE_ADMIN')">
+						<li><a href="/reserve/list">Reserve List</a></li>
+					</sec:authorize>
 					<li><a href="/reserve/register">Reserve</a></li>
 				</ul></li>
 		</ul>
@@ -79,7 +127,7 @@
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2986010b12d8334b24509c1d77fe5837&libraries=services"></script>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.1/handlebars.js"></script>
-	
+
 <script>
 
 if(${msg ne null}){

@@ -67,6 +67,7 @@ public class AjaxController {
 		return new ResponseEntity<RooftopVO> (reserveService.getRooftopVO(bno), HttpStatus.OK);
 	}
 	
+	@PreAuthorize("permitAll")
 	@GetMapping(value = "/idCheck", produces = "application/json")
 	public ResponseEntity<Map<String, Boolean>> getIdCheck(String id) {
 		log.info("getIdCheck call........" + id);

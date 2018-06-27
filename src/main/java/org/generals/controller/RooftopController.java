@@ -7,6 +7,7 @@ import org.generals.domain.RooftopVO;
 import org.generals.service.RooftopService;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -40,13 +41,18 @@ public class RooftopController  extends AbstractController<RooftopVO, Integer, R
 	
 	@Override
 	public void list(Criteria cri, Model model, Principal principal) throws Exception {
-		//접근자의 권한을 확인하여 ADMIN이 아니면 Authorize안된 list에 접근 불가
-		User user = (User)((Authentication)principal).getPrincipal();
-
-		if(!user.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
+		
+		if(principal !=null) {
+		
+			//접근자의 권한을 확인하여 ADMIN이 아니면 Authorize안된 list에 접근 불가
+			User user = (User)((Authentication)principal).getPrincipal();
+	
+			if(!user.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
+				cri.setState("Y");
+			}
+		}else {
 			cri.setState("Y");
 		}
-		
 		super.list(cri, model, principal);
 		
 	}

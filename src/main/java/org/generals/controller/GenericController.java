@@ -15,6 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public interface GenericController<T, K> {
 	
 	@GetMapping("/list")
+	@PreAuthorize("permitAll")
 	public void list(Criteria cri, Model model, Principal principal) throws Exception;
 	
 	@GetMapping("/view")

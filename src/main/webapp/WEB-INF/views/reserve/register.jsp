@@ -13,12 +13,15 @@
 	<header class="major">
 		<h2>Reservation</h2>
 	</header>
-	<form method="post" action="/reserve/register">
+	<form method="post" action="/reserve/register" class="inputForm">
 		<div class="row uniform">
 
-			<input type="hidden"
-			name="${_csrf.parameterName }" value="${_csrf.token }">
-			
+			<input type="hidden" name="${_csrf.parameterName }"
+				value="${_csrf.token }"> <input type="hidden"
+				name="id"
+				value="<sec:authentication property='principal.username'/>"
+				readonly="readonly">
+
 			<div class="6u 12u$(xsmall)">
 				<label>Rooftop</label>
 			</div>
@@ -118,57 +121,54 @@
 	var thirdRow = $(".thirdRow select");
 	var serialsMap = new Map();
 	var rooftop = $("#rooftop");
+	var inputForm = $(".inputForm");
 
 	$("#cancel").click(function(event) {
 		self.location = "/reserve/list";
 	});
 
-	$('form')
-			.submit(
-					function(event) {
-						var form = $(this);
-						var submitAllow = false;
+	inputForm
+			.submit(function(event) {
+				var form = $(this);
+				var submitAllow = false;
 
-						$(".firstRow, .secondRow").find("input, select").each(
+				$(".firstRow, .secondRow").find("input, select").each(
+						function(idx, target) {
+							var inputData = $(target);
+							if (!$(target).val()) {
+								alert(inputData.data("name") + "을 입력해주세요");
+								event.preventDefault();
+								return submitAllow;
+							}
+
+						});
+
+				$(".article")
+						.each(
 								function(idx, target) {
-									var inputData = $(target);
-									if (!$(target).val()) {
-										alert(inputData.data("name")
-												+ "을 입력해주세요");
-										event.preventDefault();
-										return submitAllow;
+									var type = $(target).data("type");
+									var count = $(target).data("count");
+									var serials = $(target).data("serials");
+
+									form
+											.append("<input type='hidden' name='articleList["+ idx +"].type' value='"+ type +"'/>");
+
+									for (var i = 0; i < count; i++) {
+										form
+												.append("<input type='hidden' name='articleList["
+														+ idx
+														+ "].serials["
+														+ i
+														+ "]' value='"
+														+ serialsMap.get(type)[i]
+														+ "'/>")
 									}
 
 								});
+				submitAllow = true;
 
-						$(".article")
-								.each(
-										function(idx, target) {
-											var type = $(target).data("type");
-											var count = $(target).data("count");
-											var serials = $(target).data(
-													"serials");
-
-											form
-													.append("<input type='hidden' name='articleList["+ idx +"].type' value='"+ type +"'/>");
-
-											for (var i = 0; i < count; i++) {
-												form
-														.append("<input type='hidden' name='articleList["
-																+ idx
-																+ "].serials["
-																+ i
-																+ "]' value='"
-																+ serialsMap
-																		.get(type)[i]
-																+ "'/>")
-											}
-
-										});
-						submitAllow = true;
-
-						return submitAllow;
-					});
+				return submitAllow;
+			});
 
 	function makeDatepicker(opendate, closedate) {
 
@@ -221,7 +221,9 @@
 		};
 
 		$.ajax({
-			headers : { "X-CSRF-TOKEN" : "${_csrf.token }"},
+			headers : {
+				"X-CSRF-TOKEN" : "${_csrf.token }"
+			},
 			url : '/ajax/articleData',
 			type : 'post',
 			data : JSON.stringify(obj),
@@ -253,7 +255,7 @@
 	// get date event
 	firstRow.change(function(event) {
 		init();
-		
+
 		if (reservedate.val() != "") {
 			$(".secondRow").show();
 			var obj = {
@@ -262,7 +264,9 @@
 			};
 
 			$.ajax({
-				headers : { "X-CSRF-TOKEN" : "${_csrf.token }"},
+				headers : {
+					"X-CSRF-TOKEN" : "${_csrf.token }"
+				},
 				url : '/ajax/timeData',
 				type : 'post',
 				data : JSON.stringify(obj),
@@ -277,7 +281,8 @@
 						var end = new Date(item.endTime).getHours();
 						collectTime(start, end);
 					});
-					makeStartTime(timeDataList[0].openTime, timeDataList[0].closeTime);
+					makeStartTime(timeDataList[0].openTime,
+							timeDataList[0].closeTime);
 				}
 			});
 		}
@@ -285,20 +290,22 @@
 
 	rooftop.change(function() {
 		reservedate.val("");
-	
+
 		$.ajax({
-			url : '/ajax/rooftopData?bno='+$('select[name="bno"] option:selected').val(),
+			url : '/ajax/rooftopData?bno='
+					+ $('select[name="bno"] option:selected').val(),
 			type : 'get',
 			dataType : 'json',
 			processData : false,
 			contentType : "application/json;charset=UTF-8",
 			success : function(data) {
 				reservedate.datepicker("destroy");
-				makeDatepicker(new Date(data.opendate),new Date(data.closedate));
+				makeDatepicker(new Date(data.opendate),
+						new Date(data.closedate));
 			}
 		});
 	});
-	
+
 	function collectTime(start, end) {
 		for (start; start < end; start++) {
 			impossibleTime.push(start);
@@ -371,14 +378,15 @@
 				+ type.val() + "' data-count='" + value + "'>" + articleName
 				+ " : " + value + "ea <span>X</span></li>");
 	};
-	
-	$(document).ready(
-			function() {
-				makeDatepicker(
-						new Date(
-								"<fmt:formatDate value="${selectRooftopVO.opendate}" type="date" pattern="yyyy-MM-dd"/>"),
-						new Date(
-								"<fmt:formatDate value="${selectRooftopVO.closedate}" type="date" pattern="yyyy-MM-dd"/>"));
 
-			});
+	$(document)
+			.ready(
+					function() {
+						makeDatepicker(
+								new Date(
+										"<fmt:formatDate value="${selectRooftopVO.opendate}" type="date" pattern="yyyy-MM-dd"/>"),
+								new Date(
+										"<fmt:formatDate value="${selectRooftopVO.closedate}" type="date" pattern="yyyy-MM-dd"/>"));
+
+					});
 </script>

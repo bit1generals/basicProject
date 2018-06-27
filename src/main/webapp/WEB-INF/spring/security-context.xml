@@ -4,14 +4,14 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
 
-	<security:http auto-config="true" use-expressions="false">
+	<security:http auto-config="true" use-expressions="true">
 		<security:form-login login-page="/member/login" />
+		<security:logout logout-url="/member/logout" logout-success-url="/" delete-cookies="JSESSIONID" invalidate-session="true"/>
 		<security:remember-me key="jr99" token-validity-seconds="3600" data-source-ref="dataSource" />		
 		<security:intercept-url pattern="/rooftop/list?state=N" access="ROLE_ADMIN" />
 	</security:http>
 	<security:authentication-manager>
-		<security:authentication-provider
-			user-service-ref="customUserService">
+		<security:authentication-provider user-service-ref="customUserService">
 			<security:password-encoder ref="samepleEncoder" />
 		</security:authentication-provider>
 	</security:authentication-manager>

@@ -25,7 +25,7 @@
 			</div>
 
 			<div class="3u 12u$(xsmall)">
-				<input type="text" name="boardVO.id" value="user0"
+				<input type="text" name="boardVO.id" value="<sec:authentication property='principal.username'/>" 
 					readonly="readonly">
 			</div>
 

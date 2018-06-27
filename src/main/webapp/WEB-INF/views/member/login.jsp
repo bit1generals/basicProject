@@ -2,6 +2,12 @@
 	pageEncoding="UTF-8"%>
 <%@include file="../includes/header.jsp"%>
 
+<sec:authorize access="isAuthenticated()">
+<script>
+	alert("이미 로그인된 사용자입니다.");
+	self.location = "/";
+</script>
+</sec:authorize>
 
 <section>
 	<c:if test="${param.error != null }">
@@ -66,8 +72,8 @@
 
 				<div class="4u 12u$(xsmall)">
 
-					<input type="checkbox" id="rememberMe" name="remember-me"> <label
-						for="rememberMe">Remember Me</label>
+					<input type="checkbox" id="rememberMe" name="remember-me">
+					<label for="rememberMe">Remember Me</label>
 
 					<ul class="actions">
 						<li style="padding-right: 5px;"><input type="submit"
@@ -80,7 +86,7 @@
 
 
 
-				
+
 
 			</div>
 		</form>

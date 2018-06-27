@@ -89,6 +89,7 @@ public class FileController {
 
 
 	@GetMapping("/show")
+	@PreAuthorize("permitAll")
 	public ResponseEntity<byte[]> showFile(FileVO fileVO) throws Exception {
 
 		log.info("show file");
