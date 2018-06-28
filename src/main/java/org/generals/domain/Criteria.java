@@ -1,10 +1,9 @@
 package org.generals.domain;
 
-import java.net.URLDecoder;
-import java.net.URLEncoder;
-
-import org.springframework.web.util.UriComponents;
-import org.springframework.web.util.UriComponentsBuilder;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import lombok.Data;
 import lombok.extern.log4j.Log4j;
@@ -29,9 +28,36 @@ public class Criteria {
 	}
 	
 	public String[] getArr() {
-		log.info("getARR-------------------------------"+this.type.split("-").toString());
-		return this.type.split("-");
+		if(type !=null) {
+			log.info("getARR-------------------------------"+this.type.split("-").toString());
+			log.info("getARR-------------------------------"+Arrays.toString(this.type.split("-")));
+			return this.type.split("-");
+		}
+		return null;
 	}
+	public String[] getSearchRooftopArr() {
+		if(getArr() != null) {
+			List<String> resultList = Arrays.asList(getArr()).stream().filter(target -> !"w".equals(target)).collect(Collectors.toList());
+			log.info("getSearchRooftop : "+ Arrays.toString((String[]) resultList.toArray(new String[0])));
+			if(((String[]) resultList.toArray(new String[0])).length ==0) {
+				return null;
+			}
+			return (String[]) resultList.toArray(new String[0]);
+		}else {
+			return null;
+		}
+		
+	}
+	public String[] getSearchBoardArr() {
+		if(getArr() != null) {
+			List<String> resultList = Arrays.asList(getArr()).stream().filter(target -> "w".equals(target)).collect(Collectors.toList());
+			log.info("getSearchBoardArr : "+ resultList);
+			return (String[]) resultList.toArray(new String[0]);
+		}else {
+			return null;
+		}
+	}
+	
 	
 	public String getKeyword() {
 		log.info("getKeyword---------------------------------"+this.keyword);
@@ -41,5 +67,12 @@ public class Criteria {
 	public void setPage(int page) {
 		this.page = page < 0 ? 1 : page;
 	}
-	
+	public static void main(String[] args) {
+		Criteria cri = new Criteria();
+		cri.type = null;
+		
+		/*cri.getSearchBoard();*/
+		
+		System.out.println(cri.getSearchRooftopArr());
+	}
 }
