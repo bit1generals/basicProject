@@ -7,6 +7,8 @@
 		<h2>Rooftop Modify</h2>
 	</header>
 
+
+
 	<form id="searchForm">
 		<input type="hidden" name="key" value="${rooftopVO.boardVO.bno}">
 		<input type="hidden" name="page" value="${cri.page}">

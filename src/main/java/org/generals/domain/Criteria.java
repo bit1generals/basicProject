@@ -13,7 +13,7 @@ import lombok.extern.log4j.Log4j;
 public class Criteria {
 
 	private int page;
-	private String type, btype, keyword, state;
+	private String type, btype, keyword, state, id;
 
 	public Criteria() {
 		this.page = 1;

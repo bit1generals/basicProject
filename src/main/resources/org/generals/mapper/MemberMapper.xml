@@ -45,4 +45,12 @@
 		update tbl_member set pw = #{pw} where id = #{id}
 	</update>
 
+	<select id="selectMemberVO" resultType="org.generals.domain.MemberVO">
+		select * from tbl_member where id = #{id}
+	</select>
+	
+	<update id="update">
+		update tbl_member set pw = #{pw}, email = #{email}, updatedate = now() where id = #{id}
+	</update>
+	
 </mapper>

@@ -17,8 +17,7 @@
 			<input type="hidden" name="keyword" value="${cri.keyword }">
 			<input type="hidden" name="type" value="${cri.type}">
 		</c:if>
-		<input type="hidden" name="${_csrf.parameterName }"
-			value="${_csrf.token }">
+		
 	</form>
 
 	<div class="row uniform">
@@ -159,11 +158,12 @@
 				disabled="disabled"><c:out
 					value="${rooftopVO.boardVO.content}" /></textarea>
 		</div>
-
+		
 		<div class="12u$">
 			<ul class="actions">
+				<sec:authentication property="principal" var="user"/>
 				<c:if
-					test="${rooftopVO.boardVO.id} == <sec:authentication property='principal.username'/>">
+					test="${rooftopVO.boardVO.id eq user.username}">
 					<li><button class="modify special" data-uri="modify"
 							data-method="get">Modify</button></li>
 					<li><button class="remove" data-uri="remove"

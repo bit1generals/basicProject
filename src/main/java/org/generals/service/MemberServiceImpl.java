@@ -30,6 +30,17 @@ public class MemberServiceImpl extends GenericServiceImpl<MemberVO, String, Memb
 			throw new Exception("memberJoin Fail");
 		}
 	}
+
+	@Override
+	public MemberVO getMember(String id) {
+		return mapper.selectMemberVO(id);
+	}
+
+	@Override
+	public void modify(MemberVO vo) throws Exception {
+		vo.setPw(encoder.encode(vo.getPw()));
+		super.modify(vo);		
+	}
 	
 	
 

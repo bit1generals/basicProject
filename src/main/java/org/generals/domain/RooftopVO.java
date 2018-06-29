@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 public class RooftopVO {
 
 	private Integer rtno,bno, openTime, closeTime;
-	private String rtname, address;
+	private String rtname, address, state;
 	private int maximum;
 	private double lat, lng;
 

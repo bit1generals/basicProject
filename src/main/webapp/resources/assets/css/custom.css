@@ -102,3 +102,8 @@ option:disabled{
 element.style{
     margin-top: 10px;
 }
+
+input[type="text"]:read-only, input[type="text"]:disabled{
+	background-color: rgba(252, 218, 218, 0.3);
+	
+}

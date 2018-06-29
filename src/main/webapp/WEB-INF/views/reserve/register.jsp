@@ -17,8 +17,7 @@
 		<div class="row uniform">
 
 			<input type="hidden" name="${_csrf.parameterName }"
-				value="${_csrf.token }"> <input type="hidden"
-				name="id"
+				value="${_csrf.token }"> <input type="hidden" name="id"
 				value="<sec:authentication property='principal.username'/>"
 				readonly="readonly">
 
@@ -99,6 +98,7 @@
 				<li><input type="submit" id="submit" value="Reservation"></li>
 				<li><input type="reset" id="reset" value="Reset"></li>
 				<li><input type="button" id="cancel" value="Cancel"></li>
+				<li><input type="button" id="list" value="List" data-uri="list"></li>				
 			</ul>
 		</div>
 	</form>
@@ -123,10 +123,14 @@
 	var rooftop = $("#rooftop");
 	var inputForm = $(".inputForm");
 
+	$(".actions .list").click(function name(event) {
+		
+	});
 	$("#cancel").click(function(event) {
 		self.location = "/reserve/list";
 	});
 
+	
 	inputForm
 			.submit(function(event) {
 				var form = $(this);

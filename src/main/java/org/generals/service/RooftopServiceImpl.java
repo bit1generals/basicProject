@@ -55,6 +55,7 @@ public class RooftopServiceImpl extends GenericServiceImpl<RooftopVO, Integer, R
 
 	@Override
 	public List<RooftopVO> getList(Criteria cri) throws Exception {
+		log.info("Service Call!!!!!!");
 		return rooftopMapper.getList(cri);
 	}
 

@@ -49,11 +49,14 @@
 	<select id="selectTime" resultType="org.generals.domain.ReserveVO">
 		select rooftop.bno,
 		starttime, endtime, opentime, closetime from
-		(select starttime, endtime, bno
+		(select starttime,
+		endtime, bno
 		from tbl_reserve_list where bno=#{bno} and
 		reservedate=#{reservedate}
-		and state=#{state}) reserve right outer join (select * from tbl_rooftop where bno=#{bno}) rooftop
-		on reserve.bno = rooftop.bno
+		and state=#{state}) reserve right outer join
+		(select * from tbl_rooftop where bno=#{bno}) rooftop
+		on reserve.bno =
+		rooftop.bno
 	</select>
 
 	<select id="selectArticle" resultType="org.generals.domain.ArticleVO">
@@ -95,7 +98,7 @@
 		<result property="startTime" column="starttime" />
 		<result property="endTime" column="endtime" />
 		<result property="message" column="message" />
-		
+
 		<collection property="rooftopVO" resultMap="rooftopVO"></collection>
 	</resultMap>
 
@@ -108,10 +111,17 @@
 	<select id="selectReserveList" resultMap="reserveVO">
 		select *
 		from (select *
-		from tbl_reserve_list order by reservedate desc)
+		from tbl_reserve_list
+		<where>
+			<if test="id != null">
+				id = #{id}
+			</if>
+		</where>
+		order by reservedate desc)
 		reserve inner
 		join
-		tbl_rooftop rooftop on reserve.bno = rooftop.bno
+		tbl_rooftop rooftop on
+		reserve.bno = rooftop.bno
 		limit #{skip}, 10
 	</select>
 

@@ -30,7 +30,7 @@
 						<input type="hidden" name="${_csrf.parameterName }"
 							value="${_csrf.token }">
 						<button>Logout</button>
-						<a class="button">MyPage</a>
+						<a class="button" href="/member/myPage">MyPage</a>
 					</form>
 				</div>
 			</div>
@@ -122,11 +122,11 @@
 <!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 <script src="/resources/assets/js/main.js"></script>
 <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
-
 <script type="text/javascript"
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2986010b12d8334b24509c1d77fe5837&libraries=services"></script>
+<script src="/resources/assets/js/moment.js"></script>
 <script
-	src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.1/handlebars.js"></script>
+	src="/resources/assets/js/handlebars.js"></script>
 
 <script>
 

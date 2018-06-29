@@ -6,6 +6,18 @@
 	<header class="major">
 		<h2>Rooftop Register</h2>
 	</header>
+
+	<form id="searchForm">
+		<input type="hidden" name="key" value="${rooftopVO.boardVO.bno}">
+		<input type="hidden" name="page" value="${cri.page}">
+		<input type="hidden"
+			name="state" value="${cri.state}">
+		<c:if test="${cri.type != null }">
+			<input type="hidden" name="keyword" value="${cri.keyword }">
+			<input type="hidden" name="type" value="${cri.type}">
+		</c:if>
+	</form>
+
 	<form method="post" class="inputForm">
 		<div class="row uniform">
 			<input type="hidden" name="boardVO.btype" value="R"> <input
@@ -25,7 +37,8 @@
 			</div>
 
 			<div class="3u 12u$(xsmall)">
-				<input type="text" name="boardVO.id" value="<sec:authentication property='principal.username'/>" 
+				<input type="text" name="boardVO.id"
+					value="<sec:authentication property='principal.username'/>"
 					readonly="readonly">
 			</div>
 
@@ -128,6 +141,8 @@
 				<ul class="actions">
 					<li><input type="submit" value="Register" class="special" /></li>
 					<li><input type="reset" value="Reset" /></li>
+					<li><input type="button" value="List" class="list special"
+						data-uri="list"></li>
 				</ul>
 			</div>
 		</div>
@@ -163,6 +178,14 @@
 	var openCloseDate = $(".openCloseDate");
 	var openTime = $(".openTime");
 	var closeTime = $(".closeTime");
+
+	$(".list").click(
+			function(event) {
+				event.preventDefault();
+				var that = $(event.target);
+				$("#searchForm").attr("action", that.data("uri")).attr(
+						"method", that.data("method")).submit();
+			});
 
 	openCloseDate.datepicker({
 		dateFormat : 'yy-mm-dd',

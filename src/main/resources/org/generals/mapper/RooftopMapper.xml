@@ -15,6 +15,7 @@
 		<result property="opendate" column="opendate" />
 		<result property="closedate" column="closedate" />
 		<result property="address" column="address" />
+		<result property="state" column="state" />
 		<collection property="boardVO" resultMap="boardMap" />
 	</resultMap>
 
@@ -50,10 +51,10 @@
 			<if test="type eq 'w'.toString()">id like concat('%',#{keyword},'%')</if>
 		</foreach>
 	</sql>
-	
+
 	<sql id="search">
-		<foreach collection="arr" open=" (" close=")"
-			item="type" separator=" or ">
+		<foreach collection="arr" open=" (" close=")" item="type"
+			separator=" or ">
 			<if test="type eq 'rt'.toString()">rtname </if>
 			<if test="type eq 'a'.toString()">address </if>
 			<if test="type eq 'w'.toString()">id </if>
@@ -64,42 +65,54 @@
 	<select id="getList" resultMap="rooftopMap">
 
 
-		select rtno, rtname, rooftop.bno bno, maximum, lat, lng, opentime,closetime, opendate, closedate, id, title, content, regdate,updatedate,fno,fname, uuid, path, address
+		select rtno, rtname, rooftop.bno bno, maximum, lat, lng,
+		opentime,closetime, opendate, closedate, id, title, content,
+		regdate,updatedate,fno,fname, uuid, path, address, state
 		from
-			(select rtno, rtname, roof.bno,maximum, lat, lng, opentime,closetime,opendate, closedate, id, title,content,regdate,updatedate, address
-			from
-				(select rtno, rtname, bno,maximum, lat, lng, opentime,closetime,opendate, closedate, address
-				from tbl_rooftop 
-				<where>
-					<if test="state != null and state != ''">
-						state = #{state}
-					</if>
-				</where>
-				) roof inner join tbl_board board
-			on roof.bno = board.bno
-			<where>
-				<if test="type != null and type != ''">
-					<include refid="search"/>
-				</if>
-			</where>
-			
-		order by rtno desc limit #{skip}, 12) rooftop left outer join 
+		(select rtno, rtname, roof.bno,maximum, lat, lng,
+		opentime,closetime,opendate, closedate, id,
+		title,content,regdate,updatedate, address, state
+		from
+		(select rtno, rtname, bno,maximum, lat, lng, opentime,closetime,opendate,
+		closedate, address, state
+		from tbl_rooftop
+		<where>
+			<if test="state != null and state != ''">
+				state = #{state}
+			</if>
+		</where>
+		) roof inner join (select * from tbl_board
+		<where>
+		<if test="id != null">
+		 id = #{id}
+		 </if>
+		</where>
+		) board
+		on roof.bno = board.bno
+		<where>
+			<if test="type != null and type != ''">
+				<include refid="search" />
+			</if>
+		
+		</where>
+
+		order by rtno desc limit #{skip}, 12) rooftop left outer join
 		(select * from tbl_file where ftype='Y') files
 		on rooftop.bno = files.bno
 		order by rtno desc
 	</select>
-		<!-- select rtno, rtname, rooftop.bno bno, maximum, lat, lng, opentime, 
-			closetime, opendate, closedate, id, title, content, regdate, updatedate,fno,fname, 
-			uuid, path, address from (select rtno, rtname, roof.bno,maximum, lat, lng, 
-			opentime,closetime,opendate, closedate, id, title,content, regdate,updatedate, 
-			address from (select * from tbl_rooftop <where> <if test="state != null and 
-			state != ''"> state = #{state} </if> <if test="state != null and state != 
-			'' and searchRooftopArr != null"> and </if> <if test="searchRooftopArr != 
-			null"> <include refid="searchRooftop" /> </if> </where> ) roof inner join 
-			(select * from tbl_board <where> <if test="searchBoardArr != null"> <include 
-			refid="searchBoard" /> </if> </where> ) board on roof.bno = board.bno order 
-			by rtno desc limit #{skip}, 12 ) rooftop left outer join (select * from tbl_file 
-			where ftype='Y') files on rooftop.bno = files.bno order by rtno desc -->
+	<!-- select rtno, rtname, rooftop.bno bno, maximum, lat, lng, opentime, 
+		closetime, opendate, closedate, id, title, content, regdate, updatedate,fno,fname, 
+		uuid, path, address from (select rtno, rtname, roof.bno,maximum, lat, lng, 
+		opentime,closetime,opendate, closedate, id, title,content, regdate,updatedate, 
+		address from (select * from tbl_rooftop <where> <if test="state != null and 
+		state != ''"> state = #{state} </if> <if test="state != null and state != 
+		'' and searchRooftopArr != null"> and </if> <if test="searchRooftopArr != 
+		null"> <include refid="searchRooftop" /> </if> </where> ) roof inner join 
+		(select * from tbl_board <where> <if test="searchBoardArr != null"> <include 
+		refid="searchBoard" /> </if> </where> ) board on roof.bno = board.bno order 
+		by rtno desc limit #{skip}, 12 ) rooftop left outer join (select * from tbl_file 
+		where ftype='Y') files on rooftop.bno = files.bno order by rtno desc -->
 
 	<select id="read" resultType="org.generals.domain.RooftopVO">
 		select * from tbl_rooftop where bno
@@ -107,23 +120,30 @@
 	</select>
 
 	<select id="getTotal" resultType="int">
-			
-			select count(rtno)
-			from
-				(select rtno, rtname, bno,maximum, lat, lng, opentime,closetime,opendate, closedate, address
-				from tbl_rooftop 
-				<where>
-					<if test="state != null and state != ''">
-						state = #{state}
-					</if>
-				</where>
-				) roof inner join tbl_board board
-			on roof.bno = board.bno
-			<where>
-				<if test="type != null and type != ''">
-					<include refid="search"/>
-				</if>
-			</where>
+
+		select count(rtno)
+		from
+		(select rtno, rtname, bno,maximum, lat, lng, opentime,closetime,opendate,
+		closedate, address
+		from tbl_rooftop
+		<where>
+			<if test="state != null and state != ''">
+				state = #{state}
+			</if>
+		</where>
+		) roof inner join (select * from tbl_board
+		<where>
+		<if test="id != null">
+		 id = #{id}
+		 </if>
+		</where>
+		) board
+		on roof.bno = board.bno
+		<where>
+			<if test="type != null and type != ''">
+				<include refid="search" />
+			</if>
+		</where>
 
 	</select>
 

@@ -1,11 +1,15 @@
 package org.generals.controller;
 
+import java.security.Principal;
+
 import org.generals.domain.Criteria;
 import org.generals.domain.MemberVO;
 import org.generals.service.MemberService;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -47,6 +51,25 @@ public class MemberController extends AbstractController<MemberVO, String, Membe
 		return "redirect:/";
 	}
 	
+	@GetMapping("/myPage")
+	public void myPage(Principal principal, Model model) {
+		log.info("myPage Get");
+		User user = (User)((Authentication)principal).getPrincipal();
+		model.addAttribute("memberVO", service.getMember(user.getUsername()));
+	}
 	
+	@PostMapping("/myPage")
+	public String modifyPost(MemberVO vo,RedirectAttributes rttr) {
+		log.info("myPage Post");
+		log.info("Check!!! : "+vo);
+		try {
+			service.modify(vo);
+			buildRedirectAttribute(rttr, methodParse(),SUCCESS);
+		} catch (Exception e) {
+			e.printStackTrace();
+			buildRedirectAttribute(rttr, methodParse(),FAIL);
+		}
+		return "redirect:/member/myPage";
+	}
 	
 }

@@ -5,10 +5,12 @@ import java.util.List;
 import java.util.Map;
 
 import org.generals.domain.ArticleVO;
+import org.generals.domain.Criteria;
 import org.generals.domain.ReserveVO;
 import org.generals.domain.RooftopVO;
 import org.generals.service.MemberService;
 import org.generals.service.ReserveService;
+import org.generals.service.RooftopService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
@@ -33,6 +35,9 @@ public class AjaxController {
 	
 	@Setter(onMethod_ = { @Autowired })
 	private ReserveService reserveService;
+	
+	@Setter(onMethod_ = { @Autowired })
+	private RooftopService rooftopService;
 	
 	@Setter(onMethod_ = { @Autowired })
 	private MemberService memberService;
@@ -74,6 +79,27 @@ public class AjaxController {
 		Map<String, Boolean> map = new HashMap<>();
 		map.put("result", memberService.checkID(id));
 		return new ResponseEntity<Map<String, Boolean>> (map, HttpStatus.OK);
+	}
+	
+	@PostMapping(value = "/rooftopList", produces = "application/json")
+	public ResponseEntity<List<RooftopVO>> getRooftopList(@RequestBody Criteria cri) throws Exception {
+		log.info("11111111111 : "+ cri);
+		return new ResponseEntity<List<RooftopVO>> (rooftopService.getList(cri), HttpStatus.OK);
+	}
+	
+	@PostMapping(value = "/reserveList", produces = "application/json")
+	public ResponseEntity<List<ReserveVO>> getReserveList(@RequestBody Criteria cri) {
+		return new ResponseEntity<List<ReserveVO>> (reserveService.getList(cri), HttpStatus.OK);
+	}
+
+	
+	@PostMapping(value = "/rooftopReserveList", produces = "application/json")
+	public ResponseEntity<List<ReserveVO>> getRooftopReserveList(@RequestBody Criteria cri) throws Exception {
+		
+		List<RooftopVO> rooftopList = rooftopService.getList(cri);
+		
+		//미완성 아직 안만짐.
+		return new ResponseEntity<List<ReserveVO>> (reserveService.getList(cri), HttpStatus.OK);
 	}
 	
 }
