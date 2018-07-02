@@ -28,6 +28,7 @@ public class BoardServiceImpl extends GenericServiceImpl<BoardVO, Integer, Board
 	public void register(BoardVO vo) throws Exception {
 		super.register(vo);
 		if(vo.getFiles() != null) {
+			log.info("vo getfile ================== " + vo.getFiles());
 			fileMapper.updateBnoBySelect(vo.getFiles());
 		}
 	}

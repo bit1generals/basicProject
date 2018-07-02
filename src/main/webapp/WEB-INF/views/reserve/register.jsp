@@ -140,7 +140,7 @@
 						function(idx, target) {
 							var inputData = $(target);
 							if (!$(target).val()) {
-								alert(inputData.data("name") + "을 입력해주세요");
+								swal("Oops!", "Please enter " +inputData.data("name"), "warning");
 								event.preventDefault();
 								return submitAllow;
 							}

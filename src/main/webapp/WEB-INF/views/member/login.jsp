@@ -3,16 +3,19 @@
 <%@include file="../includes/header.jsp"%>
 
 <sec:authorize access="isAuthenticated()">
-<script>
-	alert("이미 로그인된 사용자입니다.");
-	self.location = "/";
-</script>
+	<script>
+		swal("You are already signed in.");
+		self.location = "/";
+	</script>
 </sec:authorize>
 
 <section>
 	<c:if test="${param.error != null }">
-		<h2>아이디 혹은 패스워드가 틀렸습니다.</h2>
+		<script>
+			swal("Sorry", "Please check your ID and password!", "warning");
+		</script>
 	</c:if>
+
 	<header class="major">
 		<h2>Login</h2>
 	</header>

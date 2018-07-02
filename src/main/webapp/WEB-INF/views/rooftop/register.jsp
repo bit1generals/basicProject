@@ -1,6 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@include file="../includes/header.jsp"%>
+<style>
+* {
+	font-family: 'Open Sans';
+}
+</style>
+
+
+
+
+
+
+
+
 
 <section>
 	<header class="major">
@@ -9,9 +22,8 @@
 
 	<form id="searchForm">
 		<input type="hidden" name="key" value="${rooftopVO.boardVO.bno}">
-		<input type="hidden" name="page" value="${cri.page}">
-		<input type="hidden"
-			name="state" value="${cri.state}">
+		<input type="hidden" name="page" value="${cri.page}"> <input
+			type="hidden" name="state" value="${cri.state}">
 		<c:if test="${cri.type != null }">
 			<input type="hidden" name="keyword" value="${cri.keyword }">
 			<input type="hidden" name="type" value="${cri.type}">
@@ -21,9 +33,9 @@
 	<form method="post" class="inputForm">
 		<div class="row uniform">
 			<input type="hidden" name="boardVO.btype" value="R"> <input
-				type="hidden" name="lat" value=""> <input type="hidden"
-				name="lng" value=""><input type="hidden"
-				name="${_csrf.parameterName }" value="${_csrf.token }">
+				type="hidden" name="lat" value="" data-name="Rooftop Address">
+			<input type="hidden" name="lng" value="" data-name="Rooftop Address"><input
+				type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
 
 			<div class="9u 12u$(xsmall)">
 				<label>Title</label>
@@ -73,19 +85,38 @@
 				<label>CloseTime</label>
 			</div>
 			<div class="3u 12u$(xsmall)">
-				<input type="text" class="openCloseDate" name="opendate"
+				<!-- <input type="text" class="openCloseDate" name="opendate"
 					autocomplete="off" data-name="OpenDate"
-					placeholder="Input OpenDate" />
+					placeholder="Input OpenDate" /> -->
+
+				<div ng-controller="mainController" class="ng-scope">
+					<input ng-flat-datepicker="" type="text" name="opendate"
+						placeholder="Input OpenDate" autocomplete="off"
+						data-name="OpenDate" ng-model="date" allow-future="true"
+						min-date="minDate" max-date="maxDate" date-format="'YYYY-MM-DD'"
+						class="ng-valid ng-isolate-scope ng-touched ng-dirty ng-valid-parse">
+				</div>
+
 			</div>
 
+
 			<div class="3u 12u$(xsmall)">
-				<input type="text" class="openCloseDate" name="closedate"
+				<!-- <input type="text" class="openCloseDate" name="closedate"
 					autocomplete="off" data-name="CloseDate"
-					placeholder="Input CloseDate" />
+					placeholder="Input CloseDate" /> -->
+
+				<div ng-controller="mainController" class="ng-scope">
+					<input ng-flat-datepicker="" type="text" name="closedate"
+						placeholder="Input CloseDate" autocomplete="off"
+						data-name="CloseDate" ng-model="date" allow-future="true"
+						min-date="minDate" date-format="'YYYY-MM-DD'"
+						class="ng-valid ng-isolate-scope ng-touched ng-dirty ng-valid-parse">
+				</div>
 			</div>
 
 			<div class="3u 12u$(xsmall)">
-				<select name="openTime" class="openTime" data-name="OpenTime">
+				 <select
+					name="openTime" class="openTime" data-name="OpenTime">
 					<c:forEach begin="0" end="23" var="num">
 						<option value="${num}">${num}:00</option>
 					</c:forEach>
@@ -179,6 +210,10 @@
 	var openTime = $(".openTime");
 	var closeTime = $(".closeTime");
 
+	//moment().format('YYYY[-]MM[-]DD')
+	var minDate = moment().format('YYYY[-]MM[-]DD');
+	console.log(minDate);
+
 	$(".list").click(
 			function(event) {
 				event.preventDefault();
@@ -250,14 +285,17 @@
 		var html = "";
 		var submitAllow = false;
 
-		inputForm.find("input, select, textarea").each(function(idx, target) {
-			var inputData = $(target);
-			if (!inputData.val()) {
-				alert(inputData.data("name") + "을(를) 입력해주세요");
-				event.preventDefault();
-				return submitAllow;
-			}
-		});
+		inputForm.find("input, select, textarea").each(
+				function(idx, target) {
+					var inputData = $(target);
+					if (!inputData.val()) {
+						console.dir(inputData);
+						swal("Oops!", "Please enter " + inputData.data("name"),
+								"warning");
+						event.preventDefault();
+						return submitAllow;
+					}
+				});
 
 		$(".uploadFile li").each(
 				function(i, data) {

@@ -17,7 +17,6 @@
 			<input type="hidden" name="keyword" value="${cri.keyword }">
 			<input type="hidden" name="type" value="${cri.type}">
 		</c:if>
-		
 	</form>
 
 	<div class="row uniform">
@@ -31,6 +30,7 @@
 		<div class="9u 12u$(xsmall)">
 			<input type="text" name="title"
 				value='<c:out value="${rooftopVO.boardVO.title}"/>' disabled>
+				
 		</div>
 
 		<div class="3u 12u$(xsmall)">
@@ -171,13 +171,13 @@
 				</c:if>
 				<li><button class="list special" data-uri="list"
 						data-method="get">List</button></li>
-				<c:if test="${cri.state eq 'N'}">
+				<c:if test="${rooftopVO.state eq 'N'}">
 					<sec:authorize access="hasRole('ROLE_ADMIN')">
 						<li><button class="authorize" data-uri="authorize"
 								data-method="post">Authorize</button></li>
 					</sec:authorize>
 				</c:if>
-				<c:if test="${cri.state eq 'Y'}">
+				<c:if test="${rooftopVO.state eq 'Y'}">
 					<li><button class="reserve special"
 							data-uri="/reserve/register" data-method="get">Reservation</button></li>
 				</c:if>
@@ -230,9 +230,14 @@
 
 	$(".actions li").click(function(event) {
 		
-				var that = $(event.target);
-				formObj.attr("action", that.data("uri")).attr("method",
-						that.data("method")).submit();
+			var that = $(event.target);
+
+			if(that.data("method")=="post"){
+				formObj.append("<input type='hidden' name='${_csrf.parameterName }' value='${_csrf.token }'>");
+			}
+			
+			formObj.attr("action", that.data("uri")).attr("method",
+					that.data("method")).submit();
 	});
 	
 	$(document).ready(function(){

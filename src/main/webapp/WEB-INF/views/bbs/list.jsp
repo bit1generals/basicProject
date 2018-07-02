@@ -21,7 +21,7 @@
 					</div>
 				</div>
 				<c:choose>
-					<c:when test="${boardVO.content.length() > 50}">
+					<c:when test="${boardVO.content.length() > 100}">
 						<p>${boardVO.content.substring(0,50)}...... (づ｡◕‿‿◕｡)づ </p>
 					</c:when>
 					<c:otherwise>
@@ -125,7 +125,7 @@
 		
 		if(keyword.length == 0){
 			event.preventDefault();
-			alert("검색어를 입력하세요.");
+			swal("Please enter your search term.");
 		}
 	});
 </script>

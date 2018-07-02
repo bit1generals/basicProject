@@ -306,7 +306,7 @@
 		inputForm.find("input, select, textarea").each(function(idx, target) {
 			var inputData = $(target);
 			if (!inputData.val()) {
-				alert(inputData.data("name") + "을(를) 입력해주세요");
+				swal("Oops!", "Please enter " +inputData.data("name"), "warning");
 				event.preventDefault();
 				return submitAllow;
 			}

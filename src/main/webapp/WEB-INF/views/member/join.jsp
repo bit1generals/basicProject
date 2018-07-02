@@ -186,7 +186,7 @@
 		if (check) {
 			return true;
 		} else {
-			alert(target.name + "를 다시 입력해주세요.");
+			swal("Oops!", "Please re-enter " +target.name, "warning");
 			return false;
 		}
 	}
@@ -194,7 +194,7 @@
 	function checkEmptyValue(target) {
 		var value = $(target).val();
 		if (value == "") {
-			alert(target.name + "을(를) 입력해주세요.");
+			swal("Oops!", "Please re-enter " +target.name, "warning");
 			return false;
 		}
 		return true;

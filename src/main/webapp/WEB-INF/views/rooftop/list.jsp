@@ -170,7 +170,7 @@
 
 		if (keyword.length == 0) {
 			event.preventDefault();
-			alert("검색어를 입력하세요.");
+			swal("Please enter your search term.");
 		}
 	});
 	

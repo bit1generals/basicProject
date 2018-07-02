@@ -61,7 +61,7 @@
 						<input type="checkbox" id="rememberMe" name="remember-me">
 						<label for="rememberMe">Remember Me</label>
 						<ul class="actions">
-							<li><button>Login</button></li>
+							<li><input type="submit" value="Login"></li>
 							<li><a href="/member/join" class="button">Join</a></li>
 						</ul>
 					</div>
@@ -121,17 +121,20 @@
 <script src="/resources/assets/js/util.js"></script>
 <!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 <script src="/resources/assets/js/main.js"></script>
-<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+<script src="/resources/assets/js/jquery-ui.min.js"></script>
 <script type="text/javascript"
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2986010b12d8334b24509c1d77fe5837&libraries=services"></script>
 <script src="/resources/assets/js/moment.js"></script>
+<script src="/resources/assets/js/handlebars.js"></script>
 <script
-	src="/resources/assets/js/handlebars.js"></script>
+	src="/resources/assets/js/angular.min.js"></script>
+<script src="/resources/assets/js/ng-flat-datepicker.js"></script>
+<script src="/resources/assets/js/app.js"></script>
 
 <script>
 
 if(${msg ne null}){
-	alert("${msg}");
+	swal("${msg}");
 }
 </script>
 </body>

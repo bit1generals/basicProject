@@ -205,6 +205,36 @@
 	</tbody>
 </table>
 </script>
+<script id="myRooftopReserveList" type="text/x-handlebars-template">
+<table>
+	<thead>
+		<tr>
+			<th>No</th>
+			<th>Rooftop Name</th>
+			<th>reserver ID</th>
+			<th>Reserve Date</th>
+			<th>Start Time</th>
+			<th>End Time</th>
+			<th>Regdate</th>
+		</tr>
+	</thead>
+	<tbody>
+		{{#each .}}
+			<tr class="rowData" >
+				<td>{{rno}}</td>
+				<td>{{rooftopVO.rtname}}</td>
+				<th>{{rooftopVO.boardVO.id}}</th>
+				<td>{{reservedate}}</td>
+				<td>{{formatTime startTime "hh:mm"}}</td>
+				<td>{{formatTime endTime "hh:mm"}}</td>
+				<td>{{formatTime regdate "YYYY-MM-DD h:mm"}}</td>
+				<td>{{state}}</td>
+			</tr>
+		{{/each}}
+	
+	</tbody>
+</table>
+</script>
 <script>
 	var pwCheckAction = $(".pwCheckAction");
 	var pwCheck = $("#pwCheck");
@@ -273,7 +303,7 @@
 		if (check) {
 			return true;
 		} else {
-			alert(target.name + "를 다시 입력해주세요.");
+			swal("Oops!", "Please re-enter " +target.name, "warning");
 			return false;
 		}
 	}
@@ -281,7 +311,7 @@
 	function checkEmptyValue(target) {
 		var value = $(target).val();
 		if (value == "") {
-			alert(target.name + "을(를) 입력해주세요.");
+			swal("Oops!", "Please re-enter " +target.name, "warning");
 			return false;
 		}
 		return true;
