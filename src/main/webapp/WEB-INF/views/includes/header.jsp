@@ -14,14 +14,18 @@
 <link rel="stylesheet" href="/resources/assets/css/main.css" />
 <link rel="stylesheet" href="/resources/assets/css/custom.css" />
 <link rel="stylesheet" href="/resources/assets/css/jquery-ui.css" />
+<link rel="stylesheet" href="/resources/assets/css/nice-select.css" />
+<link href="/resources/assets/css/datepicker.min.css" rel="stylesheet"
+	type="text/css">
+
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-<link rel="stylesheet" href="/resources/assets/css/ng-flat-datepicker.css"/>
+
 
 <!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
 <!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 
 </head>
-<body ng-app="testApp" ng-strict-di> 
+<body> 
 
 	<!-- Wrapper -->
 	<div id="wrapper">

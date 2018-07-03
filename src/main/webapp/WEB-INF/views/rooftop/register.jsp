@@ -1,20 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@include file="../includes/header.jsp"%>
-<style>
+<!-- <style>
 * {
 	font-family: 'Open Sans';
 }
 </style>
-
-
-
-
-
-
-
-
-
+ -->
 <section>
 	<header class="major">
 		<h2>Rooftop Register</h2>
@@ -85,33 +77,16 @@
 				<label>CloseTime</label>
 			</div>
 			<div class="3u 12u$(xsmall)">
-				<!-- <input type="text" class="openCloseDate" name="opendate"
+				 <input type="text" class="openCloseDate datepicker-here" name="opendate"
 					autocomplete="off" data-name="OpenDate"
-					placeholder="Input OpenDate" /> -->
-
-				<div ng-controller="mainController" class="ng-scope">
-					<input ng-flat-datepicker="" type="text" name="opendate"
-						placeholder="Input OpenDate" autocomplete="off"
-						data-name="OpenDate" ng-model="date" allow-future="true"
-						min-date="minDate" max-date="maxDate" date-format="'YYYY-MM-DD'"
-						class="ng-valid ng-isolate-scope ng-touched ng-dirty ng-valid-parse">
-				</div>
-
+					placeholder="Input OpenDate"  /> 
 			</div>
 
 
 			<div class="3u 12u$(xsmall)">
-				<!-- <input type="text" class="openCloseDate" name="closedate"
+				 <input type="text" class="openCloseDate datepicker-here" name="closedate"
 					autocomplete="off" data-name="CloseDate"
-					placeholder="Input CloseDate" /> -->
-
-				<div ng-controller="mainController" class="ng-scope">
-					<input ng-flat-datepicker="" type="text" name="closedate"
-						placeholder="Input CloseDate" autocomplete="off"
-						data-name="CloseDate" ng-model="date" allow-future="true"
-						min-date="minDate" date-format="'YYYY-MM-DD'"
-						class="ng-valid ng-isolate-scope ng-touched ng-dirty ng-valid-parse">
-				</div>
+					placeholder="Input CloseDate" > 
 			</div>
 
 			<div class="3u 12u$(xsmall)">
@@ -210,9 +185,7 @@
 	var openTime = $(".openTime");
 	var closeTime = $(".closeTime");
 
-	//moment().format('YYYY[-]MM[-]DD')
-	var minDate = moment().format('YYYY[-]MM[-]DD');
-	console.log(minDate);
+
 
 	$(".list").click(
 			function(event) {
@@ -222,9 +195,16 @@
 						"method", that.data("method")).submit();
 			});
 
-	openCloseDate.datepicker({
+	/* openCloseDate.datepicker({
 		dateFormat : 'yy-mm-dd',
 		minDate : 1
+	}); */
+	
+	openCloseDate.datepicker({
+	    language: 'en',
+	    dateFormat : 'yy-mm-dd',
+	    autoClose: true,
+	    minDate: new Date() // Now can select only dates, which goes after today
 	});
 
 	fileDrop.on("dragenter dragover", function(event) {

@@ -42,8 +42,9 @@
 
 			<div class="6u 12u$(xsmall) firstRow">
 				<div class="select-wrapper">
-					<input type="text" id="reservedate" name="reservedate"
+					<input type="text" id="reservedate" class="datepicker-here" name="reservedate"
 						data-name="Date" autocomplete="off" />
+				
 				</div>
 			</div>
 
@@ -98,7 +99,7 @@
 				<li><input type="submit" id="submit" value="Reservation"></li>
 				<li><input type="reset" id="reset" value="Reset"></li>
 				<li><input type="button" id="cancel" value="Cancel"></li>
-				<li><input type="button" id="list" value="List" data-uri="list"></li>				
+				<li><input type="button" id="list" value="List" data-uri="list"></li>
 			</ul>
 		</div>
 	</form>
@@ -123,14 +124,14 @@
 	var rooftop = $("#rooftop");
 	var inputForm = $(".inputForm");
 
+
 	$(".actions .list").click(function name(event) {
-		
+
 	});
 	$("#cancel").click(function(event) {
 		self.location = "/reserve/list";
 	});
 
-	
 	inputForm
 			.submit(function(event) {
 				var form = $(this);
@@ -140,7 +141,8 @@
 						function(idx, target) {
 							var inputData = $(target);
 							if (!$(target).val()) {
-								swal("Oops!", "Please enter " +inputData.data("name"), "warning");
+								swal("Oops!", "Please enter "
+										+ inputData.data("name"), "warning");
 								event.preventDefault();
 								return submitAllow;
 							}
@@ -176,19 +178,23 @@
 
 	function makeDatepicker(opendate, closedate) {
 
-		console.log(opendate);
-		console.log(closedate);
+	    console.log(opendate);
+		console.log(closedate);		
+		
 		reservedate.datepicker({
-			dateFormat : 'yy-mm-dd',
-			minDate : (opendate > new Date() ? opendate : 1),
+		    language: 'en',
+		    dateFormat : 'yyyy-mm-dd',
+		    autoClose: true,
+		    minDate : (opendate > new Date() ? opendate : new Date()),
 			maxDate : closedate
-		})
+		});
 	};
 
 	//console.dir($('.firstRow input'));
 
 	firstRow.on("change", "select,input", function(e) {
-		//console.dir($(this));
+		console.dir("check~!~!~!~!"+$(this));
+		
 	});
 
 	thirdRow.find('option:first').attr('selected', 'selected');
@@ -243,23 +249,27 @@
 
 	// get end time event
 	startTime.change(function(event) {
+		console.log("start change!");
 		endTime.empty();
 		var start = new Date(this.value).getHours();
 		var end = findEndTime(start, $(this[0]).data("close"));
-		var date = reservedate.val();
+		var date = reservedate.val().trim();
 		for (start += 1; start <= end; start++) {
 			endTime.append('<option value="' + date + ' '
 					+ ('00' + start).slice(-2) + ':00:00">' + start
 					+ ':00</option>');
-		}
-		;
+		};
+		console.dir(new Date(this.value));
+		console.log("start : "+start);
+		console.log("end : "+end);
+		console.log("date : "+date);
 
 	});
 
 	// get date event
-	firstRow.change(function(event) {
+	firstRow.on("change",function(event) {
 		init();
-
+		console.log("check");
 		if (reservedate.val() != "") {
 			$(".secondRow").show();
 			var obj = {
@@ -304,8 +314,9 @@
 			contentType : "application/json;charset=UTF-8",
 			success : function(data) {
 				reservedate.datepicker("destroy");
-				makeDatepicker(new Date(data.opendate),
-						new Date(data.closedate));
+			   makeDatepicker(new Date(data.opendate),
+						new Date(data.closedate)); 
+		
 			}
 		});
 	});
@@ -316,8 +327,9 @@
 		}
 	};
 	function makeStartTime(openTime, closeTime) {
-		var date = reservedate.val();
-
+		var date = reservedate.val().trim();
+		console.log("Date:"+date);
+		
 		startTime.append('<option data-close="'+closeTime+'"></option>');
 
 		for (var num = openTime; num < closeTime; num++) {
@@ -328,8 +340,8 @@
 					+ ':00:00"'
 					+ (impossibleTime.includes(num) ? 'disabled="disabled"'
 							: '') + '">' + num + ':00</option>');
-		}
-		;
+		};
+		//startTime.niceSelect();
 	};
 
 	function init() {
@@ -391,6 +403,6 @@
 										"<fmt:formatDate value="${selectRooftopVO.opendate}" type="date" pattern="yyyy-MM-dd"/>"),
 								new Date(
 										"<fmt:formatDate value="${selectRooftopVO.closedate}" type="date" pattern="yyyy-MM-dd"/>"));
-
+						 //rooftop.niceSelect();
 					});
 </script>

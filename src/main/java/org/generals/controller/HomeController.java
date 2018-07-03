@@ -26,5 +26,9 @@ public class HomeController extends AbstractController<RooftopVO, Integer, Rooft
 		
 		return "home";
 	}
-	
+	@PreAuthorize("permitAll")
+	@RequestMapping(value = "/test", method = RequestMethod.GET)
+	public void test(Model model) {
+		
+	}
 }

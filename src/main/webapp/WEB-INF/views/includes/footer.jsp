@@ -117,6 +117,7 @@
 
 <!-- Scripts -->
 <script src="/resources/assets/js/jquery.min.js"></script>
+<script src="/resources/assets/js/jquery.nice-select.js"></script>
 <script src="/resources/assets/js/skel.min.js"></script>
 <script src="/resources/assets/js/util.js"></script>
 <!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
@@ -126,10 +127,8 @@
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2986010b12d8334b24509c1d77fe5837&libraries=services"></script>
 <script src="/resources/assets/js/moment.js"></script>
 <script src="/resources/assets/js/handlebars.js"></script>
-<script
-	src="/resources/assets/js/angular.min.js"></script>
-<script src="/resources/assets/js/ng-flat-datepicker.js"></script>
-<script src="/resources/assets/js/app.js"></script>
+<script src="/resources/assets/js/datepicker.min.js"></script>
+<script src="/resources/assets/js/datepicker.en.js"></script>
 
 <script>
 
