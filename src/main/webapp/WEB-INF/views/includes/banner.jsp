@@ -22,6 +22,6 @@
 	</div>
 	<span class="image object"> <img
 		src="/resources/images/5.jpg" alt="" />
-		<!-- Last Commit -->
+		<!-- Last Commit from sh -->
 	</span>
 </section>
