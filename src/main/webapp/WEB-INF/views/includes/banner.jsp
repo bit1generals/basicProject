@@ -21,6 +21,6 @@
 		</ul>
 	</div>
 	<span class="image object"> <img
-		src="/resources/images/dotte4.gif" alt="" />
+		src="/resources/images/5.jpg" alt="" />
 	</span>
 </section>
