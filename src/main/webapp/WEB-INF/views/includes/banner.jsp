@@ -22,5 +22,6 @@
 	</div>
 	<span class="image object"> <img
 		src="/resources/images/5.jpg" alt="" />
+		<!-- Last Commit -->
 	</span>
 </section>
