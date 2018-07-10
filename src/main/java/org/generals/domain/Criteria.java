@@ -35,10 +35,10 @@ public class Criteria {
 		}
 		return null;
 	}
-	public String[] getSearchRooftopArr() {
+	public String[] getSearchStageArr() {
 		if(getArr() != null) {
 			List<String> resultList = Arrays.asList(getArr()).stream().filter(target -> !"w".equals(target)).collect(Collectors.toList());
-			log.info("getSearchRooftop : "+ Arrays.toString((String[]) resultList.toArray(new String[0])));
+			log.info("getSearchStage : "+ Arrays.toString((String[]) resultList.toArray(new String[0])));
 			if(((String[]) resultList.toArray(new String[0])).length ==0) {
 				return null;
 			}
@@ -73,6 +73,6 @@ public class Criteria {
 		
 		/*cri.getSearchBoard();*/
 		
-		System.out.println(cri.getSearchRooftopArr());
+		System.out.println(cri.getSearchStageArr());
 	}
 }

@@ -10,7 +10,7 @@
 
 
 	<form id="searchForm">
-		<input type="hidden" name="key" value="${rooftopVO.boardVO.bno}">
+		<input type="hidden" name="key" value="${stageVO.boardVO.bno}">
 		<input type="hidden" name="page" value="${cri.page}">
 
 		<c:if test="${param.state != null }">
@@ -25,10 +25,10 @@
 	<form method="post" class="inputForm">
 		<div class="row uniform">
 			<input type="hidden" name="boardVO.bno"
-				value="${rooftopVO.boardVO.bno}"> <input type="hidden"
+				value="${stageVO.boardVO.bno}"> <input type="hidden"
 				name="boardVO.btype" value="R"> <input type="hidden"
-				name="lat" value="${rooftopVO.lat}"> <input type="hidden"
-				name="lng" value="${rooftopVO.lng}"> <input type="hidden"
+				name="lat" value="${stageVO.lat}"> <input type="hidden"
+				name="lng" value="${stageVO.lng}"> <input type="hidden"
 				name="${_csrf.parameterName }" value="${_csrf.token }">
 
 			<div class="9u 12u$(xsmall)">
@@ -40,13 +40,13 @@
 
 			<div class="9u 12u$(xsmall)">
 				<input type="text" name="boardVO.title"
-					value='<c:out value="${rooftopVO.boardVO.title}"/>'
+					value='<c:out value="${stageVO.boardVO.title}"/>'
 					data-name="Title">
 			</div>
 
 			<div class="3u 12u$(xsmall)">
 				<input type="text" name="boardVO.id"
-					value='<c:out value="${rooftopVO.boardVO.id}"/>' disabled>
+					value='<c:out value="${stageVO.boardVO.id}"/>' disabled>
 			</div>
 
 
@@ -58,12 +58,12 @@
 			</div>
 
 			<div class="9u 12u$(xsmall)">
-				<input type="text" name="rtname" value="${rooftopVO.rtname}"
-					data-name="Rooftop Name">
+				<input type="text" name="rtname" value="${stageVO.rtname}"
+					data-name="Stage Name">
 			</div>
 
 			<div class="3u 12u$(xsmall)">
-				<input type="text" name="maximum" value="${rooftopVO.maximum}"
+				<input type="text" name="maximum" value="${stageVO.maximum}"
 					data-name="Maximum People">
 			</div>
 
@@ -77,12 +77,12 @@
 
 			<div class="6u 12u$(xsmall)">
 				<input type="text"
-					value='<fmt:formatDate value="${rooftopVO.boardVO.regdate}" type="both"/>'
+					value='<fmt:formatDate value="${stageVO.boardVO.regdate}" type="both"/>'
 					disabled>
 			</div>
 			<div class="6u 12u$(xsmall)">
 				<input type="text"
-					value='<fmt:formatDate value="${rooftopVO.boardVO.updatedate}" type="both"/>'
+					value='<fmt:formatDate value="${stageVO.boardVO.updatedate}" type="both"/>'
 					disabled>
 			</div>
 
@@ -103,7 +103,7 @@
 			<div class="3u 12u$(xsmall)">
 				<input type="text" class="openCloseDate datepicker-here"
 					name="opendate" autocomplete="off" data-name="OpenDate"
-					value='<fmt:formatDate value="${rooftopVO.opendate}" pattern="yyyy-MM-dd" type="date"/>'
+					value='<fmt:formatDate value="${stageVO.opendate}" pattern="yyyy-MM-dd" type="date"/>'
 					placeholder="Input OpenDate" />
 			</div>
 
@@ -111,7 +111,7 @@
 			<div class="3u 12u$(xsmall)">
 				<input type="text" class="openCloseDate datepicker-here"
 					name="closedate" autocomplete="off" data-name="CloseDate"
-					value='<fmt:formatDate value="${rooftopVO.closedate}" pattern="yyyy-MM-dd" type="date"/>'
+					value='<fmt:formatDate value="${stageVO.closedate}" pattern="yyyy-MM-dd" type="date"/>'
 					placeholder="Input CloseDate">
 			</div>
 
@@ -120,13 +120,13 @@
 				<select name="openTime" class="openTime" data-name="OpenTime">
 					<c:forEach begin="0" end="23" var="num">
 						<option value="${num}"
-							${num eq rooftopVO.openTime ? 'selected':''}>${num}:00</option>
+							${num eq stageVO.openTime ? 'selected':''}>${num}:00</option>
 					</c:forEach>
 				</select>
 			</div>
 			<div class="3u 12u$(xsmall)">
 				<select name="closeTime" class="closeTime" data-name="CloseTime">
-					<c:forEach begin="${rooftopVO.closeTime}" end="24" var="num">
+					<c:forEach begin="${stageVO.closeTime}" end="24" var="num">
 						<option value="${num}">${num}:00</option>
 					</c:forEach>
 				</select>
@@ -137,8 +137,8 @@
 			</div>
 
 			<div class="10u 12u$(xsmall)">
-				<input type="text" name="address" value="${rooftopVO.address}"
-					id="address" data-name="Rooftop Address">
+				<input type="text" name="address" value="${stageVO.address}"
+					id="address" data-name="Stage Address">
 			</div>
 
 			<div class="2u 12u$(xsmall)">
@@ -160,7 +160,7 @@
 					<div class="fileZone">
 						<ul class="uploadFile">
 
-							<c:forEach items="${rooftopVO.boardVO.files}" var="fileVO">
+							<c:forEach items="${stageVO.boardVO.files}" var="fileVO">
 									<div class="fileWrapper">
 										<div class="fileContent">
 											<c:choose>
@@ -194,7 +194,7 @@
 			<div class="12u$">
 				<textarea name="boardVO.content" rows="12" style="resize: none"
 					data-name="Content"><c:out
-						value="${rooftopVO.boardVO.content}" /></textarea>
+						value="${stageVO.boardVO.content}" /></textarea>
 			</div>
 
 			<div class="12u$">
@@ -207,7 +207,7 @@
 			</div>
 		</div>
 	</form>
-	<a>fileVO = ${rooftopVO.boardVO.files}</a>
+	<a>fileVO = ${stageVO.boardVO.files}</a>
 
 </section>
 </div>
@@ -321,13 +321,13 @@
 					var file = $(data);
 					console.log('FILE VO');
 					console.dir(i);
-					html += "<input type='hidden' name='rooftopVO.boardVO.files[" + i
+					html += "<input type='hidden' name='stageVO.boardVO.files[" + i
 							+ "].fname' value='" + file.data("fname") + "'>";
-					html += "<input type='hidden' name='rooftopVO.boardVO.files[" + i
+					html += "<input type='hidden' name='stageVO.boardVO.files[" + i
 							+ "].uuid' value='" + file.data("uuid") + "'>";
-					html += "<input type='hidden' name='rooftopVO.boardVO.files[" + i
+					html += "<input type='hidden' name='stageVO.boardVO.files[" + i
 							+ "].path' value='" + file.data("path") + "'>";
-					html += "<input type='hidden' name='rooftopVO.boardVO.files[" + i
+					html += "<input type='hidden' name='stageVO.boardVO.files[" + i
 							+ "].ftype' value='" + file.data("ftype") + "'>";
 				});
 		inputForm.append(html);
@@ -362,7 +362,7 @@
 	});
 	
 	$(document).ready(function(){
-		if(${rooftopVO.boardVO.files[0].fno != null}){
+		if(${stageVO.boardVO.files[0].fno != null}){
 			$(".fileDrop").show();
 			fileAttach.data("show", true);
 		}

@@ -4,7 +4,7 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import org.generals.domain.RooftopVO;
+import org.generals.domain.StageVO;
 import org.generals.service.StageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 @Scope( proxyMode = ScopedProxyMode.TARGET_CLASS )
-public class HomeController extends AbstractController<RooftopVO, Integer, StageService> {
+public class HomeController extends AbstractController<StageVO, Integer, StageService> {
 	
 	@PreAuthorize("permitAll")
 	@RequestMapping(value = "/", method = RequestMethod.GET)

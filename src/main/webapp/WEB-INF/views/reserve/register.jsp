@@ -30,8 +30,8 @@
 
 			<div class="6u 12u$(xsmall) firstRow">
 				<div class="select-wrapper">
-					<select name="bno" id="rooftop" data-name="Rooftop">
-						<option value = "${selectRooftopVO.bno}"> ${selectRooftopVO.rtname} (${selectRooftopVO.maximum} person)
+					<select name="bno" id="stage" data-name="Stage">
+						<option value = "${selectStageVO.bno}"> ${selectStageVO.rtname} (${selectStageVO.maximum} person)
 					</select>
 				</div>
 			</div>
@@ -98,9 +98,9 @@
 				<li><input type="button" id="list" value="List" data-uri="list"></li>
 			</ul>
 		</div>
-		<a>rooftopVO = ${rooftopVO}<br></a> 
-		<a>rooftopList = ${rooftopList}<br></a> 
-		<a>selectRooftopVO = ${selectRooftopVO}<br></a> 
+		<a>stageVO = ${stageVO}<br></a> 
+		<a>stageList = ${stageList}<br></a> 
+		<a>selectStageVO = ${selectStageVO}<br></a> 
 		<a>key = ${key}</a>
 	</form>
 
@@ -123,7 +123,7 @@
 	var secondRow = $(".secondRow");
 	var thirdRow = $(".thirdRow");
 	var serialsMap = new Map();
-	var rooftop = $("#rooftop");
+	var stage = $("#stage");
 	var inputForm = $(".inputForm");
 
 	$("#list").click(function(event) {
@@ -189,7 +189,7 @@
 			onSelect: function(value){
 				init();
 				var obj = {
-						"bno" : "${selectRooftopVO .bno}",
+						"bno" : "${selectStageVO .bno}",
 						"reservedate" : value + " 00"
 					};
 				$.ajax({
@@ -373,9 +373,9 @@
 					function() {
 						makeDatepicker(
 								new Date(
-										"<fmt:formatDate value="${selectRooftopVO.opendate}" type="date" pattern="yyyy-MM-dd"/>"),
+										"<fmt:formatDate value="${selectStageVO.opendate}" type="date" pattern="yyyy-MM-dd"/>"),
 								new Date(
-										"<fmt:formatDate value="${selectRooftopVO.closedate}" type="date" pattern="yyyy-MM-dd"/>"));
-						//rooftop.niceSelect();
+										"<fmt:formatDate value="${selectStageVO.closedate}" type="date" pattern="yyyy-MM-dd"/>"));
+						//stage.niceSelect();
 					});
 </script>

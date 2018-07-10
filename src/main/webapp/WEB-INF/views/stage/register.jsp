@@ -9,11 +9,11 @@
  -->
 <section>
 	<header class="major">
-		<h2>Rooftop Register</h2>
+		<h2>Stage Register</h2>
 	</header>
 
 	<form id="searchForm">
-		<input type="hidden" name="key" value="${rooftopVO.boardVO.bno}">
+		<input type="hidden" name="key" value="${stageVO.boardVO.bno}">
 		<input type="hidden" name="page" value="${cri.page}"> <input
 			type="hidden" name="state" value="${cri.state}">
 		<c:if test="${cri.type != null }">
@@ -25,8 +25,8 @@
 	<form method="post" class="inputForm">
 		<div class="row uniform">
 			<input type="hidden" name="boardVO.btype" value="R"> <input
-				type="hidden" name="lat" value="" data-name="Rooftop Address">
-			<input type="hidden" name="lng" value="" data-name="Rooftop Address"><input
+				type="hidden" name="lat" value="" data-name="Stage Address">
+			<input type="hidden" name="lng" value="" data-name="Stage Address"><input
 				type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
 
 			<div class="9u 12u$(xsmall)">
@@ -47,15 +47,15 @@
 			</div>
 
 			<div class="9u 12u$(xsmall)">
-				<label>Rooftop Name</label>
+				<label>Stage Name</label>
 			</div>
 			<div class="3u 12u$(xsmall)">
 				<label>Maximum</label>
 			</div>
 
 			<div class="9u 12u$(xsmall)">
-				<input type="text" name="rtname" value="rooftop name"
-					placeholder="Input Rooftop Name" data-name="Rooftop Name">
+				<input type="text" name="rtname" value="stage name"
+					placeholder="Input Stage Name" data-name="Stage Name">
 			</div>
 
 			<div class="3u 12u$(xsmall)">
@@ -108,7 +108,7 @@
 			<div class="10u 12u$(xsmall)">
 				<input type="text" name="address" value="서울특별시 종로구 종로2가 9"
 					id="address" placeholder="Input Address"
-					data-name="Rooftop Address">
+					data-name="Stage Address">
 			</div>
 
 			<div class="2u 12u$(xsmall)">
@@ -348,7 +348,7 @@
 												// 인포윈도우로 장소에 대한 설명을 표시합니다
 												infoWindow = new daum.maps.InfoWindow(
 														{
-															content : '<div style="width:150px;text-align:center;padding:6px 0;">My Rooftop</div>'
+															content : '<div style="width:150px;text-align:center;padding:6px 0;">My Stage</div>'
 														});
 												infoWindow.open(map, marker);
 												// 지도의 중심을 결과값으로 받은 위치로 이동시킵니다

@@ -4,14 +4,14 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.generals.mapper.ReserveMapper">
 
-	<select id="selectRooftop" resultType="org.generals.domain.RooftopVO">
-		select * from tbl_rooftop
+	<select id="selectStage" resultType="org.generals.domain.StageVO">
+		select * from tbl_stage
 		where state = 'Y' and closedate >= now()
 	</select>
 
-	<select id="selectRooftopByBno" resultType="org.generals.domain.RooftopVO">
+	<select id="selectStageByBno" resultType="org.generals.domain.StageVO">
 		select * from
-		tbl_rooftop where bno = #{bno}
+		tbl_stage where bno = #{bno}
 	</select>
 
 
@@ -47,16 +47,16 @@
 		</foreach> </insert> -->
 
 	<select id="selectTime" resultType="org.generals.domain.ReserveVO">
-		select rooftop.bno,
+		select stage.bno,
 		starttime, endtime, opentime, closetime from
 		(select starttime,
 		endtime, bno
 		from tbl_reserve_list where bno=#{bno} and
 		reservedate=#{reservedate}
 		and state=#{state}) reserve right outer join
-		(select * from tbl_rooftop where bno=#{bno}) rooftop
+		(select * from tbl_stage where bno=#{bno}) stage
 		on reserve.bno =
-		rooftop.bno
+		stage.bno
 	</select>
 
 	<select id="selectArticle" resultType="org.generals.domain.ArticleVO">
@@ -98,11 +98,11 @@
 		<result property="startTime" column="starttime" />
 		<result property="endTime" column="endtime" />
 		<result property="message" column="message" />
-
-		<collection property="rooftopVO" resultMap="rooftopVO"></collection>
+		<result property="state" column="state"/>
+		<collection property="stageVO" resultMap="stageVO"></collection>
 	</resultMap>
 
-	<resultMap type="org.generals.domain.RooftopVO" id="rooftopVO">
+	<resultMap type="org.generals.domain.StageVO" id="stageVO">
 		<result property="bno" column="bno" />
 		<result property="rtname" column="rtname" />
 		<result property="maximum" column="maximum" />
@@ -120,8 +120,8 @@
 		order by reservedate desc)
 		reserve inner
 		join
-		tbl_rooftop rooftop on
-		reserve.bno = rooftop.bno
+		tbl_stage stage on
+		reserve.bno = stage.bno
 		limit #{skip}, 10
 	</select>
 
@@ -140,8 +140,8 @@
 		id="getReserveVO"> <id property="rno" column="rno" /> <result property="id" 
 		column="id" /> <result property="reservedate" column="reservedate" /> <result 
 		property="regdate" column="regdate" /> <result property="startTime" column="starttime" 
-		/> <result property="endTime" column="endtime" /> <collection property="rooftopVO" 
-		resultMap="rooftopVO"></collection> <collection property="articleList" resultMap="getReserveArticle"></collection> 
+		/> <result property="endTime" column="endtime" /> <collection property="stageVO" 
+		resultMap="stageVO"></collection> <collection property="articleList" resultMap="getReserveArticle"></collection> 
 		</resultMap> <select id="getReserve" resultMap="getReserveVO"> select * from 
 		(select * from tbl_reserve_list where rno = #{rno}) reserve inner join tbl_reserve_article_list 
 		article on reserve.rno = article.rno </select> -->
@@ -164,5 +164,21 @@
 			<result column="serial" />
 		</collection>
 	</resultMap>
+
+	<!-- 등록한 reserve 작성자 id를 기준으로 예약글 가져오기 -->
+	<select id="selectStagebyReserverid" resultMap="reserveVO">
+		select rtno, rtname, reserve.bno, maximum, lat, lng, opentime, closetime,
+		opendate, closedate,
+		reserve.state, address, btype, id, title, content, regdate, updatedate, rno,
+		reservedate,
+		starttime, endtime, message from tbl_stage inner join
+		(
+		select tbl_board.bno, btype, tbl_board.id, title, content, tbl_reserve_list.regdate, tbl_reserve_list.updatedate, rno,
+		reservedate, state, starttime, endtime, message
+		from tbl_board inner join tbl_reserve_list
+		on tbl_board.bno = tbl_reserve_list.bno where tbl_reserve_list.id =
+		#{id}
+		) reserve on tbl_stage.bno = reserve.bno
+	</select>
 
 </mapper>

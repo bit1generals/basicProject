@@ -8,7 +8,7 @@
 	</header>
 
 	<form id="searchForm">
-		<input type="hidden" name="key" value="${rooftopVO.boardVO.bno}">
+		<input type="hidden" name="key" value="${stageVO.boardVO.bno}">
 		<input type="hidden" name="page" value="${cri.page}">
 		<c:if test="${param.state != null }">
 			<input type="hidden" name="state" value="${param.state}">
@@ -29,13 +29,13 @@
 
 		<div class="9u 12u$(xsmall)">
 			<input type="text" name="title"
-				value='<c:out value="${rooftopVO.boardVO.title}"/>' disabled>
+				value='<c:out value="${stageVO.boardVO.title}"/>' disabled>
 				
 		</div>
 
 		<div class="3u 12u$(xsmall)">
 			<input type="text" name="id"
-				value='<c:out value="${rooftopVO.boardVO.id}"/>' disabled>
+				value='<c:out value="${stageVO.boardVO.id}"/>' disabled>
 		</div>
 
 		<div class="9u 12u$(xsmall)">
@@ -46,11 +46,11 @@
 		</div>
 
 		<div class="9u 12u$(xsmall)">
-			<input type="text" name="rtname" value="${rooftopVO.rtname}" disabled>
+			<input type="text" name="rtname" value="${stageVO.rtname}" disabled>
 		</div>
 
 		<div class="3u 12u$(xsmall)">
-			<input type="text" name="maximum" value="${rooftopVO.maximum}"
+			<input type="text" name="maximum" value="${stageVO.maximum}"
 				disabled>
 		</div>
 
@@ -63,12 +63,12 @@
 
 		<div class="6u 12u$(xsmall)">
 			<input type="text"
-				value='<fmt:formatDate value="${rooftopVO.boardVO.regdate}" type="both"/>'
+				value='<fmt:formatDate value="${stageVO.boardVO.regdate}" type="both"/>'
 				disabled>
 		</div>
 		<div class="6u 12u$(xsmall)">
 			<input type="text" name="updatedate"
-				value='<fmt:formatDate value="${rooftopVO.boardVO.updatedate}" type="both"/>'
+				value='<fmt:formatDate value="${stageVO.boardVO.updatedate}" type="both"/>'
 				disabled>
 		</div>
 
@@ -88,22 +88,22 @@
 
 		<div class="3u 12u$(xsmall)">
 			<input type="text" class="openCloseDate" name="opendate"
-				value='<fmt:formatDate value="${rooftopVO.opendate}" type="date"/>'
+				value='<fmt:formatDate value="${stageVO.opendate}" type="date"/>'
 				disabled />
 		</div>
 
 		<div class="3u 12u$(xsmall)">
 			<input type="text" class="openCloseDate" name="closedate"
-				value='<fmt:formatDate value="${rooftopVO.closedate}" type="date"/>'
+				value='<fmt:formatDate value="${stageVO.closedate}" type="date"/>'
 				disabled />
 		</div>
 
 		<div class="3u 12u$(xsmall)">
-			<input type="text" name="openTime" value="${rooftopVO.openTime}"
+			<input type="text" name="openTime" value="${stageVO.openTime}"
 				disabled />
 		</div>
 		<div class="3u 12u$(xsmall)">
-			<input type="text" name="closeTime" value="${rooftopVO.closeTime}"
+			<input type="text" name="closeTime" value="${stageVO.closeTime}"
 				disabled />
 		</div>
 
@@ -112,7 +112,7 @@
 		</div>
 
 		<div class="12u$">
-			<input type="text" name="address" value="${rooftopVO.address}"
+			<input type="text" name="address" value="${stageVO.address}"
 				disabled>
 		</div>
 
@@ -125,7 +125,7 @@
 				<div class="fileZone">
 					<ul class="uploadFile">
 
-						<c:forEach items="${rooftopVO.boardVO.files}" var="fileVO">
+						<c:forEach items="${stageVO.boardVO.files}" var="fileVO">
 							<div class="fileWrapper">
 								<div class="fileContent">
 									<c:choose>
@@ -156,14 +156,14 @@
 		<div class="12u$">
 			<textarea name="content" rows="12" style="resize: none"
 				disabled="disabled"><c:out
-					value="${rooftopVO.boardVO.content}" /></textarea>
+					value="${stageVO.boardVO.content}" /></textarea>
 		</div>
 		
 		<div class="12u$">
 			<ul class="actions">
 				<sec:authentication property="principal" var="user"/>
 				<c:if
-					test="${rooftopVO.boardVO.id eq user.username}">
+					test="${stageVO.boardVO.id eq user.username}">
 					<li><button class="modify special" data-uri="modify"
 							data-method="get">Modify</button></li>
 					<li><button class="remove" data-uri="remove"
@@ -171,13 +171,13 @@
 				</c:if>
 				<li><button class="list special" data-uri="list"
 						data-method="get">List</button></li>
-				<c:if test="${rooftopVO.state eq 'N'}">
+				<c:if test="${stageVO.state eq 'N'}">
 					<sec:authorize access="hasRole('ROLE_ADMIN')">
 						<li><button class="authorize" data-uri="authorize"
 								data-method="post">Authorize</button></li>
 					</sec:authorize>
 				</c:if>
-				<c:if test="${rooftopVO.state eq 'Y'}">
+				<c:if test="${stageVO.state eq 'Y'}">
 					<li><button class="reserve special"
 							data-uri="/reserve/register" data-method="get">Reservation</button></li>
 				</c:if>
@@ -240,7 +240,7 @@
 	});
 	
 	$(document).ready(function(){
-		if(${rooftopVO.boardVO.files[0].fno != null}){
+		if(${stageVO.boardVO.files[0].fno != null}){
 			$(".fileDrop").show();
 		}else{
 			$(".onCheck").remove();
@@ -251,12 +251,12 @@
 	function showMap(){
 		console.log("showMap check");
 		var mapContainer = document.getElementById('map'),mapOption = {
-			center : new daum.maps.LatLng(${rooftopVO.lat},${rooftopVO.lng}),
+			center : new daum.maps.LatLng(${stageVO.lat},${stageVO.lng}),
 			level : 3
 		};
 		var map = new daum.maps.Map(mapContainer, mapOption);
 						
-		var coords = new daum.maps.LatLng(${rooftopVO.lat},${rooftopVO.lng});
+		var coords = new daum.maps.LatLng(${stageVO.lat},${stageVO.lng});
 
 		// 결과값으로 받은 위치를 마커로 표시합니다
 		var marker = new daum.maps.Marker({
@@ -270,7 +270,7 @@
 		// 인포윈도우로 장소에 대한 설명을 표시합니다
 		var infoWindow = new daum.maps.InfoWindow(
 				{
-					content : '<div style="width:150px;text-align:center;padding:6px 0;">${rooftopVO.rtname}</div>'
+					content : '<div style="width:150px;text-align:center;padding:6px 0;">${stageVO.rtname}</div>'
 				});
 		infoWindow.open(map, marker);
 		map.setCenter(coords);

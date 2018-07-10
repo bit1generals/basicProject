@@ -5,7 +5,7 @@ import java.util.List;
 import org.generals.domain.ArticleVO;
 import org.generals.domain.Criteria;
 import org.generals.domain.ReserveVO;
-import org.generals.domain.RooftopVO;
+import org.generals.domain.StageVO;
 import org.generals.mapper.ReserveMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,10 +31,10 @@ public class ReserveService {
 		}
 	}
 
-	public List<RooftopVO> getRooftop() {
+	public List<StageVO> getStage() {
 		log.info("============getMapper=================");
-		log.info("get rooftop...........................");
-		return mapper.selectRooftop();
+		log.info("get Stage...........................");
+		return mapper.selectStage();
 	}
 
 	public List<ReserveVO> getTimeData(ReserveVO vo) {
@@ -68,8 +68,12 @@ public class ReserveService {
 		return mapper.selectArticleByRno(rno);
 	}
 	
-	public RooftopVO getRooftopVO(Integer bno) {
-		return mapper.selectRooftopByBno(bno);
+	public StageVO getStageVO(Integer bno) {
+		return mapper.selectStageByBno(bno);
+	}
+	
+	public List<ReserveVO> getReserveByid(Criteria cri) {
+		return mapper.selectStagebyReserverid(cri);
 	}
 	
 }

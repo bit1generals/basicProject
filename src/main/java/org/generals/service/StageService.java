@@ -1,9 +1,15 @@
 package org.generals.service;
 
-import org.generals.domain.RooftopVO;
+import java.util.List;
 
-public interface StageService extends GenericService<RooftopVO, Integer> {
+import org.generals.domain.Criteria;
+import org.generals.domain.ReserveVO;
+import org.generals.domain.StageVO;
+
+public interface StageService extends GenericService<StageVO, Integer> {
 	
 	public void authorize(Integer key) throws Exception;
+
+	public List<ReserveVO> getSchdule(Criteria cri);
 	
 }

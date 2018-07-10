@@ -10,7 +10,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-public class RooftopVO {
+public class StageVO {
 
 	private Integer rtno,bno, openTime, closeTime;
 	private String rtname, address, state;

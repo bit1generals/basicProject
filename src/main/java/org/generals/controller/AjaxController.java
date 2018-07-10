@@ -7,7 +7,7 @@ import java.util.Map;
 import org.generals.domain.ArticleVO;
 import org.generals.domain.Criteria;
 import org.generals.domain.ReserveVO;
-import org.generals.domain.RooftopVO;
+import org.generals.domain.StageVO;
 import org.generals.service.MemberService;
 import org.generals.service.ReserveService;
 import org.generals.service.StageService;
@@ -37,7 +37,7 @@ public class AjaxController {
 	private ReserveService reserveService;
 	
 	@Setter(onMethod_ = { @Autowired })
-	private StageService rooftopService;
+	private StageService stageService;
 	
 	@Setter(onMethod_ = { @Autowired })
 	private MemberService memberService;
@@ -56,7 +56,7 @@ public class AjaxController {
 		log.info("getArticleData call........");
 		log.info("vo : "+vo);
 		log.info("type : "+ vo.getType());
-		vo.setState("D");
+		vo.setState("Waiting");
 		ArticleVO articleVO = reserveService.getReserveArticle(vo, vo.getType());
 		return new ResponseEntity<ArticleVO>(articleVO, HttpStatus.OK);
 	}
@@ -67,9 +67,9 @@ public class AjaxController {
 		return new ResponseEntity<List<ArticleVO>>(list, HttpStatus.OK);
 	}
 	
-	@GetMapping(value = "/rooftopData", produces = "application/json")
-	public ResponseEntity<RooftopVO> getRooftopData(Integer bno) {
-		return new ResponseEntity<RooftopVO> (reserveService.getRooftopVO(bno), HttpStatus.OK);
+	@GetMapping(value = "/stageData", produces = "application/json")
+	public ResponseEntity<StageVO> getStageData(Integer bno) {
+		return new ResponseEntity<StageVO> (reserveService.getStageVO(bno), HttpStatus.OK);
 	}
 	
 	@PreAuthorize("permitAll")
@@ -81,26 +81,24 @@ public class AjaxController {
 		return new ResponseEntity<Map<String, Boolean>> (map, HttpStatus.OK);
 	}
 	
-	@PostMapping(value = "/rooftopList", produces = "application/json")
-	public ResponseEntity<List<RooftopVO>> getRooftopList(@RequestBody Criteria cri) throws Exception {
-		log.info("rooftopList : "+ cri);
-		return new ResponseEntity<List<RooftopVO>> (rooftopService.getList(cri), HttpStatus.OK);
+	@PostMapping(value = "/myStage", produces = "application/json")
+	public ResponseEntity<List<StageVO>> getStageList(@RequestBody Criteria cri) throws Exception {
+		log.info("StageList : "+ cri);
+		return new ResponseEntity<List<StageVO>> (stageService.getList(cri), HttpStatus.OK);
 	}
 	
-	@PostMapping(value = "/reserveList", produces = "application/json")
+	@PostMapping(value = "/myReservation", produces = "application/json")
 	public ResponseEntity<List<ReserveVO>> getReserveList(@RequestBody Criteria cri) {
 		log.info("reserveList : " + cri);
-		return new ResponseEntity<List<ReserveVO>> (reserveService.getList(cri), HttpStatus.OK);
+		return new ResponseEntity<List<ReserveVO>> (reserveService.getReserveByid(cri), HttpStatus.OK);
 	}
 
 	
-	@PostMapping(value = "/myRooftopReserveList", produces = "application/json")
-	public ResponseEntity<List<ReserveVO>> getRooftopReserveList(@RequestBody Criteria cri) throws Exception {
-		log.info("myRooftopReserveList : " + cri);
-		List<RooftopVO> rooftopList = rooftopService.getList(cri);
-		
+	@PostMapping(value = "/stageSchedule", produces = "application/json")
+	public ResponseEntity<List<ReserveVO>> getStageReserveList(@RequestBody Criteria cri) throws Exception {
+		log.info("myStageReserveList : " + cri);
 		//미완성 아직 안만짐.
-		return new ResponseEntity<List<ReserveVO>> (reserveService.getList(cri), HttpStatus.OK);
+		return new ResponseEntity<List<ReserveVO>> (stageService.getSchdule(cri), HttpStatus.OK);
 	}
 	
 }

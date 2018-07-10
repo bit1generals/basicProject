@@ -6,11 +6,11 @@ import org.apache.ibatis.annotations.Param;
 import org.generals.domain.ArticleVO;
 import org.generals.domain.Criteria;
 import org.generals.domain.ReserveVO;
-import org.generals.domain.RooftopVO;
+import org.generals.domain.StageVO;
 
 public interface ReserveMapper {
 
-	public List<RooftopVO> selectRooftop();
+	public List<StageVO> selectStage();
 	
 	public List<ArticleVO> selectArticle();
 	
@@ -30,6 +30,8 @@ public interface ReserveMapper {
 
 	public List<ArticleVO> selectArticleByRno(Long rno);
 	
-	public RooftopVO selectRooftopByBno(Integer bno);
+	public StageVO selectStageByBno(Integer bno);
+	
+	public List<ReserveVO> selectStagebyReserverid(Criteria cri);
 }
 

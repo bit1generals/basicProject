@@ -18,7 +18,7 @@ public class ReserveVO {
 	private Integer openTime, closeTime;
 	private String id, state, message, type;
 	
-	private RooftopVO rooftopVO;
+	private StageVO stageVO;
 
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH")

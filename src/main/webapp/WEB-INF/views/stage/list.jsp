@@ -36,34 +36,34 @@
 
 
 		<div class="posts">
-			<c:forEach items="${list}" var="rooftopVO">
-				<article data-key="${rooftopVO.boardVO.bno}" data-uri="view"
+			<c:forEach items="${list}" var="stageVO">
+				<article data-key="${stageVO.boardVO.bno}" data-uri="view"
 					data-method="get">
 
 					<a class="image"> <img style="cursor: pointer"
-						src="${rooftopVO.boardVO.files[0].fno ne null 
-					? rooftopVO.boardVO.files[0].urlBuilder('midthumbnails') : '/resources/images/1.jpg'}"
+						src="${stageVO.boardVO.files[0].fno ne null 
+					? stageVO.boardVO.files[0].urlBuilder('midthumbnails') : '/resources/images/1.jpg'}"
 						alt="" class="view" /></a>
 
 					<div class="row uniform textArea">
 						<div class="8u 12u$(xsmall)">
-							<h3>${rooftopVO.boardVO.title}</h3>
+							<h3>${stageVO.boardVO.title}</h3>
 						</div>
 						<div class="4u 12u$(xsmall)">
-							<h3>${rooftopVO.boardVO.id}</h3>
+							<h3>${stageVO.boardVO.id}</h3>
 						</div>
 
 						<div class="12u">
-							<h4>${rooftopVO.address}</h4>
+							<h4>${stageVO.address}</h4>
 						</div>
 					</div>
 
 					<c:choose>
-						<c:when test="${rooftopVO.boardVO.content.length() > 50}">
-							<p>${rooftopVO.boardVO.content.substring(0,50)}...... (づ｡◕‿‿◕｡)づ </p>
+						<c:when test="${stageVO.boardVO.content.length() > 50}">
+							<p>${stageVO.boardVO.content.substring(0,50)}...... (づ｡◕‿‿◕｡)づ </p>
 						</c:when>
 						<c:otherwise>
-							<p>${rooftopVO.boardVO.content}</p>
+							<p>${stageVO.boardVO.content}</p>
 						</c:otherwise>
 					</c:choose>
 					<ul class="actions">
@@ -96,17 +96,17 @@
 					<option value="" ${pm.cri.type eq null?'selected':''}>-
 						Category -</option>
 					<option value="a" ${pm.cri.type eq 'a'?'selected':''}>Address</option>
-					<option value="rt" ${pm.cri.type eq 'rt'?'selected':''}>Rooftop
+					<option value="rt" ${pm.cri.type eq 'rt'?'selected':''}>Stage
 						Name</option>
 					<option value="w" ${pm.cri.type eq 'w'?'selected':''}>Writer</option>
 					<option value="a-rt" ${pm.cri.type eq 'a-rt'?'selected':''}>Address
-						+ Rooftop Name</option>
+						+ Stage Name</option>
 					<option value="a-w" ${pm.cri.type eq 'a-w'?'selected':''}>Address
 						+ Writer</option>
 					<option value="w-rt" ${pm.cri.type eq 'w-rt'?'selected':''}>Writer
-						+ Rooftop Name</option>
+						+ Stage Name</option>
 					<option value="a-rt-w" ${pm.cri.type eq 'a-rt-w'?'selected':''}>Address
-						+ Rooftop Name + Writer</option>
+						+ Stage Name + Writer</option>
 				</select>
 			</div>
 		</div>

@@ -35,7 +35,7 @@ public class ReserveController {
 	public void register(Integer key, Model model) {
 		log.info("register()... call");
 		if(key != null) {
-			model.addAttribute("selectRooftopVO", service.getRooftopVO(key));
+			model.addAttribute("selectStageVO", service.getStageVO(key));
 		}
 		model.addAttribute("articleList", service.getArticle());
 	}
@@ -44,7 +44,7 @@ public class ReserveController {
 	public String registerPost(ReserveVO reserveVO, RedirectAttributes rttr) {
 		log.info("registerPost()... call");
 		log.info("reserveVO : " + reserveVO);
-		reserveVO.setState("D");
+		reserveVO.setState("Waiting");
 		try {
 			service.insertReserve(reserveVO);
 			rttr.addFlashAttribute("msg", "Reservation Success");
@@ -52,7 +52,7 @@ public class ReserveController {
 			rttr.addFlashAttribute("msg", e.getMessage());
 		}
 		
-		return "redirect:list";
+		return "redirect:../stage/list";
 	}
 	
 	@GetMapping("/list")

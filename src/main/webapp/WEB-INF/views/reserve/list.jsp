@@ -18,7 +18,7 @@
 							<thead>
 								<tr>
 									<th>No</th>
-									<th colspan="2">Rooftop Name</th>
+									<th colspan="2">Stage Name</th>
 									<th>Id</th>
 									<th>Reservedate</th>
 									<th>Start Time</th>
@@ -32,7 +32,7 @@
 									<tr data-rno="${reserveVO.rno}" class="rowData"
 										data-state="false" data-msg="${reserveVO.message}">
 										<td>${reserveVO.rno}</td>
-										<td colspan="2">${reserveVO.rooftopVO.rtname}</td>
+										<td colspan="2">${reserveVO.stageVO.rtname}</td>
 										<td>${reserveVO.id}</td>
 										<td>${reserveVO.reservedate}</td>
 										<td><fmt:formatDate value="${reserveVO.startTime}"

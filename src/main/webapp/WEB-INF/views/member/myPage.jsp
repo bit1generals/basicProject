@@ -8,8 +8,22 @@
 		<h2>My Page</h2>
 	</header>
 
+	<div class="row uniform">
+		<div class="12u$">
+			<ul class="actions">
+				<li><input type="button" value="My Privacy"
+					class="action special" data-name="MyPrivacy"></li>
+				<li><input type="button" value="My Stage" class="action"
+					data-name="myStage"></li>
+				<li><input type="button" value="Stage Schedule" class="action"
+					data-name="stageSchedule"></li>
+				<li><input type="button" value="My Reservation" class="action"
+					data-name="myReservation"></li>
+			</ul>
+		</div>
+	</div>
 	<form id="searchForm">
-		<input type="hidden" name="key" value="${rooftopVO.boardVO.bno}">
+		<input type="hidden" name="key" value="${stageVO.boardVO.bno}">
 		<input type="hidden" name="page" value="${cri.page}">
 
 		<c:if test="${param.state != null }">
@@ -22,135 +36,113 @@
 	</form>
 
 
-	<div>
-		<form id="joinForm" method="post">
+	<section class="rooptopListShow">
+		<div class="table">
+			<form id="joinForm" method="post">
 
-			<div class="row uniform">
-				<div class="4u 12u$(xsmall)"></div>
-				<div class="4u 12u$(xsmall)">
-					<label>ID</label>
+				<div class="row uniform">
+					<div class="4u 12u$(xsmall)"></div>
+					<div class="4u 12u$(xsmall)">
+						<label>ID</label>
+					</div>
 				</div>
-			</div>
-			<div class="row uniform">
-				<div class="4u 12u$(xsmall)"></div>
-				<div class="4u 12u$(xsmall)">
-					<input type="text" name="id" id="id" value="${memberVO.id}"
-						readonly="readonly" />
-				</div>
-			</div>
-
-			<div class="row uniform">
-				<div class="4u 12u$(xsmall)"></div>
-				<div class="4u 12u$(xsmall)">
-					<label>PASSWORD</label>
-				</div>
-			</div>
-
-			<div class="row uniform">
-				<div class="4u 12u$(xsmall)"></div>
-				<div class="4u 12u$(xsmall)">
-					<input type="password" name="pw" id="pw"
-						class="pwCheckAction inputs" />
-				</div>
-			</div>
-
-			<div class="row uniform">
-				<div class="4u 12u$(xsmall)"></div>
-				<div class="4u 12u$(xsmall) checkMsg">
-					<label>PASSWORD CHECK</label>
+				<div class="row uniform">
+					<div class="4u 12u$(xsmall)"></div>
+					<div class="4u 12u$(xsmall)">
+						<input type="text" name="id" id="id" value="${memberVO.id}"
+							readonly="readonly" />
+					</div>
 				</div>
 
-			</div>
+				<div class="row uniform">
+					<div class="4u 12u$(xsmall)"></div>
+					<div class="4u 12u$(xsmall)">
+						<label>PASSWORD</label>
+					</div>
+				</div>
 
-			<div class="row uniform">
-				<div class="4u 12u$(xsmall)"></div>
-				<div class="4u 12u$(xsmall)">
-					<input type="password" id="pwCheck" class="pwCheckAction inputs" />
+				<div class="row uniform">
+					<div class="4u 12u$(xsmall)"></div>
+					<div class="4u 12u$(xsmall)">
+						<input type="password" name="pw" id="pw"
+							class="pwCheckAction inputs" />
+					</div>
 				</div>
-				<div class="4u 12u$(xsmall)"></div>
-			</div>
 
-			<div class="row uniform">
-				<div class="4u 12u$(xsmall)"></div>
-				<div class="4u 12u$(xsmall)">
-					<label>NAME</label>
-				</div>
-			</div>
-			<div class="row uniform">
-				<div class="4u 12u$(xsmall)"></div>
-				<div class="4u 12u$(xsmall)">
-					<input type="text" name="name" id="name" value="${memberVO.name }"
-						readonly="readonly" />
-				</div>
-			</div>
+				<div class="row uniform">
+					<div class="4u 12u$(xsmall)"></div>
+					<div class="4u 12u$(xsmall) checkMsg">
+						<label>PASSWORD CHECK</label>
+					</div>
 
-			<div class="row uniform">
-				<div class="4u 12u$(xsmall)"></div>
-				<div class="4u 12u$(xsmall)">
-					<label>EMAIL</label>
 				</div>
-			</div>
-			<div class="row uniform">
-				<div class="4u 12u$(xsmall)"></div>
-				<div class="4u 12u$(xsmall)">
-					<input type="text" name="email" id="email" class="inputs extra"
-						value="${memberVO.email}" />
-				</div>
-			</div>
-			<input type="hidden" name="${_csrf.parameterName }"
-				value="${_csrf.token }">
 
-			<div class="row uniform">
-				<div class="4u 12u$(xsmall)"></div>
-
-				<div class="4u 12u$(xsmall)">
-					<ul class="actions">
-						<li><input type="submit" value="Modify" data-uri="myPage"
-							data-method="post"></li>
-					</ul>
+				<div class="row uniform">
+					<div class="4u 12u$(xsmall)"></div>
+					<div class="4u 12u$(xsmall)">
+						<input type="password" id="pwCheck" class="pwCheckAction inputs" />
+					</div>
+					<div class="4u 12u$(xsmall)"></div>
 				</div>
-			</div>
-		</form>
-	</div>
+
+				<div class="row uniform">
+					<div class="4u 12u$(xsmall)"></div>
+					<div class="4u 12u$(xsmall)">
+						<label>NAME</label>
+					</div>
+				</div>
+				<div class="row uniform">
+					<div class="4u 12u$(xsmall)"></div>
+					<div class="4u 12u$(xsmall)">
+						<input type="text" name="name" id="name" value="${memberVO.name }"
+							readonly="readonly" />
+					</div>
+				</div>
+
+				<div class="row uniform">
+					<div class="4u 12u$(xsmall)"></div>
+					<div class="4u 12u$(xsmall)">
+						<label>EMAIL</label>
+					</div>
+				</div>
+				<div class="row uniform">
+					<div class="4u 12u$(xsmall)"></div>
+					<div class="4u 12u$(xsmall)">
+						<input type="text" name="email" id="email" class="inputs extra"
+							value="${memberVO.email}" />
+					</div>
+				</div>
+				<input type="hidden" name="${_csrf.parameterName }"
+					value="${_csrf.token }">
+
+				<div class="row uniform">
+					<div class="4u 12u$(xsmall)"></div>
+
+					<div class="4u 12u$(xsmall)">
+						<ul class="actions">
+							<li><input type="submit" value="Modify" data-uri="myPage"
+								data-method="post"></li>
+						</ul>
+					</div>
+				</div>
+			</form>
+		</div>
+
+	</section>
+
+	<hr>
 
 </section>
-
-<secion>
-<hr>
-<div class="row uniform">
-
-	<div class="12u$">
-		<ul class="actions">
-			<li><input type="button" value="My Rooftop List" class="action"
-				data-name="rooftopList"></li>
-			<li><input type="button" value="My Rooftop Reserved List" class="action"
-				data-name="myRooftopReserveList"></li>
-			<li><input type="button" value="My Reserved List" class="action"
-				data-name="reserveList"></li>
-		</ul>
-	</div>
-</div>
-</secion>
-
-<section class="rooptopListShow">
-	<header class="list"> </header>
-
-	<div class="table-wrapper"></div>
-
-</section>
-
-
 
 </div>
 </div>
 <%@include file="../includes/footer.jsp"%>
-
-<script id="rooftopList" type="text/x-handlebars-template">
+<script id="myStage" type="text/x-handlebars-template">
 <table>
 	<thead>
 		<tr>
 			<th>No</th>
-			<th colspan="2">Rooftop Name</th>
+			<th colspan="2">Stage Name</th>
 			<th>Open Date</th>
 			<th>Close Date</th>
 			<th>Start Time</th>
@@ -162,14 +154,14 @@
 	<tbody>
 		{{#each .}}
 			<tr class="rowData" >
-				<td>{{rtno}}</td>
-				<td colspan="2">{{rtname}}</td>
-				<td>{{formatTime opendate "YYYY-MM-DD"}}</td>
-				<td>{{formatTime closedate "YYYY-MM-DD"}}</td>
-				<td>{{openTime}}:00</td>
-				<td>{{closeTime}}:00</td>
-				<td>{{formatTime regdate "YYYY-MM-DD h:mm"}}</td>
-				<td>{{state}}</td>
+				<td name="rtno">{{rtno}}</td>
+				<td colspan="2" name="rtname">{{rtname}}</td>
+				<td name="opendate">{{formatTime opendate "YYYY-MM-DD"}}</td>
+				<td name="closedate">{{formatTime closedate "YYYY-MM-DD"}}</td>
+				<td name="openTime">{{openTime}}:00</td>
+				<td name="closeTime">{{closeTime}}:00</td>
+				<td name="regdate">{{formatTime regdate "YYYY-MM-DD h:mm"}}</td>
+				<td name="rtname">{{state}}</td>
 			</tr>
 		{{/each}}
 	
@@ -177,63 +169,90 @@
 </table>
 </script>
 
-<script id="reserveList" type="text/x-handlebars-template">
+<script id="myReservation" type="text/x-handlebars-template">
 <table>
 	<thead>
 		<tr>
 			<th>No</th>
-			<th colspan="2">Rooftop Name</th>
+			<th colspan="2">Stage Name</th>
 			<th>Reserve Date</th>
 			<th>Start Time</th>
 			<th>End Time</th>
 			<th>Regdate</th>
+			<th>State</th>
 		</tr>
 	</thead>
 	<tbody>
 		{{#each .}}
 			<tr class="rowData" >
-				<td>{{rno}}</td>
-				<td colspan="2">{{rooftopVO.rtname}}</td>
-				<td>{{reservedate}}</td>
-				<td>{{formatTime startTime "hh:mm"}}</td>
-				<td>{{formatTime endTime "hh:mm"}}</td>
-				<td>{{formatTime regdate "YYYY-MM-DD h:mm"}}</td>
-				<td>{{state}}</td>
+				<td name="rno">{{rno}}</td>
+				<td colspan="2" name="rtname">{{stageVO.rtname}}</td>
+				<td name="reservedate">{{reservedate}}</td>
+				<td name="stateTime">{{formatTime startTime "hh:mm"}}</td>
+				<td name="endTime">{{formatTime endTime "hh:mm"}}</td>
+				<td name="regdate">{{formatTime regdate "YYYY-MM-DD h:mm"}}</td>
+				<td name="state">{{state}}</td>
 			</tr>
 		{{/each}}
 	
 	</tbody>
 </table>
 </script>
-<script id="myRooftopReserveList" type="text/x-handlebars-template">
+<script id="stageSchedule" type="text/x-handlebars-template">
 <table>
 	<thead>
 		<tr>
 			<th>No</th>
-			<th>Rooftop Name</th>
+			<th>Stage Name</th>
 			<th>reserver ID</th>
 			<th>Reserve Date</th>
 			<th>Start Time</th>
 			<th>End Time</th>
 			<th>Regdate</th>
+			<th>State</th>
 		</tr>
 	</thead>
 	<tbody>
 		{{#each .}}
 			<tr class="rowData" >
-				<td>{{rno}}</td>
-				<td>{{rooftopVO.rtname}}</td>
-				<th>{{rooftopVO.boardVO.id}}</th>
-				<td>{{reservedate}}</td>
-				<td>{{formatTime startTime "hh:mm"}}</td>
-				<td>{{formatTime endTime "hh:mm"}}</td>
-				<td>{{formatTime regdate "YYYY-MM-DD h:mm"}}</td>
-				<td>{{state}}</td>
+				<td name="rno">{{rno}}</td>
+				<td name="rtname">{{stageVO.rtname}}</td>
+				<th name="id">{{stageVO.boardVO.id}}</th>
+				<td name="reservedate">{{reservedate}}</td>
+				<td name="stateTime">{{formatTime startTime "hh:mm"}}</td>
+				<td name="endTime">{{formatTime endTime "hh:mm"}}</td>
+				<td name="regdate">{{formatTime regdate "YYYY-MM-DD h:mm"}}</td>
+				<td name="state">{{state}}</td>
+				<td type="hidden" name="msg">{{message}}</div>
 			</tr>
+			
 		{{/each}}
-	
 	</tbody>
 </table>
+</script>
+<script id="template" type="text/x-handlebars-template">
+<tr class='loadArticle' rowspan='2'>
+	<td colspan='8'>
+		└> 
+	{{#if .}}
+		Articles : 
+		{{#each .}}
+			{{aname}}  {{this.serials.length}}개
+		{{/each}}
+	{{else}}
+           Articles was not reserved.
+	{{/if}}
+	</td>
+
+</tr>
+{{#if this.msg}}
+<tr class='loadArticle'>
+	<td colspan='8'>
+		└> Message : {{this.msg}}
+	</td>
+</tr>
+{{/if}}
+<input class='loadArticle' type='hidden'/>
 </script>
 <script>
 	var pwCheckAction = $(".pwCheckAction");
@@ -246,22 +265,64 @@
 	var extra = $(".extra");
 	var actions = $(".actions");
 	var action = $(".action");
-	var rooftopList = Handlebars.compile($("#rooftopList").html());
-	var reserveList = Handlebars.compile($("#reserveList").html());
-	var tableTarget = $(".table-wrapper");
-	
+	var tableTarget = $(".table");
+	var template = Handlebars.compile($("#template").html());
+
+	function eventAdd(showList) {
+		var statement;
+		var rowData = $(".rowData");
+		rowData.click(function(event) {
+			var selectedData = $(this);
+			console.log(selectedData);
+			var rno = selectedData.find("td[name=rno]").text();
+			var state = selectedData.find("td[name=state]");
+			var msg = selectedData.data("td[name=msg]");
+			console.log($(".loadArticle"));
+			$(".loadArticle").remove();
+			if (statement != rno) {
+				console.log("if in! ==" + statement);
+				selectAjax(rno, selectedData, msg);
+				statement = rno;
+			} else {
+				statement = "";
+			}
+		});
+
+		function selectAjax(rno, selectedData, msg) {
+			$.ajax({
+				url : '/ajax/reserveArticleData?rno=' + rno,
+				type : 'get',
+				dataType : 'text',
+				processData : false,
+				contentType : "application/json;charset=UTF-8",
+				success : function(articleVOList) {
+					var obj = JSON.parse(articleVOList);
+					console.dir($(obj));
+					obj.msg = msg;
+					console.dir(obj);
+					var html = template(obj);
+					selectedData.after(html);
+				}
+			});
+		}
+		;
+	}
+
 	action.click(function(event) {
-		var target = $(this); 
+		var target = $(this);
 		var showList = target.data("name");
 		var obj = {
-			"id" : "${memberVO.id}",
-			"type" : null,
-			"keyword" : null
+			"id" : "${memberVO.id}"
 		};
-		getListData(showList, obj);		
+		action.removeClass("special");
+		target.addClass("special");
+		if (showList != 'MyPrivacy') {
+			getListData(showList, obj);
+		} else {
+			location.reload();
+		}
 	});
 
-	
 	extra.blur(function() {
 		//만약 각 input에서 입력 안한것과 state가 틀린것을 구분안한다면 어떻게 구분함?
 		if ($(this).val() != "") {
@@ -300,7 +361,7 @@
 		if (check) {
 			return true;
 		} else {
-			swal("Oops!", "Please re-enter " +target.name, "warning");
+			swal("Oops!", "Please re-enter " + target.name, "warning");
 			return false;
 		}
 	}
@@ -308,7 +369,7 @@
 	function checkEmptyValue(target) {
 		var value = $(target).val();
 		if (value == "") {
-			swal("Oops!", "Please re-enter " +target.name, "warning");
+			swal("Oops!", "Please re-enter " + target.name, "warning");
 			return false;
 		}
 		return true;
@@ -327,7 +388,7 @@
 			pwCheck.data("state", false);
 		}
 	}
-	
+
 	function getListData(showList, obj) {
 		$.ajax({
 			headers : {
@@ -340,13 +401,9 @@
 			processData : false,
 			contentType : "application/json;charset=UTF-8",
 			success : function(dataList) {
-				var html;
-				if(showList == 'rooftopList'){
-					html = rooftopList(dataList);
-				}else{
-					html = reserveList(dataList);
-				}
-				tableTarget.html(html);
+				var handle = Handlebars.compile($("#" + showList).html());
+				tableTarget.html(handle(dataList));
+				eventAdd(showList);
 			}
 		});
 	}

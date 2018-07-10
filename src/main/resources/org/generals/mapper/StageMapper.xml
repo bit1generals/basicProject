@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.generals.mapper.RooftopMapper">
+<mapper namespace="org.generals.mapper.StageMapper">
 
-	<resultMap type="org.generals.domain.RooftopVO" id="rooftopMap">
+	<resultMap type="org.generals.domain.StageVO" id="stageMap">
 		<id property="rtno" column="rtno" />
 		<result property="rtname" column="rtname" />
 		<result property="maximum" column="maximum" />
@@ -38,8 +38,8 @@
 		<result property="path" column="path" />
 	</resultMap>
 
-	<sql id="searchRooftop">
-		<foreach collection="searchRooftopArr" open=" (" close=")"
+	<sql id="searchStage">
+		<foreach collection="searchStageArr" open=" (" close=")"
 			item="type" separator=" or ">
 			<if test="type eq 'rt'.toString()">rtname like concat('%',#{keyword},'%')</if>
 			<if test="type eq 'a'.toString()">address like concat('%',#{keyword},'%')</if>
@@ -47,7 +47,8 @@
 	</sql>
 
 	<sql id="searchBoard">
-		<foreach collection="searchBoardArr" open="(" close=")" item="type">
+		<foreach collection="searchBoardArr" open="(" close=")"
+			item="type">
 			<if test="type eq 'w'.toString()">id like concat('%',#{keyword},'%')</if>
 		</foreach>
 	</sql>
@@ -62,20 +63,21 @@
 		</foreach>
 	</sql>
 
-	<select id="getList" resultMap="rooftopMap">
-
-
-		select rtno, rtname, rooftop.bno bno, maximum, lat, lng,
+	<select id="getList" resultMap="stageMap">
+		select rtno, rtname, stage.bno bno, maximum, lat, lng,
 		opentime,closetime, opendate, closedate, id, title, content,
 		regdate,updatedate,fno,fname, uuid, path, address, state
 		from
-		(select rtno, rtname, roof.bno,maximum, lat, lng,
-		opentime,closetime,opendate, closedate, id,
+		(select
+		rtno, rtname, roof.bno,maximum, lat, lng,
+		opentime,closetime,opendate,
+		closedate, id,
 		title,content,regdate,updatedate, address, state
 		from
-		(select rtno, rtname, bno,maximum, lat, lng, opentime,closetime,opendate,
+		(select rtno, rtname, bno,maximum, lat, lng,
+		opentime,closetime,opendate,
 		closedate, address, state
-		from tbl_rooftop
+		from tbl_stage
 		<where>
 			<if test="state != null and state != ''">
 				state = #{state}
@@ -83,9 +85,9 @@
 		</where>
 		) roof inner join (select * from tbl_board
 		<where>
-		<if test="id != null">
-		 id = #{id}
-		 </if>
+			<if test="id != null">
+				id = #{id}
+			</if>
 		</where>
 		) board
 		on roof.bno = board.bno
@@ -93,39 +95,43 @@
 			<if test="type != null and type != ''">
 				<include refid="search" />
 			</if>
-		
+
 		</where>
 
-		order by rtno desc limit #{skip}, 12) rooftop left outer join
-		(select * from tbl_file where ftype='Y') files
-		on rooftop.bno = files.bno
-		order by rtno desc
+		order by rtno desc limit #{skip}, 12) stage left outer join
+		(select *
+		from tbl_file where ftype='Y') files
+		on stage.bno = files.bno
+		order by
+		rtno desc
 	</select>
-	<!-- select rtno, rtname, rooftop.bno bno, maximum, lat, lng, opentime, 
-		closetime, opendate, closedate, id, title, content, regdate, updatedate,fno,fname, 
-		uuid, path, address from (select rtno, rtname, roof.bno,maximum, lat, lng, 
-		opentime,closetime,opendate, closedate, id, title,content, regdate,updatedate, 
-		address from (select * from tbl_rooftop <where> <if test="state != null and 
-		state != ''"> state = #{state} </if> <if test="state != null and state != 
-		'' and searchRooftopArr != null"> and </if> <if test="searchRooftopArr != 
-		null"> <include refid="searchRooftop" /> </if> </where> ) roof inner join 
-		(select * from tbl_board <where> <if test="searchBoardArr != null"> <include 
-		refid="searchBoard" /> </if> </where> ) board on roof.bno = board.bno order 
-		by rtno desc limit #{skip}, 12 ) rooftop left outer join (select * from tbl_file 
-		where ftype='Y') files on rooftop.bno = files.bno order by rtno desc -->
+	<!-- select rtno, rtname, stage.bno bno, maximum, lat, lng, opentime, closetime, 
+		opendate, closedate, id, title, content, regdate, updatedate,fno,fname, uuid, 
+		path, address from (select rtno, rtname, roof.bno,maximum, lat, lng, opentime,closetime,opendate, 
+		closedate, id, title,content, regdate,updatedate, address from (select * 
+		from tbl_stage <where> <if test="state != null and state != ''"> state = 
+		#{state} </if> <if test="state != null and state != '' and searchStageArr 
+		!= null"> and </if> <if test="searchStageArr != null"> <include refid="searchStage" 
+		/> </if> </where> ) roof inner join (select * from tbl_board <where> <if 
+		test="searchBoardArr != null"> <include refid="searchBoard" /> </if> </where> 
+		) board on roof.bno = board.bno order by rtno desc limit #{skip}, 12 ) stage 
+		left outer join (select * from tbl_file where ftype='Y') files on stage.bno 
+		= files.bno order by rtno desc -->
 
-	<select id="read" resultType="org.generals.domain.RooftopVO">
-		select * from tbl_rooftop where bno
-		= #{bno}
+	<select id="read" resultType="org.generals.domain.StageVO">
+		select * from tbl_stage where bno
+		=
+		#{bno}
 	</select>
 
 	<select id="getTotal" resultType="int">
 
 		select count(rtno)
 		from
-		(select rtno, rtname, bno,maximum, lat, lng, opentime,closetime,opendate,
+		(select rtno, rtname, bno,maximum, lat, lng,
+		opentime,closetime,opendate,
 		closedate, address
-		from tbl_rooftop
+		from tbl_stage
 		<where>
 			<if test="state != null and state != ''">
 				state = #{state}
@@ -133,9 +139,9 @@
 		</where>
 		) roof inner join (select * from tbl_board
 		<where>
-		<if test="id != null">
-		 id = #{id}
-		 </if>
+			<if test="id != null">
+				id = #{id}
+			</if>
 		</where>
 		) board
 		on roof.bno = board.bno
@@ -152,8 +158,9 @@
 		<selectKey order="BEFORE" resultType="int" keyProperty="bno">
 			select max(bno) from tbl_board
 		</selectKey>
-		insert into tbl_rooftop (rtno, rtname, bno, maximum, lat, lng,
-		opentime, closetime, opendate, closedate, address)
+		insert into tbl_stage (rtno, rtname, bno, maximum, lat, lng,
+		opentime,
+		closetime, opendate, closedate, address)
 		values (#{rtno},
 		#{rtname},
 		#{bno}, #{maximum},
@@ -162,7 +169,7 @@
 	</insert>
 
 	<update id="update">
-		update tbl_rooftop set rtname = #{rtname}, maximum =
+		update tbl_stage set rtname = #{rtname}, maximum =
 		#{maximum}, lat = #{lat}, lng = #{lng},
 		opentime = #{openTime},
 		closetime = #{closeTime}, opendate = #{opendate},
@@ -174,12 +181,42 @@
 	</update>
 
 	<update id="updateStatebyBno">
-		update tbl_rooftop set state = 'Y' where bno = #{bno}
+		update tbl_stage set state = 'Y' where bno = #{bno}
 	</update>
 
 	<delete id="delete">
-		delete from tbl_rooftop where bno = #{bno}
+		delete from tbl_stage where bno = #{bno}
 	</delete>
+
+	<resultMap type="org.generals.domain.ReserveVO"
+		id="reserveVO">
+		<id property="rno" column="rno" />
+		<result property="id" column="id" />
+		<result property="reservedate" column="reservedate" />
+		<result property="regdate" column="regdate" />
+		<result property="startTime" column="starttime" />
+		<result property="endTime" column="endtime" />
+		<result property="message" column="message" />
+		<result property="state" column="state"/>
+		<collection property="stageVO" resultMap="stageMap"></collection>
+	</resultMap>
+	<!-- 등록한 stage의 작성자 id를 기준으로 예약글 가져오기 -->
+	<select id="selectStagebyBoarderid" resultMap="reserveVO">
+		select rtno, rtname, reserve.bno, maximum, lat, lng, opentime, closetime,
+		opendate, closedate,
+		reserve.state, address, btype, id, title, content, regdate, updatedate, rno,
+		reservedate,
+		starttime, endtime, message from tbl_stage inner join
+		(
+		select tbl_board.bno, btype, tbl_reserve_list.id, title, content,
+		tbl_reserve_list.regdate, tbl_reserve_list.updatedate, rno,
+		reservedate, state, starttime, endtime, message
+		from tbl_board inner
+		join tbl_reserve_list
+		on tbl_board.bno = tbl_reserve_list.bno where
+		tbl_board.id = #{id}
+		) reserve on tbl_stage.bno = reserve.bno
+	</select>
 
 </mapper>
 

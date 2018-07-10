@@ -3,7 +3,7 @@ package org.generals.controller;
 import java.security.Principal;
 
 import org.generals.domain.Criteria;
-import org.generals.domain.RooftopVO;
+import org.generals.domain.StageVO;
 import org.generals.service.StageService;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
@@ -25,7 +25,7 @@ import lombok.extern.log4j.Log4j;
 @RequestMapping("/stage/*")
 @Log4j
 @Scope(proxyMode = ScopedProxyMode.TARGET_CLASS )
-public class StageController  extends AbstractController<RooftopVO, Integer, StageService> {
+public class StageController  extends AbstractController<StageVO, Integer, StageService> {
 
 	@PostMapping("/authorize")
 	public String authorize(Integer key, @ModelAttribute("cri")Criteria cri, RedirectAttributes rttr) {
