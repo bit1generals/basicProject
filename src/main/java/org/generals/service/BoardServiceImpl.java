@@ -35,9 +35,12 @@ public class BoardServiceImpl extends GenericServiceImpl<BoardVO, Integer, Board
 
 	@Override
 	public void modify(BoardVO vo) throws Exception {
+		log.info("modify in ===" + vo);
 		super.modify(vo);
 		fileMapper.updateBnoNull(vo.getBno());
-		fileMapper.updateBnoByParam(vo.getBno(), vo.getFiles());
+		if(vo.getFiles() != null) {
+			fileMapper.updateBnoByParam(vo.getBno(), vo.getFiles());
+		}
 	}
 
 	@Override

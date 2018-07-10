@@ -77,25 +77,21 @@
 		<ul>
 			<li><a href="/">Homepage</a></li>
 			<li><a href="/bbs/list">Free Board</a></li>
-			<li><a href="/rooftop/list">Rooftop List</a></li>
-			<li><span class="opener">Reserve</span>
-				<ul>
-					<sec:authorize access="hasRole('ROLE_ADMIN')">
-						<li><a href="/reserve/list">Reserve List</a></li>
-					</sec:authorize>
-					<li><a href="/reserve/register">Reserve</a></li>
-				</ul></li>
+			<li><a href="/stage/list">Stage List</a></li>
+			<li><a href="">Busking List</a></li>
+			<li><a href="">LIVE Streaming</a>
+			<sec:authorize access="hasRole('ROLE_ADMIN')">
+				<li><a href="/reserve/list">Reserved List</a></li>
+			</sec:authorize>
 		</ul>
+
+
 		</nav>
 
 		<!-- Section -->
 		<section> <header class="major">
-		<h2>Get in touch</h2>
+		<h2>Feed Back</h2>
 		</header>
-		<p>Sed varius enim lorem ullamcorper dolore aliquam aenean ornare
-			velit lacus, ac varius enim lorem ullamcorper dolore. Proin sed
-			aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus
-			aliquam.</p>
 		<ul class="contact">
 			<li class="fa-envelope-o"><a href="#">nelldkLee@gmail.com</a></li>
 			<li class="fa-envelope-o"><a href="#">wjdrnsl@gmail.com</a></li>

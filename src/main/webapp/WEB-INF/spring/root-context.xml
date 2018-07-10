@@ -20,9 +20,9 @@
 			<property name="jdbcUrl" value="jdbc:mysql://10.10.10.23:3306/jr01?useSSL=false"></property> -->
 		<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property>
 		<property name="jdbcUrl"
-			value="jdbc:log4jdbc:mysql://10.10.10.26:3306/generals"></property>
+			value="jdbc:log4jdbc:mysql://localhost/generals"></property>
 		<property name="username" value="study"></property>
-		<property name="password" value="study"></property>
+		<property name="password" value="12345678"></property>
 		<property name="minimumIdle" value="3"></property>
 	</bean>
 

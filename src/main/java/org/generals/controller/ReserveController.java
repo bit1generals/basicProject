@@ -37,7 +37,6 @@ public class ReserveController {
 		if(key != null) {
 			model.addAttribute("selectRooftopVO", service.getRooftopVO(key));
 		}
-		model.addAttribute("rooftopList", service.getRooftop());
 		model.addAttribute("articleList", service.getArticle());
 	}
 	

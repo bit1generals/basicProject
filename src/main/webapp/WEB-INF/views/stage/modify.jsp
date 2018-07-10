@@ -4,7 +4,7 @@
 
 <section>
 	<header class="major">
-		<h2>Rooftop Modify</h2>
+		<h2>Stage Modify</h2>
 	</header>
 
 
@@ -28,9 +28,8 @@
 				value="${rooftopVO.boardVO.bno}"> <input type="hidden"
 				name="boardVO.btype" value="R"> <input type="hidden"
 				name="lat" value="${rooftopVO.lat}"> <input type="hidden"
-				name="lng" value="${rooftopVO.lng}">
-				<input type="hidden"
-			name="${_csrf.parameterName }" value="${_csrf.token }">
+				name="lng" value="${rooftopVO.lng}"> <input type="hidden"
+				name="${_csrf.parameterName }" value="${_csrf.token }">
 
 			<div class="9u 12u$(xsmall)">
 				<label>Title</label>
@@ -52,7 +51,7 @@
 
 
 			<div class="9u 12u$(xsmall)">
-				<label>Rooftop Name</label>
+				<label>Stage Name</label>
 			</div>
 			<div class="3u 12u$(xsmall)">
 				<label>Maximum</label>
@@ -102,16 +101,20 @@
 			</div>
 
 			<div class="3u 12u$(xsmall)">
-				<input type="text" class="openCloseDate" name="opendate"
+				<input type="text" class="openCloseDate datepicker-here"
+					name="opendate" autocomplete="off" data-name="OpenDate"
 					value='<fmt:formatDate value="${rooftopVO.opendate}" pattern="yyyy-MM-dd" type="date"/>'
-					data-name="OpenDate" />
+					placeholder="Input OpenDate" />
 			</div>
 
+
 			<div class="3u 12u$(xsmall)">
-				<input type="text" class="openCloseDate" name="closedate"
+				<input type="text" class="openCloseDate datepicker-here"
+					name="closedate" autocomplete="off" data-name="CloseDate"
 					value='<fmt:formatDate value="${rooftopVO.closedate}" pattern="yyyy-MM-dd" type="date"/>'
-					data-name="CloseDate" />
+					placeholder="Input CloseDate">
 			</div>
+
 
 			<div class="3u 12u$(xsmall)">
 				<select name="openTime" class="openTime" data-name="OpenTime">
@@ -156,30 +159,31 @@
 				<div class="fileDrop">
 					<div class="fileZone">
 						<ul class="uploadFile">
+
 							<c:forEach items="${rooftopVO.boardVO.files}" var="fileVO">
+									<div class="fileWrapper">
+										<div class="fileContent">
+											<c:choose>
+												<c:when test="${fileVO.ftype == 'Y'}">
+													<div class="fileHeader">X</div>
+													<li class="img" data-fname="${fileVO.fname}"
+														data-uuid="${fileVO.uuid}" data-path="${fileVO.path}"
+														data-ftype="${fileVO.ftype}"><img
+														src="${fileVO.urlBuilder()}/thumbnails">
+												</c:when>
 
-								<div class="fileWrapper">
-									<div class="fileContent">
-										<div class="fileHeader">X</div>
-										<c:choose>
-											<c:when test="${fileVO.ftype == 'Y'}">
-												<li class="img" data-fname="${fileVO.fname}"
-													data-uuid="${fileVO.uuid}" data-path="${fileVO.path}"
-													data-ftype="${fileVO.ftype}"><img
-													src="${fileVO.urlBuilder()}/thumbnails">
-											</c:when>
-
-											<c:when test="${fileVO.ftype == 'N'}">
-												<li data-fname="${fileVO.fname}" data-uuid="${fileVO.uuid}"
-													data-path="${fileVO.path}" data-ftype="${fileVO.ftype}">
-													<a href="${fileVO.urlBuilder()}"> <img
-														src="/resources/img/default.png"></a>
-											</c:when>
-										</c:choose>
-										</li>
-										<div class="fileFooter">${fileVO.fname}</div>
+												<c:when test="${fileVO.ftype == 'N'}">
+													<div class="fileHeader">X</div>
+													<li data-fname="${fileVO.fname}" data-uuid="${fileVO.uuid}"
+														data-path="${fileVO.path}" data-ftype="${fileVO.ftype}">
+														<a href="${fileVO.urlBuilder()}"> <img
+															src="/resources/img/default.png"></a>
+												</c:when>
+											</c:choose>
+											</li>
+											<div class="fileFooter">${fileVO.fname}</div>
+										</div>
 									</div>
-								</div>
 							</c:forEach>
 
 						</ul>
@@ -203,6 +207,8 @@
 			</div>
 		</div>
 	</form>
+	<a>fileVO = ${rooftopVO.boardVO.files}</a>
+
 </section>
 </div>
 </div>
@@ -302,37 +308,33 @@
 	inputForm.submit(function(event) {
 		var form = $(this);
 		var html = "";
-		var submitAllow = false;
 		inputForm.find("input, select, textarea").each(function(idx, target) {
 			var inputData = $(target);
 			if (!inputData.val()) {
 				swal("Oops!", "Please enter " +inputData.data("name"), "warning");
 				event.preventDefault();
-				return submitAllow;
+				return false;
 			}
 		});
-		console.dir($(".uploadFile li"));
 		$(".uploadFile li").each(
 				function(i, data) {
 					var file = $(data);
-					console.log(i);
-					html += "<input type='hidden' name='boardVO.files[" + i
+					console.log('FILE VO');
+					console.dir(i);
+					html += "<input type='hidden' name='rooftopVO.boardVO.files[" + i
 							+ "].fname' value='" + file.data("fname") + "'>";
-					html += "<input type='hidden' name='boardVO.files[" + i
+					html += "<input type='hidden' name='rooftopVO.boardVO.files[" + i
 							+ "].uuid' value='" + file.data("uuid") + "'>";
-					html += "<input type='hidden' name='boardVO.files[" + i
+					html += "<input type='hidden' name='rooftopVO.boardVO.files[" + i
 							+ "].path' value='" + file.data("path") + "'>";
-					html += "<input type='hidden' name='boardVO.files[" + i
+					html += "<input type='hidden' name='rooftopVO.boardVO.files[" + i
 							+ "].ftype' value='" + file.data("ftype") + "'>";
 				});
 		inputForm.append(html);
 		for(var i = 0; i < 36; i++ ){
 			console.dir($(inputForm.find("input, select, textarea")[i]).attr('name'));
 		}
-		
-		submitAllow = true;
-
-		return submitAllow;
+		return true;
 	});
 	
 	$(".list").click(
@@ -408,7 +410,7 @@
 								// 인포윈도우로 장소에 대한 설명을 표시합니다
 								infoWindow = new daum.maps.InfoWindow(
 										{
-											content : '<div style="width:150px;text-align:center;padding:6px 0;">My Rooftop</div>'
+											content : '<div style="width:150px;text-align:center;padding:6px 0;">Select Point</div>'
 										});
 								infoWindow.open(map, marker);
 								// 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
@@ -426,9 +428,12 @@
 	};
 	
 	openCloseDate.datepicker({
-		dateFormat : 'yy-mm-dd',
-		minDate : 1
-	});
+	    language: 'en',
+	    dateFormat : 'yyyy-mm-dd',
+	    autoClose: true,
+	    minDate: new Date() // Now can select only dates, which goes after today
+});
+	
 	openTime.change(function(event) {
 
 		makeCloseTime($(this).val());

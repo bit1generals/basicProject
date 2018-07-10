@@ -5,7 +5,7 @@ import java.util.Date;
 import org.generals.domain.BoardVO;
 import org.generals.domain.Criteria;
 import org.generals.domain.RooftopVO;
-import org.generals.service.RooftopService;
+import org.generals.service.StageService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ import lombok.extern.log4j.Log4j;
 public class RooftopTests {
 
 	@Setter(onMethod_ = { @Autowired })
-	private RooftopService service;
+	private StageService service;
 
 	/*@Test
 	public void testRegister() throws Exception {

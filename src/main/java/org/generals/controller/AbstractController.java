@@ -45,8 +45,7 @@ public abstract class AbstractController<T, K, S extends GenericService> impleme
 	}
 
 	@Override
-	public void register(
-			@ModelAttribute("cri")Criteria cri) throws Exception {
+	public void register(@ModelAttribute("cri")Criteria cri) throws Exception {
 
 		log.info("Abstract register Get");
 

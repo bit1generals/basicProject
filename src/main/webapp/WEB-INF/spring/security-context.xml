@@ -8,7 +8,7 @@
 		<security:form-login login-page="/member/login" />
 		<security:logout logout-url="/member/logout" logout-success-url="/" delete-cookies="JSESSIONID" invalidate-session="true"/>
 		<security:remember-me key="jr99" token-validity-seconds="3600" data-source-ref="dataSource" />		
-		<security:intercept-url pattern="/rooftop/list?state=N" access="ROLE_ADMIN" />
+		<security:intercept-url pattern="/stage/list?state=N" access="ROLE_ADMIN" />
 	</security:http>
 	<security:authentication-manager>
 		<security:authentication-provider user-service-ref="customUserService">

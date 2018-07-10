@@ -121,12 +121,12 @@
 
 	<div class="12u$">
 		<ul class="actions">
-			<li><input type="button" value="My Rooftop List"
-				data-uri="rooftopList" data-name="rooftopList"></li>
-			<li><input type="button" value="My Rooftop Reserve List"
-				data-uri="rooftopReserveList" data-name="reserveList"></li>
-			<li><input type="button" value="My Reserve List"
-				data-uri="reserveList" data-name="reserveList"></li>
+			<li><input type="button" value="My Rooftop List" class="action"
+				data-name="rooftopList"></li>
+			<li><input type="button" value="My Rooftop Reserved List" class="action"
+				data-name="myRooftopReserveList"></li>
+			<li><input type="button" value="My Reserved List" class="action"
+				data-name="reserveList"></li>
 		</ul>
 	</div>
 </div>
@@ -245,23 +245,20 @@
 	var joinForm = $("#joinForm");
 	var extra = $(".extra");
 	var actions = $(".actions");
+	var action = $(".action");
 	var rooftopList = Handlebars.compile($("#rooftopList").html());
 	var reserveList = Handlebars.compile($("#reserveList").html());
 	var tableTarget = $(".table-wrapper");
 	
-	//핸들바스 써주세요.
-	actions.click("input", function(event) {
-
-		var target = $(event.target); 
-		var uri = target.data("uri");
+	action.click(function(event) {
+		var target = $(this); 
 		var showList = target.data("name");
-		
 		var obj = {
 			"id" : "${memberVO.id}",
 			"type" : null,
 			"keyword" : null
 		};
-		getListData(uri, showList, obj);		
+		getListData(showList, obj);		
 	});
 
 	
@@ -331,12 +328,12 @@
 		}
 	}
 	
-	function getListData(uri, showList, obj) {
+	function getListData(showList, obj) {
 		$.ajax({
 			headers : {
 				"X-CSRF-TOKEN" : "${_csrf.token }"
 			},
-			url : '/ajax/' + uri,
+			url : '/ajax/' + showList,
 			type : 'post',
 			dataType : 'json',
 			data : JSON.stringify(obj),

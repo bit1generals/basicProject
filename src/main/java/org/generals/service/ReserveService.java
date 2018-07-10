@@ -33,7 +33,6 @@ public class ReserveService {
 
 	public List<RooftopVO> getRooftop() {
 		log.info("============getMapper=================");
-		log.info(mapper);
 		log.info("get rooftop...........................");
 		return mapper.selectRooftop();
 	}

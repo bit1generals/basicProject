@@ -21,7 +21,7 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 @Service
 @Transactional
-public class RooftopServiceImpl extends GenericServiceImpl<RooftopVO, Integer, RooftopMapper> implements RooftopService {
+public class StageServiceImpl extends GenericServiceImpl<RooftopVO, Integer, RooftopMapper> implements StageService {
 
 	@Setter(onMethod_ = { @Autowired })
 	private RooftopMapper rooftopMapper;

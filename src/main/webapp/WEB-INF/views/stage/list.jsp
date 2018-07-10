@@ -9,7 +9,7 @@
 	<header class="major">
 
 		<h2 class="mainFont">
-			Rooftop
+			Stage
 			<c:if test="${param.state eq 'N'}"> Unreceived </c:if>
 			List
 		</h2>
@@ -118,7 +118,7 @@
 		<div class="4u 12u$(xsmall)">
 			<ul class="actions">
 				<li><button class="button special icon fa-search">Search</button></li>
-				<li><a href="/rooftop/register" class="button">Register</a></li>
+				<li><a href="./register" class="button">Register</a></li>
 			</ul>
 		</div>
 	</div>

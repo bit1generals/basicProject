@@ -22,7 +22,7 @@
 				readonly="readonly">
 
 			<div class="6u 12u$(xsmall)">
-				<label>Rooftop</label>
+				<label>Stage</label>
 			</div>
 			<div class="6u 12u$(xsmall)">
 				<label>ReserveDate</label>
@@ -31,20 +31,16 @@
 			<div class="6u 12u$(xsmall) firstRow">
 				<div class="select-wrapper">
 					<select name="bno" id="rooftop" data-name="Rooftop">
-						<c:forEach items="${rooftopList}" var="rooftopVO">
-							<option value="${rooftopVO.bno}"
-								${selectRooftopVO.bno eq rooftopVO.bno ? 'selected' : ''}>${rooftopVO.rtname}
-								(${rooftopVO.maximum} person)</option>
-						</c:forEach>
+						<option value = "${selectRooftopVO.bno}"> ${selectRooftopVO.rtname} (${selectRooftopVO.maximum} person)
 					</select>
 				</div>
 			</div>
 
 			<div class="6u 12u$(xsmall) firstRow">
 				<div class="select-wrapper">
-					<input type="text" id="reservedate" class="datepicker-here" name="reservedate"
-						data-name="Date" autocomplete="off" />
-				
+					<input type="text" id="reservedate" class="datepicker-here"
+						name="reservedate" data-name="Date" autocomplete="off" />
+
 				</div>
 			</div>
 
@@ -102,7 +98,13 @@
 				<li><input type="button" id="list" value="List" data-uri="list"></li>
 			</ul>
 		</div>
+		<a>rooftopVO = ${rooftopVO}<br></a> 
+		<a>rooftopList = ${rooftopList}<br></a> 
+		<a>selectRooftopVO = ${selectRooftopVO}<br></a> 
+		<a>key = ${key}</a>
 	</form>
+
+
 </section>
 </div>
 </div>
@@ -119,17 +121,18 @@
 	var articleList = $(".articleList");
 	var firstRow = $(".firstRow");
 	var secondRow = $(".secondRow");
-	var thirdRow = $(".thirdRow select");
+	var thirdRow = $(".thirdRow");
 	var serialsMap = new Map();
 	var rooftop = $("#rooftop");
 	var inputForm = $(".inputForm");
 
-
-	$(".actions .list").click(function name(event) {
-
+	$("#list").click(function(event) {
+		console.log("click event");
+		self.location = "/stage/list";
 	});
+
 	$("#cancel").click(function(event) {
-		self.location = "/reserve/list";
+		history.back();
 	});
 
 	inputForm
@@ -177,34 +180,59 @@
 			});
 
 	function makeDatepicker(opendate, closedate) {
-
-	    console.log(opendate);
-		console.log(closedate);		
-		
 		reservedate.datepicker({
-		    language: 'en',
-		    dateFormat : 'yyyy-mm-dd',
-		    autoClose: true,
-		    minDate : (opendate > new Date() ? opendate : new Date()),
-			maxDate : closedate
-		});
+			language : 'en',
+			dateFormat : 'yyyy-mm-dd',
+			autoClose : true,
+			minDate : (opendate > new Date() ? opendate : new Date()),
+			maxDate : closedate,
+			onSelect: function(value){
+				init();
+				var obj = {
+						"bno" : "${selectRooftopVO .bno}",
+						"reservedate" : value + " 00"
+					};
+				$.ajax({
+					headers : {
+						"X-CSRF-TOKEN" : "${_csrf.token }"
+					},
+					url : '/ajax/timeData',
+					type : 'post',
+					data : JSON.stringify(obj),
+					dataType : 'json',
+					processData : false,
+					contentType : "application/json;charset=UTF-8",
+					success : function(timeDataList) {
+						var targetList = $(timeDataList);
+						console.dir(targetList);
+						targetList.each(function(idx, item) {
+							var start = new Date(item.startTime).getHours();
+							var end = new Date(item.endTime).getHours();
+							/* var start = item.starttime;
+							var end = item.endtime; */
+							console.log(start);
+							console.log(end);
+							collectTime(start, end);
+						});
+						makeStartTime(timeDataList[0].openTime,	timeDataList[0].closeTime);
+					}
+				})
+				console.log("end");
+				secondRow.show();
+			}// function end
+		})
 	};
 
-	//console.dir($('.firstRow input'));
-
-	firstRow.on("change", "select,input", function(e) {
-		console.dir("check~!~!~!~!"+$(this));
-		
-	});
 
 	thirdRow.find('option:first').attr('selected', 'selected');
 
 	secondRow.on("change", "select", function(e) {
-		$(".thirdRow").show();
-
+		console.log("secondRow change");
 		thirdRow.find('option').removeAttr('selected');
 		thirdRow.find('option:first').attr('selected', 'selected');
 		articleList.children().remove();
+		thirdRow.show();
+
 	});
 
 	articleList.on("click", "span", function(event) {
@@ -258,67 +286,8 @@
 			endTime.append('<option value="' + date + ' '
 					+ ('00' + start).slice(-2) + ':00:00">' + start
 					+ ':00</option>');
-		};
-		console.dir(new Date(this.value));
-		console.log("start : "+start);
-		console.log("end : "+end);
-		console.log("date : "+date);
-
-	});
-
-	// get date event
-	firstRow.on("change",function(event) {
-		init();
-		console.log("check");
-		if (reservedate.val() != "") {
-			$(".secondRow").show();
-			var obj = {
-				"bno" : $('select[name="bno"] option:selected').val(),
-				"reservedate" : reservedate.val() + " 00"
-			};
-
-			$.ajax({
-				headers : {
-					"X-CSRF-TOKEN" : "${_csrf.token }"
-				},
-				url : '/ajax/timeData',
-				type : 'post',
-				data : JSON.stringify(obj),
-				dataType : 'json',
-				processData : false,
-				contentType : "application/json;charset=UTF-8",
-				success : function(timeDataList) {
-					console.dir(timeDataList);
-					var targetList = $(timeDataList);
-					targetList.each(function(idx, item) {
-						var start = new Date(item.startTime).getHours();
-						var end = new Date(item.endTime).getHours();
-						collectTime(start, end);
-					});
-					makeStartTime(timeDataList[0].openTime,
-							timeDataList[0].closeTime);
-				}
-			});
 		}
-	});
-
-	rooftop.change(function() {
-		reservedate.val("");
-
-		$.ajax({
-			url : '/ajax/rooftopData?bno='
-					+ $('select[name="bno"] option:selected').val(),
-			type : 'get',
-			dataType : 'json',
-			processData : false,
-			contentType : "application/json;charset=UTF-8",
-			success : function(data) {
-				reservedate.datepicker("destroy");
-			   makeDatepicker(new Date(data.opendate),
-						new Date(data.closedate)); 
-		
-			}
-		});
+		;
 	});
 
 	function collectTime(start, end) {
@@ -326,10 +295,13 @@
 			impossibleTime.push(start);
 		}
 	};
+	
 	function makeStartTime(openTime, closeTime) {
 		var date = reservedate.val().trim();
-		console.log("Date:"+date);
-		
+		console.log("in makeStartTime()");
+		console.log("Date:" + date);
+		console.log(openTime);
+		console.log(closeTime);
 		startTime.append('<option data-close="'+closeTime+'"></option>');
 
 		for (var num = openTime; num < closeTime; num++) {
@@ -340,7 +312,8 @@
 					+ ':00:00"'
 					+ (impossibleTime.includes(num) ? 'disabled="disabled"'
 							: '') + '">' + num + ':00</option>');
-		};
+		}
+		;
 		//startTime.niceSelect();
 	};
 
@@ -351,8 +324,8 @@
 		type.val("none");
 		count.empty();
 		articleList.empty();
-		$(".secondRow").hide();
-		$(".thirdRow").hide();
+		secondRow.hide();
+		thirdRow.hide();
 	};
 
 	function findEndTime(start, end) {
@@ -403,6 +376,6 @@
 										"<fmt:formatDate value="${selectRooftopVO.opendate}" type="date" pattern="yyyy-MM-dd"/>"),
 								new Date(
 										"<fmt:formatDate value="${selectRooftopVO.closedate}" type="date" pattern="yyyy-MM-dd"/>"));
-						 //rooftop.niceSelect();
+						//rooftop.niceSelect();
 					});
 </script>

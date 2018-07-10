@@ -4,7 +4,7 @@
 
 <section>
 	<header class="major">
-		<h2>Rooftop View</h2>
+		<h2>Stage View</h2>
 	</header>
 
 	<form id="searchForm">
@@ -39,7 +39,7 @@
 		</div>
 
 		<div class="9u 12u$(xsmall)">
-			<label>Rooftop Name</label>
+			<label>Stage Name</label>
 		</div>
 		<div class="3u 12u$(xsmall)">
 			<label>Maximum</label>
@@ -184,7 +184,6 @@
 			</ul>
 		</div>
 	</div>
-
 	<div class="originImgWrapper">
 		<div class="originImg"></div>
 	</div>

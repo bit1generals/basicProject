@@ -10,7 +10,7 @@ import org.generals.domain.ReserveVO;
 import org.generals.domain.RooftopVO;
 import org.generals.service.MemberService;
 import org.generals.service.ReserveService;
-import org.generals.service.RooftopService;
+import org.generals.service.StageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
@@ -37,7 +37,7 @@ public class AjaxController {
 	private ReserveService reserveService;
 	
 	@Setter(onMethod_ = { @Autowired })
-	private RooftopService rooftopService;
+	private StageService rooftopService;
 	
 	@Setter(onMethod_ = { @Autowired })
 	private MemberService memberService;
@@ -46,7 +46,7 @@ public class AjaxController {
 	public ResponseEntity<List<ReserveVO>> getTimeData(@RequestBody ReserveVO vo) {
 		log.info("getTimeData call......");
 		log.info("vo : "+vo);
-		vo.setState("D");
+		vo.setState("Waiting");
 		List<ReserveVO> timeDataList = reserveService.getTimeData(vo);
 		return new ResponseEntity<List<ReserveVO>>(timeDataList, HttpStatus.OK);
 	}
@@ -83,19 +83,20 @@ public class AjaxController {
 	
 	@PostMapping(value = "/rooftopList", produces = "application/json")
 	public ResponseEntity<List<RooftopVO>> getRooftopList(@RequestBody Criteria cri) throws Exception {
-		log.info("11111111111 : "+ cri);
+		log.info("rooftopList : "+ cri);
 		return new ResponseEntity<List<RooftopVO>> (rooftopService.getList(cri), HttpStatus.OK);
 	}
 	
 	@PostMapping(value = "/reserveList", produces = "application/json")
 	public ResponseEntity<List<ReserveVO>> getReserveList(@RequestBody Criteria cri) {
+		log.info("reserveList : " + cri);
 		return new ResponseEntity<List<ReserveVO>> (reserveService.getList(cri), HttpStatus.OK);
 	}
 
 	
-	@PostMapping(value = "/rooftopReserveList", produces = "application/json")
+	@PostMapping(value = "/myRooftopReserveList", produces = "application/json")
 	public ResponseEntity<List<ReserveVO>> getRooftopReserveList(@RequestBody Criteria cri) throws Exception {
-		
+		log.info("myRooftopReserveList : " + cri);
 		List<RooftopVO> rooftopList = rooftopService.getList(cri);
 		
 		//미완성 아직 안만짐.

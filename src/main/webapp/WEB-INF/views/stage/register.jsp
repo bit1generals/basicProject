@@ -202,7 +202,7 @@
 	
 	openCloseDate.datepicker({
 	    language: 'en',
-	    dateFormat : 'yy-mm-dd',
+	    dateFormat : 'yyyy-mm-dd',
 	    autoClose: true,
 	    minDate: new Date() // Now can select only dates, which goes after today
 	});
