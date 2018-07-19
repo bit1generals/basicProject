@@ -7,6 +7,7 @@
 	</header>
 	<form method="post" class="inputForm">
 		<div class="row uniform">
+				
 			<div class="9u 12u$(xsmall)">
 				<input type="text" name="title" value="title test"
 					placeholder="Input Title">
@@ -100,6 +101,9 @@
 		}
 
 		$.ajax({
+			headers : {
+				"X-CSRF-TOKEN" : "${_csrf.token }"
+			},
 			url : '/file/upload',
 			method : 'post',
 			data : formData,

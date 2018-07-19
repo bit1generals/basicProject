@@ -7,8 +7,8 @@ import lombok.Data;
 @Data
 public class BuskingVO {
 	
-	private Long bkno;
-	private String bkName, bkcontent;
+	private Long bkno, rno;
+	private String bkTitle, bkContent;
 	private Date regdate, updatedate;
 	private ReserveVO reserveVO;
 }

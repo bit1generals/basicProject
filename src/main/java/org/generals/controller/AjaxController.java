@@ -100,5 +100,5 @@ public class AjaxController {
 		//미완성 아직 안만짐.
 		return new ResponseEntity<List<ReserveVO>> (stageService.getSchdule(cri), HttpStatus.OK);
 	}
-	
+		
 }

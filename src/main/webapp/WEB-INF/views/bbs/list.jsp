@@ -21,7 +21,7 @@
 				</thead>
 				<tbody>
 					<c:forEach items="${list}" var="boardVO">
-						<tr class="rowData" data-value="${boardVO.bno}">
+						<tr class="rowData" data-key="${boardVO.bno}" data-uri="view" data-method="get">
 							<td name="bno">${boardVO.bno}</td>
 							<td name="rtname">${boardVO.title}</td>
 							<td name="id">${boardVO.id}</td>
@@ -104,7 +104,7 @@
 	var rowData = $(".rowData");
 	
 	rowData.click(function(event){
-		$(this).data("value");
+		$(this).data("key");
 	});
 	
 	$(".pagination").on(
@@ -119,9 +119,9 @@
 						parents.data("method")).submit();
 			});
 
-	$("article .view").click(
+	rowData.click(
 			function(event) {
-				var that = $(event.target).parents("article");
+				var that = $(this);
 				formObj.find("[name='key']").val(that.data("key"));
 				formObj.attr("action", that.data("uri")).attr("method",
 						that.data("method")).submit();
