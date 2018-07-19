@@ -300,8 +300,11 @@
 					console.dir($(obj));
 					obj.msg = msg;
 					console.dir(obj);
-					var html = template(obj);
-					selectedData.after(html);
+					console.log($(".special").data("name"));
+					if($(".special").data("name") != "myStage"){
+						var html = template(obj);
+						selectedData.after(html);
+					}
 				}
 			});
 		}

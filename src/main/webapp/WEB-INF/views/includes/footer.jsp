@@ -78,8 +78,8 @@
 			<li><a href="/">Homepage</a></li>
 			<li><a href="/bbs/list">Free Board</a></li>
 			<li><a href="/stage/list">Stage List</a></li>
-			<li><a href="">Busking List</a></li>
-			<li><a href="">LIVE Streaming</a>
+			<li><a href="/busking/list">Busking List</a></li>
+			<li><a href="/busking/live">LIVE Streaming</a>
 			<sec:authorize access="hasRole('ROLE_ADMIN')">
 				<li><a href="/reserve/list">Reserved List</a></li>
 			</sec:authorize>

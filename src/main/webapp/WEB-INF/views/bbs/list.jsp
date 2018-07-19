@@ -7,34 +7,32 @@
 	<header class="major">
 		<h2 class="mainFont">Free Board</h2>
 	</header>
-	<div class="posts">
-		<c:forEach items="${list}" var="boardVO">
-			<article data-key="${boardVO.bno}" data-uri="view" data-method="get">
-				<a class="image"> <img style="cursor: pointer"
-					src="/resources/images/1.jpg" alt="" class="view" /></a>
-				<div class="row uniform textArea">
-					<div class="8u 12u$(xsmall)">
-						<h3>${boardVO.title}</h3>
-					</div>
-					<div class="4u 12u$(xsmall)">
-						<h3>${boardVO.id}</h3>
-					</div>
-				</div>
-				<c:choose>
-					<c:when test="${boardVO.content.length() > 100}">
-						<p>${boardVO.content.substring(0,50)}...... (づ｡◕‿‿◕｡)づ </p>
-					</c:when>
-					<c:otherwise>
-						<p>${boardVO.content}</p>
-					</c:otherwise>
-				</c:choose>
-				<ul class="actions">
-					<li><button class="view">More</button></li>
-				</ul>
-			</article>
-		</c:forEach>
-	</div>
-
+	<section>
+		<div>
+			<table>
+				<thead>
+					<tr>
+						<th>No</th>
+						<th>Title</th>
+						<th>ID</th>
+						<th>RegDate</th>
+						<th>UpdateDate</th>
+					</tr>
+				</thead>
+				<tbody>
+					<c:forEach items="${list}" var="boardVO">
+						<tr class="rowData" data-value="${boardVO.bno}">
+							<td name="bno">${boardVO.bno}</td>
+							<td name="rtname">${boardVO.title}</td>
+							<td name="id">${boardVO.id}</td>
+							<td name="regidate"><fmt:formatDate value="${boardVO.regdate}" type="both"/></td>
+							<td name="updatedate"><fmt:formatDate value="${boardVO.updatedate}" type="both"/></td>
+						</tr>
+					</c:forEach>
+				</tbody>
+			</table>
+		</div>
+	</section>
 </section>
 <section>
 
@@ -56,19 +54,25 @@
 			<div class="3u 12u$(xsmall)">
 				<div class="select-wrapper">
 					<select name="type">
-						<option value="n" ${pm.cri.type eq null?'selected':''}>- Category -</option>
+						<option value="n" ${pm.cri.type eq null?'selected':''}>-
+							Category -</option>
 						<option value="t" ${pm.cri.type eq 't'?'selected':''}>Title</option>
 						<option value="c" ${pm.cri.type eq 'c'?'selected':''}>Content</option>
 						<option value="w" ${pm.cri.type eq 'w'?'selected':''}>Writer</option>
-						<option value="t-c" ${pm.cri.type eq 't-c'?'selected':''}>Title + Content</option>
-						<option value="t-w" ${pm.cri.type eq 't-w'?'selected':''}>Title + Writer</option>
-						<option value="w-c" ${pm.cri.type eq 'w-c'?'selected':''}>Writer + Content</option>
-						<option value="t-c-w" ${pm.cri.type eq 't-c-w'?'selected':''}>Title + Content + Writer</option>
+						<option value="t-c" ${pm.cri.type eq 't-c'?'selected':''}>Title
+							+ Content</option>
+						<option value="t-w" ${pm.cri.type eq 't-w'?'selected':''}>Title
+							+ Writer</option>
+						<option value="w-c" ${pm.cri.type eq 'w-c'?'selected':''}>Writer
+							+ Content</option>
+						<option value="t-c-w" ${pm.cri.type eq 't-c-w'?'selected':''}>Title
+							+ Content + Writer</option>
 					</select>
 				</div>
 			</div>
 			<div class="5u 12u$(xsmall)">
-				<input type="text" name="keyword" placeholder="Input Keyword" value="${pm.cri.keyword ne null ? pm.cri.keyword : '' }">
+				<input type="text" name="keyword" placeholder="Input Keyword"
+					value="${pm.cri.keyword ne null ? pm.cri.keyword : '' }">
 			</div>
 
 			<div class="4u 12u$(xsmall)">
@@ -97,7 +101,12 @@
 <%@include file="../includes/footer.jsp"%>
 <script>
 	var formObj = $("#searchForm");
-
+	var rowData = $(".rowData");
+	
+	rowData.click(function(event){
+		$(this).data("value");
+	});
+	
 	$(".pagination").on(
 			"click",
 			"span:not(.disabled)",
@@ -117,13 +126,12 @@
 				formObj.attr("action", that.data("uri")).attr("method",
 						that.data("method")).submit();
 			});
-	
-	$(".fa-search").click(function(event){
-		
+
+	$(".fa-search").click(function(event) {
+
 		var keyword = $("[name='keyword']").val().trim();
-		
-		
-		if(keyword.length == 0){
+
+		if (keyword.length == 0) {
 			event.preventDefault();
 			swal("Please enter your search term.");
 		}

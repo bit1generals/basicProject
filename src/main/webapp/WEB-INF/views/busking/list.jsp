@@ -9,32 +9,10 @@
 	<header class="major">
 
 		<h2 class="mainFont">
-			Stage
-			<c:if test="${param.state eq 'N'}"> Unreceived </c:if>
-			List
+			Busking List
 		</h2>
 	</header>
 	<form method="get">
-		<div class="row uniform">
-<!-- 		
-			<div style="float: left;">
-				<input class="formatBtn" type="button" name="tableFormat" value="View Table Forms">
-			</div>
--->
-			<sec:authorize access="hasRole('ROLE_ADMIN')">
-				<div class="4u 12u$(xsmall) radioButton" style="float: right;">
-					<input type="radio" id="authorize" name="state" value="Y"
-						${pm.cri.state eq 'Y' ? 'checked="checked"' : '' }> <label
-						for="authorize">Authorize</label> <input type="radio"
-						id="nonAuthorize" name="state" value="N"
-						${pm.cri.state eq 'N' ? 'checked="checked"' : '' }> <label
-						for="nonAuthorize">NonAuthorize</label> <input type="radio"
-						id="all" name="state" value=""
-						${pm.cri.state eq null || pm.cri.state eq '' ? 'checked="checked"' : '' }><label
-						for="all">ALL</label>
-				</div>
-			</sec:authorize>
-		</div>
 		<hr>
 		<div class="posts content">
 			<c:forEach items="${list}" var="stageVO">
