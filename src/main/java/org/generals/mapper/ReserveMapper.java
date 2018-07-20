@@ -33,5 +33,7 @@ public interface ReserveMapper {
 	public StageVO selectStageByBno(Integer bno);
 	
 	public List<ReserveVO> selectStagebyReserverid(Criteria cri);
+	
+	public int updateReserveState(@Param("rno")Long rno, @Param("state")String state);
 }
 

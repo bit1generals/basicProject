@@ -1,8 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@include file="../includes/header.jsp"%>
-
-
+<style>
+.rowData {
+	cursor: pointer;
+}
+</style>
 <section>
 	<header class="major">
 		<h2>My Page</h2>
@@ -112,6 +115,7 @@
 							value="${memberVO.email}" />
 					</div>
 				</div>
+
 				<input type="hidden" name="${_csrf.parameterName }"
 					value="${_csrf.token }">
 
@@ -153,7 +157,7 @@
 	</thead>
 	<tbody>
 		{{#each .}}
-			<tr class="rowData" >
+			<tr class="rowData" data-msg="{{message}}">
 				<td name="rtno">{{rtno}}</td>
 				<td colspan="2" name="rtname">{{rtname}}</td>
 				<td name="opendate">{{formatTime opendate "YYYY-MM-DD"}}</td>
@@ -161,7 +165,7 @@
 				<td name="openTime">{{openTime}}:00</td>
 				<td name="closeTime">{{closeTime}}:00</td>
 				<td name="regdate">{{formatTime regdate "YYYY-MM-DD h:mm"}}</td>
-				<td name="rtname">{{state}}</td>
+				<td name="state">{{state}}</td>
 			</tr>
 		{{/each}}
 	
@@ -184,17 +188,16 @@
 	</thead>
 	<tbody>
 		{{#each .}}
-			<tr class="rowData" >
+			<tr class="rowData" data-msg="{{message}}">
 				<td name="rno">{{rno}}</td>
 				<td colspan="2" name="rtname">{{stageVO.rtname}}</td>
 				<td name="reservedate">{{reservedate}}</td>
-				<td name="stateTime">{{formatTime startTime "hh:mm"}}</td>
-				<td name="endTime">{{formatTime endTime "hh:mm"}}</td>
-				<td name="regdate">{{formatTime regdate "YYYY-MM-DD h:mm"}}</td>
+				<td name="stateTime">{{formatTime startTime "H:mm"}}</td>
+				<td name="endTime">{{formatTime endTime "H:mm"}}</td>
+				<td name="regdate">{{formatTime regdate "YYYY-MM-DD H:mm"}}</td>
 				<td name="state">{{state}}</td>
 			</tr>
 		{{/each}}
-	
 	</tbody>
 </table>
 </script>
@@ -214,18 +217,16 @@
 	</thead>
 	<tbody>
 		{{#each .}}
-			<tr class="rowData" >
+			<tr class="rowData" data-msg="{{message}}">
 				<td name="rno">{{rno}}</td>
 				<td name="rtname">{{stageVO.rtname}}</td>
 				<th name="id">{{stageVO.boardVO.id}}</th>
 				<td name="reservedate">{{reservedate}}</td>
-				<td name="stateTime">{{formatTime startTime "hh:mm"}}</td>
-				<td name="endTime">{{formatTime endTime "hh:mm"}}</td>
-				<td name="regdate">{{formatTime regdate "YYYY-MM-DD h:mm"}}</td>
+				<td name="stateTime">{{formatTime startTime "H:mm"}}</td>
+				<td name="endTime">{{formatTime endTime "H:mm"}}</td>
+				<td name="regdate">{{formatTime regdate "YYYY-MM-DD H:mm"}}</td>
 				<td name="state">{{state}}</td>
-				<td type="hidden" name="msg">{{message}}</div>
 			</tr>
-			
 		{{/each}}
 	</tbody>
 </table>
@@ -242,16 +243,14 @@
 	{{else}}
            Articles was not reserved.
 	{{/if}}
+		<br>
+	{{#if this.msg}}
+		└> Message : {{this.msg}}
+	{{/if}}
 	</td>
 
 </tr>
-{{#if this.msg}}
-<tr class='loadArticle'>
-	<td colspan='8'>
-		└> Message : {{this.msg}}
-	</td>
-</tr>
-{{/if}}
+
 <input class='loadArticle' type='hidden'/>
 </script>
 <script>
@@ -273,14 +272,12 @@
 		var rowData = $(".rowData");
 		rowData.click(function(event) {
 			var selectedData = $(this);
-			console.log(selectedData);
 			var rno = selectedData.find("td[name=rno]").text();
-			var state = selectedData.find("td[name=state]");
-			var msg = selectedData.data("td[name=msg]");
-			console.log($(".loadArticle"));
+			var msg = selectedData.data("msg");
+			console.log(msg);
 			$(".loadArticle").remove();
 			if (statement != rno) {
-				console.log("if in! ==" + statement);
+				//console.log("if in! ==" + statement);
 				selectAjax(rno, selectedData, msg);
 				statement = rno;
 			} else {
@@ -288,6 +285,7 @@
 			}
 		});
 
+		// rowData click event..
 		function selectAjax(rno, selectedData, msg) {
 			$.ajax({
 				url : '/ajax/reserveArticleData?rno=' + rno,
@@ -297,11 +295,9 @@
 				contentType : "application/json;charset=UTF-8",
 				success : function(articleVOList) {
 					var obj = JSON.parse(articleVOList);
-					console.dir($(obj));
 					obj.msg = msg;
-					console.dir(obj);
-					console.log($(".special").data("name"));
-					if($(".special").data("name") != "myStage"){
+					//console.log($(".special").data("name"));
+					if ($(".special").data("name") != "myStage") {
 						var html = template(obj);
 						selectedData.after(html);
 					}

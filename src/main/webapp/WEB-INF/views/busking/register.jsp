@@ -8,7 +8,7 @@
 	<header class="major">
 		<h2>Show Your Busking</h2>
 	</header>
-	<form method="post" action="./busking/register" class="inputForm">
+	<form method="post" action="./register" class="inputForm">
 		<div class="row uniform">
 
 			<input type="hidden" name="${_csrf.parameterName }"
@@ -24,10 +24,10 @@
 			</div>
 			<div class="6u 12u$(xsmall) firstRow">
 				<div class="select-wrapper">
-					<select name="bno" id="stage" data-name="Stage">
+					<select name="rno" id="stage" data-name="Stage">
 						<option></option>
 						<c:forEach items="${reserveVOList}" var="reserveVO">
-							<c:if test="${reserveVO.state == 'Done'}">
+							<c:if test="${reserveVO.state == 'Reserve Confirm'}">
 								<option name="${reserveVO.stageVO.rtname}"
 									value="${reserveVO.rno}" data-date="${reserveVO.reservedate}"
 									data-starttime="${reserveVO.startTime}"
@@ -65,26 +65,25 @@
 
 			<div class="12u$ fourthRow">
 				<label for="department">Title</label> 
-				<input name="bktitle" type="text" />
+				<input name="bkTitle" type="text" />
 			</div>
 
 			<div class="12u$ fourthRow">
 				<label for="message">Message</label>
-				<textarea name="bkcontent" id="bkcontent" rows="6"
+				<textarea name="bkContent" id="bkcontent" rows="6"
 					style="resize: none"></textarea>
 			</div>
 
-			<ul class="actions fifthRow">
-				<li><input type="submit" id="submit" value="Reservation"></li>
-				<li><input type="reset" id="reset" value="Reset"></li>
-				<li><input type="button" id="cancel" value="Cancel"></li>
-				<li><input type="button" id="list" value="List" data-uri="list"></li>
+			<ul class="actions">
+				<li><input type="submit" class="action" value="Register"></li>
+				<li><input type="reset" class="reset" value="Reset"></li>
+				<li><input type="button" class="action" value="Cancel"></li>
+				<li><input type="button" class="action" value="List" data-uri="list"></li>
 			</ul>
 		</div>
 		<a>reserveVOList = ${reserveVOList} <br></a> 
 		<a>stageList = ${stageList}<br>
 		</a> <a>selectStageVO = ${selectStageVO}<br></a> <a>key = ${key}</a>
-		<sec:authentication property='principal.username' />
 	</form>
 
 
@@ -97,18 +96,21 @@
 	var reservedate = $("#reservedate");
 	var startTime = $("#startTime");
 	var endTime = $("#endTime");
-	var type = $("#type");
-	var count = $("#count");
-	var articleList = $(".articleList");
 	var firstRow = $(".firstRow");
 	var secondRow = $(".secondRow");
-	var stage = $("#stage");
-	var inputForm = $(".inputForm");
+	var action = $(".action")
 
 	firstRow.change(function(event) {
 		var that = $(".firstRow option:selected");
 		reservedate.val(that.data("date"));
-		startTime.val(moment(that.data("starttime")).format('hh:mm'));
-		endTime.val(moment(that.data("endtime")).format('hh:mm'));
+		startTime.val(moment(that.data("starttime")).format('H:mm'));
+		endTime.val(moment(that.data("endtime")).format('H:mm'));
 	});
+	
+	action.click(function(event){
+		if ($(this).val() != 'Register'){
+			history.back();
+		}
+	});
+	
 </script>

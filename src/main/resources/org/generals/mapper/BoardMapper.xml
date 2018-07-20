@@ -15,6 +15,7 @@
 			</foreach>
 		</if>
 	</sql>
+	
 	<insert id="insert">
 		insert into tbl_board (btype, id, title,
 		content)

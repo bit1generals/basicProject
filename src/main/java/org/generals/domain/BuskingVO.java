@@ -10,5 +10,4 @@ public class BuskingVO {
 	private Long bkno, rno;
 	private String bkTitle, bkContent;
 	private Date regdate, updatedate;
-	private ReserveVO reserveVO;
 }

@@ -1,9 +1,10 @@
 package org.generals.service;
 
+import java.util.List;
+
 import org.generals.domain.BuskingVO;
-import org.generals.domain.ReserveVO;
+import org.generals.domain.Criteria;
 import org.generals.mapper.BuskingMapper;
-import org.generals.mapper.ReserveMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,13 +19,25 @@ public class BuskingService {
 
 	@Setter(onMethod_ = { @Autowired })
 	private BuskingMapper buskingMapper;
+	
 	@Setter(onMethod_ = { @Autowired })
-	private ReserveMapper reserveMapper;
+	private ReserveService reserveService;
 	
 	
 	public void insertBusking(BuskingVO vo) throws Exception{
-		if (buskingMapper.insertBusking(vo) != 1) {
-			throw new Exception("Busking Register Fail");	
+		try {
+			log.info("getRNO test ====in");
+			buskingMapper.insertBusking(vo);
+			log.info(vo.getRno());
+			reserveService.updateReserveState(vo.getRno(), "Before Busking");
+		} catch (Exception e) {
+			throw new Exception("Busking Register Fail" + e.getMessage());
 		}
+	}
+	
+	public List<BuskingVO> getBuskingList(Criteria cri) throws Exception{
+		log.info("getBuskingList === in");
+		log.info(cri);
+		return buskingMapper.selectBuskingListByState(cri);
 	}
 }

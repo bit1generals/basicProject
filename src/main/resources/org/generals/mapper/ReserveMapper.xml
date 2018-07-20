@@ -181,4 +181,8 @@
 		) reserve on tbl_stage.bno = reserve.bno
 	</select>
 
+	<update id="updateReserveState">
+		update tbl_reserve_list set state = #{state} where rno = #{rno}
+	</update>
+
 </mapper>

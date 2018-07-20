@@ -50,6 +50,7 @@
 					</ul>
 				</article>
 			</c:forEach>
+			${buskingVOList}
 		</div>
 </section>
 <section>

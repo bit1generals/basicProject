@@ -76,4 +76,9 @@ public class ReserveService {
 		return mapper.selectStagebyReserverid(cri);
 	}
 	
+	public int updateReserveState(Long rno, String state) {
+		log.info("=============rno===========" + rno + "====================");
+		return mapper.updateReserveState(rno, state);
+	}
+	
 }
