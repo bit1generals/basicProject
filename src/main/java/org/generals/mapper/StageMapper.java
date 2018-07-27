@@ -11,4 +11,6 @@ public interface StageMapper extends GenericMapper<StageVO, Integer>{
 	public int updateStatebyBno(Integer key);
 	
 	public List<ReserveVO> selectStagebyBoarderid(Criteria cri);
+	
+	public List<StageVO> selectAllStageList();
 }

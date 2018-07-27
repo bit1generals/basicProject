@@ -117,12 +117,17 @@
 				id = #{id}
 			</if>
 		</where>
-		order by reservedate desc)
+		order by bno desc)
 		reserve inner
 		join
 		tbl_stage stage on
 		reserve.bno = stage.bno
 		limit #{skip}, 10
+	</select>
+ 	
+	<select id="selectReserveByBno" resultType="org.generals.domain.ReserveVO">
+		select * from tbl_reserve_list 
+		where bno = #{bno}
 	</select>
 
 	<select id="getTotal" resultType="int">
@@ -173,11 +178,11 @@
 		reservedate,
 		starttime, endtime, message from tbl_stage inner join
 		(
-		select tbl_board.bno, btype, tbl_board.id, title, content, tbl_reserve_list.regdate, tbl_reserve_list.updatedate, rno,
-		reservedate, state, starttime, endtime, message
-		from tbl_board inner join tbl_reserve_list
-		on tbl_board.bno = tbl_reserve_list.bno where tbl_reserve_list.id =
-		#{id}
+			select tbl_board.bno, btype, tbl_board.id, title, content, tbl_reserve_list.regdate, tbl_reserve_list.updatedate, rno,
+			reservedate, state, starttime, endtime, message
+			from tbl_board inner join tbl_reserve_list
+			on tbl_board.bno = tbl_reserve_list.bno where tbl_reserve_list.id =
+			#{id}
 		) reserve on tbl_stage.bno = reserve.bno
 	</select>
 

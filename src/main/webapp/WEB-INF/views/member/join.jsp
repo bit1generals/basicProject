@@ -51,7 +51,7 @@
 				<div class="4u 12u$(xsmall)"></div>
 				<div class="4u 12u$(xsmall)">
 					<input type="password" name="pw" id="pw"
-						class="pwCheckAction inputs" value="pw1" placeholder="Password" />
+						class="pwCheckAction inputs" placeholder="Password" />
 				</div>
 			</div>
 
@@ -66,8 +66,7 @@
 			<div class="row uniform">
 				<div class="4u 12u$(xsmall)"></div>
 				<div class="4u 12u$(xsmall)">
-					<input type="password" id="pwCheck" class="pwCheckAction inputs"
-						value="pw1" placeholder="Password" />
+					<input type="password" id="pwCheck" class="pwCheckAction inputs" placeholder="Password" />
 				</div>
 				<div class="4u 12u$(xsmall)"></div>
 			</div>
@@ -81,8 +80,7 @@
 			<div class="row uniform">
 				<div class="4u 12u$(xsmall)"></div>
 				<div class="4u 12u$(xsmall)">
-					<input type="text" name="name" id="name" value="name"
-						class="inputs extra" placeholder="Name" />
+					<input type="text" name="name" id="name" class="inputs extra" placeholder="Name" />
 				</div>
 			</div>
 
@@ -95,8 +93,7 @@
 			<div class="row uniform">
 				<div class="4u 12u$(xsmall)"></div>
 				<div class="4u 12u$(xsmall)">
-					<input type="text" name="email" id="email" value="email@email.com"
-						class="inputs extra" placeholder="Email" />
+					<input type="text" name="email" id="email" class="inputs extra" placeholder="Email" />
 				</div>
 			</div>
 			<input type="hidden"

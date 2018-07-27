@@ -81,4 +81,8 @@ public class ReserveService {
 		return mapper.updateReserveState(rno, state);
 	}
 	
+	public ReserveVO getReserveByBno(Integer bno) {
+		return mapper.selectReserveByBno(bno);
+	}
+	
 }

@@ -61,7 +61,8 @@
 
 					<c:choose>
 						<c:when test="${stageVO.boardVO.content.length() > 50}">
-							<p>${stageVO.boardVO.content.substring(0,50)}...... (づ｡◕‿‿◕｡)づ </p>
+						<!--  (づ｡◕‿‿◕｡)づ  -->
+							<p>${stageVO.boardVO.content.substring(0,50)}......</p>
 						</c:when>
 						<c:otherwise>
 							<p>${stageVO.boardVO.content}</p>

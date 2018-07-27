@@ -2,9 +2,13 @@ package org.generals.service;
 
 import java.util.List;
 
+import org.generals.domain.BoardVO;
 import org.generals.domain.BuskingVO;
 import org.generals.domain.Criteria;
+import org.generals.domain.ReserveVO;
 import org.generals.mapper.BuskingMapper;
+import org.generals.mapper.FileMapper;
+import org.generals.mapper.ReserveMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,23 +25,78 @@ public class BuskingService {
 	private BuskingMapper buskingMapper;
 	
 	@Setter(onMethod_ = { @Autowired })
-	private ReserveService reserveService;
+	private ReserveMapper reserveMapper;
 	
+	@Setter(onMethod_ = { @Autowired })
+	private BoardService boardService;
 	
+	@Setter(onMethod_ = {@Autowired})
+	private FileMapper fileMapper;
+	
+
 	public void insertBusking(BuskingVO vo) throws Exception{
 		try {
-			log.info("getRNO test ====in");
+			log.info("check 2 :" + vo);
+			log.info("insertBusking in !!!!");
+			BoardVO boardVO = vo.getBoardVO();
+			boardService.register(boardVO);
 			buskingMapper.insertBusking(vo);
-			log.info(vo.getRno());
-			reserveService.updateReserveState(vo.getRno(), "Before Busking");
+			log.info(vo.getRno()); 
+			reserveMapper.updateReserveState(vo.getRno(), "Before Busking");
+			
+			if(vo.getBoardVO().getFiles() != null) {
+				log.info("vo getfile ================== " + vo.getBoardVO().getFiles());
+				fileMapper.updateBnoBySelect(vo.getBoardVO().getFiles());
+			}
 		} catch (Exception e) {
 			throw new Exception("Busking Register Fail" + e.getMessage());
 		}
 	}
 	
 	public List<BuskingVO> getBuskingList(Criteria cri) throws Exception{
+		log.info("getBuskingList in ===");
+		List<BuskingVO> buskingVOList = buskingMapper.selectBuskingList(cri);
+		List<BoardVO> boardVOList = buskingMapper.selectBoardListbyBtype(cri);
+		List<ReserveVO> reserveVOList = buskingMapper.selectReserveListByState("Before Busking");
+		log.info(boardVOList);
+		log.info(reserveVOList);
+		for (int i = 0; i < buskingVOList.size(); i++) {
+			for (int a = 0; a < boardVOList.size(); a++) {
+				log.info(buskingVOList.get(a)+ "¿Í °°³ª?" + boardVOList.get(i).getBno());
+				if (buskingVOList.get(a).getBno() == (int)boardVOList.get(i).getBno()) {
+					BuskingVO vo = buskingVOList.get(a);
+					vo.setBoardVO(boardVOList.get(i));
+					vo.setReserveVO(reserveVOList.get(i));
+					buskingVOList.set(a, vo);
+					break;
+				}
+			}
+		};
+		return buskingVOList;
+	}
+	
+	public List<BoardVO> getBoardList(Criteria cri) throws Exception{
 		log.info("getBuskingList === in");
-		log.info(cri);
-		return buskingMapper.selectBuskingListByState(cri);
+		cri.setBtype("BK");
+		List<BoardVO> voList = buskingMapper.selectBoardListbyBtype(cri);
+		log.info(voList);
+		return voList;
+	}
+	
+	public List<BuskingVO> getBuskingVOList (Criteria cri) throws Exception {
+		return buskingMapper.selectBuskingVOList(cri);
+	}
+	
+	public BuskingVO getBuskingVO(Integer key) {
+		return buskingMapper.selectBuskingVO(key);
+	}
+	
+	public int getTotal(Criteria cri) {
+		return reserveMapper.getTotal(cri);
+	}
+	
+	public void deleteBusking(BuskingVO vo) {
+		reserveMapper.updateReserveState(vo.getRno(), "Done");
+		buskingMapper.deleteBuskingVO(vo.getBkno());
 	}
 }

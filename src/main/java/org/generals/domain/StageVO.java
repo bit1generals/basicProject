@@ -20,8 +20,16 @@ public class StageVO {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date opendate, closedate;
 	private BoardVO boardVO;
+	
+	@Override
+	public String toString() {
+		return "StageVO ['rtno' :" + rtno + ", bno : " + bno + ", openTime : " + openTime + ", closeTime : " + closeTime
+				+ ", rtname : " + rtname + ", address : " + address + ", state : " + state + ", maximum : " + maximum + ", lat : "
+				+ lat + ", lng=" + lng + ", opendate=" + opendate + ", closedate=" + closedate + ", boardVO=" + boardVO
+				+ "]";
+	}
 
-
+	
 }
 
  

@@ -12,4 +12,5 @@ public interface StageService extends GenericService<StageVO, Integer> {
 
 	public List<ReserveVO> getSchdule(Criteria cri);
 	
+	public List<StageVO> getAllList();
 }

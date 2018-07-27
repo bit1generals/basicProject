@@ -217,6 +217,10 @@
 		tbl_board.id = #{id}
 		) reserve on tbl_stage.bno = reserve.bno
 	</select>
+	
+	<select id="selectAllStageList" resultType="org.generals.domain.StageVO">
+		select * from tbl_stage where state = "Y"
+	</select>
 
 </mapper>
 

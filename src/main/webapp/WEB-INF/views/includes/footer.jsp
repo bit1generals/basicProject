@@ -50,12 +50,11 @@
 					<div class="12u$">
 						<label>ID</label> <input type="hidden"
 							name="${_csrf.parameterName }" value="${_csrf.token }"> <input
-							type="text" name="username" id="id" placeholder="Input ID"
-							value="bbb">
+							type="text" name="username" id="id" placeholder="Input ID">
 					</div>
 					<div class="12u$">
 						<label>PASSWORD</label><input type="password" name="password"
-							id="pw" value="bbb" placeholder="Password">
+							id="pw" placeholder="Password">
 					</div>
 					<div class="12u$">
 						<input type="checkbox" id="rememberMe" name="remember-me">
@@ -69,7 +68,6 @@
 			</form>
 			</section>
 		</sec:authorize>
-
 		<!-- Menu -->
 		<nav id="menu"> <header class="major">
 		<h2>Menu</h2>
@@ -79,15 +77,29 @@
 			<li><a href="/bbs/list">Free Board</a></li>
 			<li><a href="/stage/list">Stage List</a></li>
 			<li><a href="/busking/list">Busking List</a></li>
-			<li><a href="/busking/live">LIVE Streaming</a>
-			<sec:authorize access="hasRole('ROLE_ADMIN')">
-				<li><a href="/reserve/list">Reserved List</a></li>
-			</sec:authorize>
+
+
+
+			<li><span class="opener">Live Streaming</span>
+				<ul>
+					<li><a href="https://rtctest-bit.herokuapp.com/video#1"
+						target="_blank">View</a></li>
+					<sec:authorize access="isAuthenticated()">
+						<li>
+							<form target="_blank"
+								action="https://rtctest-bit.herokuapp.com/video#1" method="post" id="streamForm">
+								<input type="hidden" name="id"
+									value="<sec:authentication property='principal.username'/>">
+								<a id="startStream">Streaming</a>
+							</form>
+						</li>
+					</sec:authorize>
+				</ul> <sec:authorize access="hasRole('ROLE_ADMIN')">
+					<li><a href="/reserve/list">Reserved List</a></li>
+				</sec:authorize>
 		</ul>
 
-
 		</nav>
-
 		<!-- Section -->
 		<section> <header class="major">
 		<h2>Feed Back</h2>
@@ -127,6 +139,9 @@
 <script src="/resources/assets/js/datepicker.en.js"></script>
 
 <script>
+$("#startStream").click(function(){
+	$("#streamForm").submit();
+});
 
 if(${msg ne null}){
 	swal("${msg}");

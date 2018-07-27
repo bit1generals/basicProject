@@ -1,16 +1,10 @@
 package org.generals.service;
 
-import java.io.File;
 import java.util.List;
 
-import org.generals.controller.FileController;
-import org.generals.domain.BoardVO;
 import org.generals.domain.Criteria;
-import org.generals.domain.FileVO;
 import org.generals.domain.ReserveVO;
 import org.generals.domain.StageVO;
-import org.generals.mapper.BoardMapper;
-import org.generals.mapper.FileMapper;
 import org.generals.mapper.StageMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -63,6 +57,11 @@ public class StageServiceImpl extends GenericServiceImpl<StageVO, Integer, Stage
 	@Override
 	public int getTotal(Criteria cri) throws Exception {
 		return stageMapper.getTotal(cri);
+	}
+	
+	@Override
+	public List<StageVO> getAllList() {
+		return stageMapper.selectAllStageList();
 	}
 
 	public void authorize(Integer key) throws Exception{

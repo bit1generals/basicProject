@@ -106,7 +106,7 @@
 				<label>Address</label>
 			</div>
 			<div class="10u 12u$(xsmall)">
-				<input type="text" name="address" value="서울특별시 종로구 종로2가 9"
+				<input type="text" name="address"
 					id="address" placeholder="Input Address"
 					data-name="Stage Address">
 			</div>

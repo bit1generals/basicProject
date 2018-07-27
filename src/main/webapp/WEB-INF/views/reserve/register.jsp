@@ -98,13 +98,7 @@
 				<li><input type="button" id="list" value="List" data-uri="list"></li>
 			</ul>
 		</div>
-		<a>stageVO = ${stageVO}<br></a> 
-		<a>stageList = ${stageList}<br></a> 
-		<a>selectStageVO = ${selectStageVO}<br></a> 
-		<a>key = ${key}</a>
 	</form>
-
-
 </section>
 </div>
 </div>

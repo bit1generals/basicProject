@@ -3,31 +3,144 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.generals.mapper.BuskingMapper">
+
+	<resultMap type="org.generals.domain.BuskingVO" id="buskingVO">
+		<id property="bkno" column="bkno" />
+		<result property="rno" column="bkrno"/>
+		<result property="bno" column="bkbno"/>
+		<collection property="reserveVO" resultMap="reserveVO"></collection>
+		<collection property="boardVO" resultMap="boardVO"></collection>
+	</resultMap>
+
+	<resultMap type="org.generals.domain.BoardVO" id="boardVO">
+		<id property="bno" column="bbno" />
+		<result property="btype" column="bbtype" />
+		<result property="id" column="bid" />
+		<result property="title" column="btitle" />
+		<result property="content" column="bcontent" />
+		<result property="regdate" column="bregdate" />
+		<result property="updatedate" column="bupdatedate" />
+		<collection property="files" resultMap="fileMap"></collection>
+	</resultMap>
+
+	<resultMap type="org.generals.domain.FileVO" id="fileMap">
+		<result property="bno" column="fbno" />
+		<result property="fno" column="ffno" />
+		<result property="fname" column="ffname" />
+		<result property="uuid" column="fuuid" />
+		<result property="ftype" column="fftype" />
+		<result property="path" column="fpath" />
+	</resultMap>
+
+	<resultMap type="org.generals.domain.ReserveVO" id="reserveVO">
+		<id property="rno" column="rrno" />
+		<result property="id" column="rid" />
+		<result property="reservedate" column="rreservedate" />
+		<result property="regdate" column="rregdate" />
+		<result property="openTime" column="ropentime" />
+		<result property="closeTime" column="rclosetime" />
+		<result property="startTime" column="rstarttime" />
+		<result property="endTime" column="rendtime" />
+		<result property="message" column="rmessage" />
+		<result property="state" column="rstate" />
+		<collection property="stageVO" resultMap="stageVO"></collection>
+	</resultMap>
+
+	<resultMap type="org.generals.domain.StageVO" id="stageVO">
+		<result property="bno" column="sbno" />
+		<result property="rtno" column="srtno"/>
+		<result property="lat" column="slat"/>
+		<result property="lng" column="slng"/>
+		<result property="state" column="srtstate"/> 
+		<result property="rtname" column="srtname" />
+		<result property="openTime" column="sopentime"/>
+		<result property="closeTime" column="sclosetime"/>
+ 		<result property="address" column="saddress"/>
+		<result property="maximum" column="smaximum" />
+	</resultMap>
+
+
 	<sql id="search">
 		<if test="type != null">
 			<foreach collection="arr" open="and (" close=")" item="type"
 				separator=" or ">
-				<if test="type eq 't'.toString()">title</if>
-				<if test="type eq 'c'.toString()">content</if>
-				<if test="type eq 'w'.toString()">id</if>
+				<if test="type eq 'a'.toString()">address</if>
+				<if test="type eq 'rt'.toString()">rtname</if>
+				<if test="type eq 'w'.toString()">rid</if>
 				like concat('%',#{keyword},'%')
 			</foreach>
 		</if>
 	</sql>
 
 	<insert id="insertBusking">
-		insert into tbl_busking (bktitle, bkcontent, rno)
-		values (#{bkTitle}, #{bkContent}, #{rno})
+		<selectKey order="BEFORE" keyProperty="bno"
+			resultType="long">
+			select max(bno) from tbl_board
+		</selectKey>
+		insert into tbl_busking (bno, rno)
+		values (#{bno}, #{rno})
 	</insert>
 
-	<select id="selectBuskingListByState" resultType="org.generals.domain.BuskingVO">
-		select bkno, bktitle, bkcontent, reserve.rno, tbl_busking.regdate, 
-			tbl_busking.updatedate, bno, id, reservedate, state, 
-			starttime, endtime 
-		from tbl_busking 
-			inner join (select * from tbl_reserve_list where state = #{state})reserve 
-		where tbl_busking.rno = reserve.rno
-			order by reservedate desc limit #{skip}, 12	
+	<select id="selectBoardListbyBtype"
+		resultType="org.generals.domain.BoardVO">
+		select * from tbl_board where btype = 'BK'
+		order by bno desc
+		limit #{skip}, 12
+	</select>
+	
+	<delete id="deleteBuskingVO">
+		delete from tbl_busking where bno = ${bno}
+	</delete>
+
+	<select id="selectBuskingList"
+		resultType="org.generals.domain.BuskingVO">
+		select * from tbl_busking
+		order by bno desc limit #{skip},
+		12
 	</select>
 
+	<select id="selectReserveListByState"
+		resultType="org.generals.domain.ReserveVO">
+		select * from tbl_reserve_list
+		where state = #{state} order
+		by bno desc
+	</select>
+
+	<select id="selectBuskingVOList" resultMap="buskingVO">
+		select files.fno ffno, files.bno fbno, files.fname ffname, files.uuid fuuid, files.ftype fftype, files.path fpath, srtno, srtname, sbno, smaximum, slat, slng, sopentime, sclosetime, sopendate, sclosedate, sstate, saddress, rrno, rbno, rid, rreservedate, rregdate, rupdatedate, rstate, rstarttime, rendtime, rmessage, bkno, bkrno, bkbno, bbno, bbtype, bid, btitle, bcontent, bregdate, bupdatedate
+		from tbl_file files right outer join
+			(
+		    select stage.rtno srtno, stage.rtname srtname, stage.bno sbno, stage.maximum smaximum, stage.lat slat, stage.lng slng, stage.opentime sopentime, stage.closetime sclosetime, stage.opendate sopendate, stage.closedate sclosedate, stage.state sstate, stage.address saddress, rrno, rbno, rid, rreservedate, rregdate, rupdatedate, rstate, rstarttime, rendtime, rmessage, bkno, bkrno, bkbno, bbno, bbtype, bid, btitle, bcontent, bregdate, bupdatedate
+			from tbl_stage stage inner join
+			(
+				select reserve.rno rrno, reserve.bno rbno, reserve.id rid, reserve.reservedate rreservedate, reserve.regdate rregdate, reserve.updatedate rupdatedate, reserve.state rstate, reserve.starttime rstarttime, reserve.endtime rendtime, reserve.message rmessage, bkno, bkrno, bkbno, bbno, bbtype, bid, btitle, bcontent, bregdate, bupdatedate
+				from tbl_reserve_list reserve inner join
+				(
+					select bkno, tbl_busking.rno bkrno, tbl_busking.bno bkbno, tbl_board.bno bbno, tbl_board.btype bbtype, tbl_board.id bid, tbl_board.title btitle, tbl_board.content bcontent, tbl_board.regdate bregdate, tbl_board.updatedate bupdatedate 
+					from tbl_busking inner join tbl_board on tbl_busking.bno = tbl_board.bno
+					order by bkno desc
+				)busking on reserve.rno = busking.bkrno
+				
+			)busking
+			on stage.bno = busking.rbno
+			<include refid="search"/>
+		    )busking
+		on files.bno = busking.bbno
+	</select>
+	
+	<select id="selectBuskingVO" resultMap="buskingVO">
+		select stage.rtno srtno, stage.rtname srtname, stage.bno sbno, stage.maximum smaximum, stage.lat slat, stage.lng slng, stage.opentime sopentime, stage.closetime sclosetime, stage.opendate sopendate, stage.closedate sclosedate, stage.state sstate, stage.address saddress, rrno, rbno, rid, rreservedate, rregdate, rupdatedate, rstate, rstarttime, rendtime, rmessage, bkno, bkrno, bkbno, bbno, bbtype, bid, btitle, bcontent, bregdate, bupdatedate
+		from tbl_stage stage inner join
+		(
+			select reserve.rno rrno, reserve.bno rbno, reserve.id rid, reserve.reservedate rreservedate, reserve.regdate rregdate, reserve.updatedate rupdatedate, reserve.state rstate, reserve.starttime rstarttime, reserve.endtime rendtime, reserve.message rmessage, bkno, bkrno, bkbno, bbno, bbtype, bid, btitle, bcontent, bregdate, bupdatedate
+			from tbl_reserve_list reserve inner join
+			(
+				select bkno, tbl_busking.rno bkrno, tbl_busking.bno bkbno, tbl_board.bno bbno, tbl_board.btype bbtype, tbl_board.id bid, tbl_board.title btitle, tbl_board.content bcontent, tbl_board.regdate bregdate, tbl_board.updatedate bupdatedate 
+				from tbl_busking inner join tbl_board on tbl_busking.bno = tbl_board.bno
+				where bkno = #{key}
+			)busking on reserve.rno = busking.bkrno
+		)busking
+		on stage.bno = busking.rbno
+	</select>
+	
 </mapper>

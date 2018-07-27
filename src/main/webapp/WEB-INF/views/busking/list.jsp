@@ -1,9 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@include file="../includes/header.jsp"%>
-
-
-
 <!-- Section -->
 <section>
 	<header class="major">
@@ -13,36 +10,48 @@
 		</h2>
 	</header>
 	<form method="get">
+		<div class="row uniform">
+<!-- 		
+			<div style="float: left;">
+				<input class="formatBtn" type="button" name="tableFormat" value="View Table Forms">
+			</div>
+-->		
+		</div>
 		<hr>
 		<div class="posts content">
-			<c:forEach items="${list}" var="stageVO">
-				<article data-key="${stageVO.boardVO.bno}" data-uri="view"
+			<c:forEach items="${list}" var="buskingVO">
+				<article data-key="${buskingVO.bkno}" data-uri="view"
 					data-method="get">
 
 					<a class="image"> <img style="cursor: pointer"
-						src="${stageVO.boardVO.files[0].fno ne null 
-					? stageVO.boardVO.files[0].urlBuilder('midthumbnails') : '/resources/images/1.jpg'}"
+						src="${buskingVO.boardVO.files[0].fno ne null 
+					? buskingVO.boardVO.files[0].urlBuilder('midthumbnails') : '/resources/images/1.jpg'}"
 						alt="" class="view" /></a>
 
 					<div class="row uniform textArea">
 						<div class="8u 12u$(xsmall)">
-							<h3>${stageVO.boardVO.title}</h3>
+							<h3>${buskingVO.boardVO.title}</h3>
 						</div>
 						<div class="4u 12u$(xsmall)">
-							<h3>${stageVO.boardVO.id}</h3>
+							<h3>${buskingVO.boardVO.id}</h3>
 						</div>
 
 						<div class="12u">
-							<h4>${stageVO.address}</h4>
+							<h4>${buskingVO.reserveVO.stageVO.address}, ${buskingVO.reserveVO.stageVO.rtname}</h4>
+							<h4>${buskingVO.reserveVO.reservedate}, 
+							<fmt:formatDate value="${buskingVO.reserveVO.startTime}" type="time" pattern="HH:00"/> ~ 
+							<fmt:formatDate value="${buskingVO.reserveVO.endTime}" type="time" pattern="HH:00"/>
+							</h4>
 						</div>
 					</div>
 
 					<c:choose>
-						<c:when test="${stageVO.boardVO.content.length() > 50}">
-							<p>${stageVO.boardVO.content.substring(0,50)}...... (づ｡◕‿‿◕｡)づ </p>
+						<c:when test="${buskingVO.boardVO.content.length() > 50}">
+						<!-- (づ｡◕‿‿◕｡)づ -->	
+							<p>${buskingVO.boardVO.content.substring(0,50)}......</p>
 						</c:when>
 						<c:otherwise>
-							<p>${stageVO.boardVO.content}</p>
+							<p>${buskingVO.boardVO.content}</p>
 						</c:otherwise>
 					</c:choose>
 					<ul class="actions">
@@ -50,7 +59,6 @@
 					</ul>
 				</article>
 			</c:forEach>
-			${buskingVOList}
 		</div>
 </section>
 <section>
@@ -108,9 +116,9 @@
 </div>
 
 <form id="searchForm">
-	<input type="hidden" name="key" value=""> <input type="hidden"
-		name="page" value="${pm.cri.page}"> <input type="hidden"
-		name="state" value="${pm.cri.state}">
+	<input type="hidden" name="key" value=""> 
+	<input type="hidden" name="page" value="${pm.cri.page}"> 
+	<input type="hidden" name="state" value="${pm.cri.state}">
 
 	<c:if test="${pm.cri.type != null }">
 		<input type="hidden" name="keyword" value="${pm.cri.keyword }">

@@ -47,8 +47,7 @@
 			<div class="row uniform">
 				<div class="4u 12u$(xsmall)"></div>
 				<div class="4u 12u$(xsmall)">
-					<input type="text" name="username" id="id" placeholder="Input ID"
-						value="bbb" />
+					<input type="text" name="username" id="id" placeholder="Input ID"/>
 				</div>
 			</div>
 
@@ -64,8 +63,7 @@
 
 				<div class="4u 12u$(xsmall)">
 
-					<input type="password" name="password" id="pw" value="bbb"
-						placeholder="Password" />
+					<input type="password" name="password" id="pw" placeholder="Password" />
 				</div>
 
 			</div>

@@ -1,13 +1,11 @@
 package org.generals.domain;
 
-import java.util.Date;
-
 import lombok.Data;
 
 @Data
 public class BuskingVO {
 	
-	private Long bkno, rno;
-	private String bkTitle, bkContent;
-	private Date regdate, updatedate;
+	private Long bkno, rno, bno;
+	private BoardVO boardVO;
+	private ReserveVO reserveVO;
 }

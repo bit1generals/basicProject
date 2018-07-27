@@ -44,7 +44,7 @@ public class ReserveController {
 	public String registerPost(ReserveVO reserveVO, RedirectAttributes rttr) {
 		log.info("registerPost()... call");
 		log.info("reserveVO : " + reserveVO);
-		reserveVO.setState("Waiting");
+		reserveVO.setState("Done");
 		try {
 			service.insertReserve(reserveVO);
 			rttr.addFlashAttribute("msg", "Reservation Success");

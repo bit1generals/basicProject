@@ -46,7 +46,7 @@ public class AjaxController {
 	public ResponseEntity<List<ReserveVO>> getTimeData(@RequestBody ReserveVO vo) {
 		log.info("getTimeData call......");
 		log.info("vo : "+vo);
-		vo.setState("Waiting");
+		vo.setState("Done");
 		List<ReserveVO> timeDataList = reserveService.getTimeData(vo);
 		return new ResponseEntity<List<ReserveVO>>(timeDataList, HttpStatus.OK);
 	}
@@ -56,7 +56,7 @@ public class AjaxController {
 		log.info("getArticleData call........");
 		log.info("vo : "+vo);
 		log.info("type : "+ vo.getType());
-		vo.setState("Waiting");
+		vo.setState("Done");
 		ArticleVO articleVO = reserveService.getReserveArticle(vo, vo.getType());
 		return new ResponseEntity<ArticleVO>(articleVO, HttpStatus.OK);
 	}
