@@ -59,7 +59,7 @@ public class MemberController extends AbstractController<MemberVO, String, Membe
 	}
 	
 	@PostMapping("/myPage")
-	public String modifyPost(MemberVO vo,RedirectAttributes rttr) {
+	public String modifyPost(MemberVO vo, RedirectAttributes rttr) {
 		log.info("myPage Post");
 		log.info("Check!!! : "+vo);
 		try {

@@ -53,28 +53,6 @@ public class BuskingService {
 		}
 	}
 	
-	public List<BuskingVO> getBuskingList(Criteria cri) throws Exception{
-		log.info("getBuskingList in ===");
-		List<BuskingVO> buskingVOList = buskingMapper.selectBuskingList(cri);
-		List<BoardVO> boardVOList = buskingMapper.selectBoardListbyBtype(cri);
-		List<ReserveVO> reserveVOList = buskingMapper.selectReserveListByState("Before Busking");
-		log.info(boardVOList);
-		log.info(reserveVOList);
-		for (int i = 0; i < buskingVOList.size(); i++) {
-			for (int a = 0; a < boardVOList.size(); a++) {
-				log.info(buskingVOList.get(a)+ "¿Í °°³ª?" + boardVOList.get(i).getBno());
-				if (buskingVOList.get(a).getBno() == (int)boardVOList.get(i).getBno()) {
-					BuskingVO vo = buskingVOList.get(a);
-					vo.setBoardVO(boardVOList.get(i));
-					vo.setReserveVO(reserveVOList.get(i));
-					buskingVOList.set(a, vo);
-					break;
-				}
-			}
-		};
-		return buskingVOList;
-	}
-	
 	public List<BoardVO> getBoardList(Criteria cri) throws Exception{
 		log.info("getBuskingList === in");
 		cri.setBtype("BK");

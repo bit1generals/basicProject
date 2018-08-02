@@ -60,7 +60,7 @@ public class ReserveService {
 		return mapper.getTotal(cri);
 	}
 	
-	public ReserveVO getReserve(Long rno) {
+	public ReserveVO getReserve(Integer rno) {
 		return mapper.getReserve(rno);
 	}
 	
@@ -76,7 +76,7 @@ public class ReserveService {
 		return mapper.selectStagebyReserverid(cri);
 	}
 	
-	public int updateReserveState(Long rno, String state) {
+	public int updateReserveState(Integer rno, String state) {
 		log.info("=============rno===========" + rno + "====================");
 		return mapper.updateReserveState(rno, state);
 	}

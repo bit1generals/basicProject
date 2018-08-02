@@ -43,7 +43,6 @@ public class BuskingController {
 	@GetMapping("/list")
 	public void list(Model model, Criteria cri) {
 		try {
-			List<BuskingVO> buskingList = buskingService.getBuskingList(cri);
 			model.addAttribute("list", buskingService.getBuskingVOList(cri));
 			model.addAttribute("pm", new PageMaker(cri, buskingService.getTotal(cri)));
 		} catch (Exception e) {
@@ -85,11 +84,14 @@ public class BuskingController {
 	}
 	
 	@PostMapping("/remove")
-	public String remove(BuskingVO vo) {
+	public String remove(BuskingVO vo, RedirectAttributes rttr) {
 		try {
+			log.info("BuskingVO = " + vo);
 			buskingService.deleteBusking(vo);
+			rttr.addFlashAttribute("msg", "remove Success");
 		}catch(Exception e) {
 			e.printStackTrace();
+			rttr.addFlashAttribute("msg", "remove fail");
 		}
 		return "redirect:./list";
 	}

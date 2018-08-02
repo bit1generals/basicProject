@@ -66,7 +66,7 @@ public class ReserveController {
 	}
 	
 	@GetMapping("/view")
-	public void view(Model model, Long rno) {
+	public void view(Model model, Integer rno) {
 		model.addAttribute("reserveVO", service.getReserve(rno));
 	}
 	

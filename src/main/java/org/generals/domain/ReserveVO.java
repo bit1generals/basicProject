@@ -14,7 +14,7 @@ import lombok.Data;
 @Data
 public class ReserveVO {
 
-	private Long rno, bno;
+	private Integer rno, bno;
 	private Integer openTime, closeTime;
 	private String id, state, message, type;
 	

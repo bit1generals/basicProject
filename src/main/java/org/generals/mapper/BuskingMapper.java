@@ -21,5 +21,5 @@ public interface BuskingMapper {
 	
 	public BuskingVO selectBuskingVO(Integer key);
 	
-	public void deleteBuskingVO(Long bno);
+	public void deleteBuskingVO(Integer bkno);
 }

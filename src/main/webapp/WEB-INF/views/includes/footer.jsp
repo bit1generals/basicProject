@@ -132,7 +132,7 @@
 <script src="/resources/assets/js/main.js"></script>
 <script src="/resources/assets/js/jquery-ui.min.js"></script>
 <script type="text/javascript"
-	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2986010b12d8334b24509c1d77fe5837&libraries=services"></script>
+	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=14d8dcf45ce8c5cc713bd7caec52250e"></script>
 <script src="/resources/assets/js/moment.js"></script>
 <script src="/resources/assets/js/handlebars.js"></script>
 <script src="/resources/assets/js/datepicker.min.js"></script>

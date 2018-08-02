@@ -77,7 +77,6 @@ public abstract class AbstractController<T, K, S extends GenericService> impleme
 	public String modifyPost(T vo, @ModelAttribute("cri")Criteria cri, RedirectAttributes rttr) {
 		log.info("Abstract modifyPost Post");
 		log.info("Modify Post VO: "+vo);
-		
 		try {
 			service.modify(vo);
 			buildRedirectAttribute(rttr, methodParse(), SUCCESS);

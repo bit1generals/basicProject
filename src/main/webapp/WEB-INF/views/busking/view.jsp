@@ -7,7 +7,9 @@
 		<h2>Busking View</h2>
 	</header>
 	<form id="searchForm">
-		<input type="hidden" name="key" value="${BuskingVO.bkno}"> <input
+		<input type="hidden" name="bkno" value="${buskingVO.bkno}">
+		<input type="hidden" name="rno" value="${buskingVO.rno}">
+ 		<input type="hidden" name="key" value="${buskingVO.bkno}"> <input
 			type="hidden" name="page" value="${cri.page}">
 		<c:if test="${param.state != null }">
 			<input type="hidden" name="state" value="${param.state}">
@@ -216,15 +218,16 @@ var favorite = $(".favorite");
 	});
 
 	$(".actions li").click(function(event) {
-		
+			event.preventDefault();
 			var that = $(event.target);
 
 			if(that.data("method")=="post"){
 				formObj.append("<input type='hidden' name='${_csrf.parameterName }' value='${_csrf.token }'>");
 			}
-			
+			console.log("EVENT!!!")
 			formObj.attr("action", that.data("uri")).attr("method",
-					that.data("method")).submit();
+					that.data("method"));
+			formObj.submit();
 	});
 	
 	$(document).ready(function(){

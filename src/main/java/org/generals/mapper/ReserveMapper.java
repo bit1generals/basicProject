@@ -26,7 +26,7 @@ public interface ReserveMapper {
 	
 	public int getTotal(Criteria cri);
 	
-	public ReserveVO getReserve(Long rno);
+	public ReserveVO getReserve(Integer rno);
 
 	public List<ArticleVO> selectArticleByRno(Long rno);
 	
@@ -34,7 +34,7 @@ public interface ReserveMapper {
 	
 	public List<ReserveVO> selectStagebyReserverid(Criteria cri);
 	
-	public int updateReserveState(@Param("rno")Long rno, @Param("state")String state);
+	public int updateReserveState(@Param("rno")Integer rno, @Param("state")String state);
 	
 	public ReserveVO selectReserveByBno(Integer bno);
 }
